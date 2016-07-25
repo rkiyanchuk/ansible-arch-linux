@@ -335,12 +335,12 @@ def main():
                 for flag in flags:
                     device.set_flag(partnum, flag)
 
-            if args['lvm_group']:
-                add_to_lvm_group(partition, args['lvm_group'])
-                Partition.changed = True
-
             if args['fstype']:
                 mkfs(partition, args['fstype'], force=args['force'])
+                Partition.changed = True
+
+            if args['lvm_group']:
+                add_to_lvm_group(partition, args['lvm_group'])
                 Partition.changed = True
 
         if args['rm']:
