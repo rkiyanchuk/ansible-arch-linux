@@ -71,9 +71,10 @@ options:
     description:
       - Stop complaining and do what I say!
 
-  pvolume:
+  lvm_group:
     description:
-      - Add the partition to specified LVM physical volume.
+      - Create physical LVM volume on the partition and add it to specified
+        volume group.
 
 """
 
@@ -147,13 +148,25 @@ def is_installed(program):
     return True
 
 
-def add_lvm_physical_volume(device):
+def add_to_lvm_group(device, group):
     """Create LVM physical volume on partition"""
     is_installed('pvcreate')
-    error, output = shell_cmd('pvcreate -fy {0}'.format(device))
+    is_installed('vgcreate')
+    error, output = shell_cmd('pvcreate -ffy {0}'.format(device))
 
     if error:
         raise LVMError(output)
+
+    # Check if volume group exists
+    error, _ = shell_cmd('vgdisplay {0}'.format(group))
+    if error:  # group doesn't exist, create it with specified device.
+        err, out = shell_cmd('vgcreate {0} {1}'.format(group, device))
+    else:
+        err, out = shell_cmd('vgextend {0} {1}'.format(group, device))
+
+    if err:
+        raise LVMError(
+            'Could not add {0} to group {1}: {2}'.format(device, group, out))
 
 
 def mkfs(partition, fstype, force=False):
@@ -295,7 +308,7 @@ def main():
         'fstype': {'required': False},
         'flags': {'required': False},
         'force': {'required': False, 'default': 'false', 'type': 'bool'},
-        'pvolume': {'required': False},
+        'lvm_group': {'required': False},
         'rm': {'required': False, 'type': 'int'},
     }
 
@@ -322,8 +335,8 @@ def main():
                 for flag in flags:
                     device.set_flag(partnum, flag)
 
-            if args['pvolume']:
-                add_lvm_physical_volume(partition)
+            if args['lvm_group']:
+                add_to_lvm_group(partition, args['lvm_group'])
                 Partition.changed = True
 
             if args['fstype']:
