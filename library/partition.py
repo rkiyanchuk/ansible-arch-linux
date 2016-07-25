@@ -347,7 +347,7 @@ def main():
             device.remove(args['rm'])
             Partition.changed = True
 
-    except (PartitionError, LVMError, OSError) as exc:
+    except (PartitionError, LVMError, MkfsError, OSError) as exc:
         module.fail_json(msg=exc.message)
 
     module.exit_json(changed=Partition.changed)
