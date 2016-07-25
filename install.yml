@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  name: test partition module
+  connection: local
+
+  tasks:
+
+    - partition: dev=/dev/sda type=primary start=8GiB end=9GiB name=home pvolume=arch
