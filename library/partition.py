@@ -94,6 +94,7 @@ EXAMPLES = """
 
 class PartitionError(Exception):
     def __init__(self, msg):
+        msg = msg.strip().replace('\n', '; ')
         super(PartitionError, self).__init__(msg)
 
 
@@ -126,8 +127,7 @@ def shell_cmd(cmd):
     except subprocess.CalledProcessError as exc:
         return_code = exc.returncode
         if exc.output:
-            # Replace multi-line output with single line message.
-            output = exc.output.strip().replace('\n', '; ')
+            output = exc.output
         else:
             output = '{0} returned error code {1}'.format(prog, return_code)
 
@@ -217,6 +217,14 @@ class Partition(object):
         cmd = 'parted -sm {0} {1}'.format(self.path, ' '.join(args))
 
         error, output = shell_cmd(cmd)
+
+        # When device does not have partition table, print command returns
+        # non-zero status with error message, however still outputs useful
+        # device info. So we reset error and remove error message (first line)
+        # from the output.
+        if error and args[0] == 'print':
+            error = 0
+            output = output[output.find('\n') + 1:]
 
         if error:
             raise PartitionError(output)
@@ -341,6 +349,10 @@ def main():
 
             if args['lvm_group']:
                 add_to_lvm_group(partition, args['lvm_group'])
+                Partition.changed = True
+        else:
+            if args['fstype']:
+                mkfs(device.path, args['fstype'], force=args['force'])
                 Partition.changed = True
 
         if args['rm']:
