@@ -1,0 +1,36 @@
+---
+
+- name: sync time
+  command: timedatectl set-ntp true
+
+- name: repartition hard drives
+  include: partition.yml
+  when: repartition == True
+
+- name: mount LVM volumes
+  mount: >
+    name='{{ arch_root }}{{ item.1.mountpoint }}'
+    src='/dev/{{ item.0.group }}/{{ item.1.name }}'
+    fstype='{{ item.1.fstype }}'
+    state=mounted
+  with_subelements:
+    - '{{ lvm }}'
+    - volumes
+  when: item.1.mountpoint is defined
+
+- name: create /boot/efi directory
+  file: path={{ arch_root }}/boot/efi state=directory
+
+- name: mount raw volumes
+  mount: >
+    name='{{ arch_root }}{{ item.1.mountpoint }}'
+    src='PARTLABEL={{ item.1.name }}'
+    fstype='{{ item.1.fstype }}'
+    state=mounted
+  with_subelements:
+    - '{{ disks }}'
+    - partitions
+  when: item.1.mountpoint is defined
+
+- name: create /etc directory
+  file: path={{ arch_root }}/etc state=directory

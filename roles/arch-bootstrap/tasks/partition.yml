@@ -1,0 +1,33 @@
+---
+
+- name: clean up existing LVM records
+  command: dmsetup remove_all
+
+- name: create partition tables on disks
+  partition: dev={{ item.device }} table={{ item.table }} force=yes
+  with_items: '{{ disks }}'
+
+- name: create partitions
+  partition: >
+    dev='{{ item.0.device }}'
+    name='{{ item.1.name }}'
+    start='{{ item.1.start }}'
+    end='{{ item.1.end }}'
+    type='{{ item.1.type }}'
+    fstype='{{ item.1.fstype|default(omit) }}'
+    lvm_group='{{ item.1.lvm_group|default(omit) }}'
+  with_subelements:
+    - '{{ disks }}'
+    - partitions
+
+- name: create LVM logical volumes
+  lvol: vg={{ item.0.group }} lv={{ item.1.name }} size={{ item.1.size }}
+  with_subelements:
+    - '{{ lvm }}'
+    - volumes
+
+- name: create filesystems on LVM volumes
+  partition: dev=/dev/{{ item.0.group }}/{{ item.1.name }} fstype={{ item.1.fstype }} force=true
+  with_subelements:
+    - '{{ lvm }}'
+    - volumes
