@@ -1,1 +1,10 @@
 repartition: True
+
+user:
+  name: zoresvit
+  comment: Ruslan Kiianchuk
+  group: zoresvit
+  groups:
+    - wheel
+  shell: /usr/bin/zsh
+  email: ruslan.kiianchuk@gmail.com
