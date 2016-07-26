@@ -10,3 +10,18 @@
   roles:
     - pacman
     - aur
+
+  tasks:
+    - name: install Bash completion
+      pacman: name={{ item }} state=present
+      with_items:
+        - bash-completion
+
+    - name: install Zsh
+      pacman: name={{ item }} state=present
+      with_items:
+        - zsh
+        - zsh-completions
+
+    - name: set default shell for user
+      command: chsh -s {{ user.shell }} {{ user.name }}
