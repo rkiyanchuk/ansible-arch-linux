@@ -1,0 +1,39 @@
+---
+
+- name: configure repository mirrors
+  command: reflector --sort score -p https --country '{{ country }}' --save /etc/pacman.d/mirrorlist
+
+- name: set console font
+  lineinfile: dest=/etc/vconsole.conf state=present create=yes line="FONT=Lat2-Terminus16"
+
+- include: locales.yml
+
+- name: enable DHCP discovery
+  command: systemctl enable dhcpcd.service
+
+- name: set hostname
+  lineinfile: dest=/etc/hostname create=yes line='{{ hostname }}'
+
+- name: append hostname to /etc/hosts file
+  template: src=hosts.j2 dest=/etc/hosts mode=644
+
+- name: create user group
+  group: name={{ user.group }} state=present
+
+- name: create user and assign to group
+  user: >
+    name={{ user.name }}
+    group={{ user.group }}
+    append=yes
+    groups={{ user.groups | join(',') }}
+    comment={{ user.comment }}
+    password={{ user_password }}
+    update_password=on_create
+
+- name: install sudo
+  pacman: name=sudo state=present
+
+- name: copy sudo configuration
+  template: src=sudoers.j2 dest=/etc/sudoers mode=440
+
+- include: bootloader.yml

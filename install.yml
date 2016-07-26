@@ -16,3 +16,29 @@
 
   roles:
     - arch-bootstrap
+
+
+- hosts: chroot
+  name: install Arch Linux
+  connection: arch_chroot
+
+  pre_tasks:
+
+    - include_vars: group_vars/vbox.yml
+      when: ansible_product_name == "VirtualBox"
+
+    - include_vars: group_vars/gazp9.yml
+      when: ansible_product_name == "Gazelle Professional"
+
+    - include_vars: group_vars/xps13.yml
+      when: ansible_product_name == "XPS 13 9350"
+
+  roles:
+    - arch-chroot
+
+  vars_prompt:
+    - name: user_password
+      prompt: "User password:"
+      encrypt: "sha512_crypt"
+      private: yes
+      confirm: yes

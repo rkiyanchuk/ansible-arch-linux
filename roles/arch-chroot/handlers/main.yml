@@ -1,0 +1,3 @@
+---
+- name: rebuild initramfs
+  command: mkinitcpio -p linux

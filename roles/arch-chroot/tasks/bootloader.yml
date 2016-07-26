@@ -1,0 +1,18 @@
+---
+- name: install bootloader packages
+  pacman: name={{ item }} state=present
+  with_items:
+    - grub
+    - efibootmgr
+
+- name: add LVM to initramfs build hook
+  lineinfile: dest=/etc/mkinitcpio.conf regexp=^HOOKS= line=HOOKS="base udev autodetect modconf block lvm2 filesystems keyboard fsck"
+
+- name: rebuild initramfs
+  command: mkinitcpio -p linux
+
+- name: install Grub bootloader for UEFI
+  command: grub-install --recheck
+
+- name: create Grub config
+  command: grub-mkconfig -o /boot/grub/grub.cfg

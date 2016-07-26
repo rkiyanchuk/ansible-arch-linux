@@ -1,0 +1,14 @@
+hostname: localhost
+timezone: America/Los_Angeles
+country: United States
+locales:
+  - en_US
+
+user:
+  name: user
+  comment: 
+  group: user
+  groups:
+    - wheel
+  shell: /usr/bin/bash
+  email: 
