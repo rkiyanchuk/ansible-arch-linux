@@ -1,5 +1,5 @@
 arch_root: /mnt
-repartition: True
+repartition: False
 
 # Define hardware disks partitioning layout.
 # Required fields for partition:

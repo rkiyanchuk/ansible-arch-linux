@@ -34,3 +34,12 @@
 
 - name: create /etc directory
   file: path={{ arch_root }}/etc state=directory
+
+- name: generate fstab file
+  shell: genfstab -U {{ arch_root }} > {{ arch_root }}/etc/fstab
+
+- name: mount /tmp onto tmpfs
+  lineinfile: dest={{ arch_root }}/etc/fstab line="tmpfs /tmp tmpfs defaults,noatime,mode=1777 0 0"
+
+- name: Bootstrap base Arch Linux.
+  command: pacstrap {{ arch_root }} base base-devel sudo lvm2 reflector ansible
