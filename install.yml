@@ -42,3 +42,13 @@
       encrypt: "sha512_crypt"
       private: yes
       confirm: yes
+
+- hosts: localhost
+  connection: local
+  name: reboot into newly installed system
+  tasks:
+    - name: unmount partitions with Arch system
+      command: umount -Rf {{ arch_root }}
+
+    - name: initiate reboot
+      command: reboot
