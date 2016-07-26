@@ -2,7 +2,7 @@
 - name: configure Pacman
   copy: src=pacman.conf dest=/etc/pacman.conf
 
-- name: refresh pacman mirrors
+- name: refresh pacman mirrors and upgrade system
   pacman: update_cache=yes upgrade=yes
 
 - name: push pacman cache cleanup service

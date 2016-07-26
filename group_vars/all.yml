@@ -1,4 +1,6 @@
 repartition: True
+arch_root: /mnt
+country: United States
 
 user:
   name: zoresvit

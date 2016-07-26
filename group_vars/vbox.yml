@@ -1,3 +1,5 @@
+hostname: vbox
+
 # Define hardware disks partitioning layout.
 # Required fields for partition:
 #   - name

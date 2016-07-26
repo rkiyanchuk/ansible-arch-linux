@@ -38,7 +38,7 @@
 
   vars_prompt:
     - name: user_password
-      prompt: "User password:"
+      prompt: "user password:"
       encrypt: "sha512_crypt"
       private: yes
       confirm: yes
