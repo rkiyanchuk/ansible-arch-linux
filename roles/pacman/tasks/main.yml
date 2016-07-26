@@ -1,0 +1,24 @@
+---
+- name: configure Pacman
+  copy: src=pacman.conf dest=/etc/pacman.conf
+
+- name: refresh pacman mirrors
+  pacman: update_cache=yes upgrade=yes
+
+- name: push pacman cache cleanup service
+  copy: src=paccache.service dest=/etc/systemd/system/paccache.service
+  notify:
+    - reload systemd config
+
+- name: push pacman cache cleanup timer
+  copy: src=paccache.timer dest=/etc/systemd/system/paccache.timer
+  notify:
+    - reload systemd config
+    - restart paccache
+
+- name: enable and start pacman cache cleanup timer
+  service: name=paccache.timer enabled=yes state=started
+
+- name: install base packages
+  pacman: name={{ item }} state=present
+  with_items: "{{ pacman }}"

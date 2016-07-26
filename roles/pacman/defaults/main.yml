@@ -1,0 +1,16 @@
+pacman:
+  - arch-wiki-lite
+  - bc
+  - coreutils
+  - dialog
+  - git
+  - glances
+  - gnupg
+  - lsof
+  - moreutils
+  - rsync
+  - strace
+  - sysstat
+  - tig
+  - tmux
+  - vifm

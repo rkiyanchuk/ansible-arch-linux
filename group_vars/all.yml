@@ -8,3 +8,25 @@ user:
     - wheel
   shell: /usr/bin/zsh
   email: ruslan.kiianchuk@gmail.com
+
+pacman:
+  - arch-wiki-lite
+  - bc
+  - coreutils
+  - dialog
+  - git
+  - glances
+  - gnupg
+  - lsof
+  - moreutils
+  - rsync
+  - strace
+  - sysstat
+  - tig
+  - tmux
+  - vifm
+
+aur:
+  - cower
+  - downgrade
+  - pacaur
