@@ -3,6 +3,7 @@
   name: configure Arch Linux system
   connection: local
   become: yes
+
   pre_tasks:
     - name: update repository mirrors
       command: reflector --sort score -p https --country '{{ country }}' --save /etc/pacman.d/mirrorlist
@@ -12,3 +13,4 @@
     - aur
     - base
     - grsec
+    - ssh
