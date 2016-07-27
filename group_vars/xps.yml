@@ -1,0 +1,4 @@
+hostname: xps
+
+drivers:
+  video: xf86-video-intel

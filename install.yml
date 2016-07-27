@@ -8,10 +8,10 @@
     - include_vars: group_vars/vbox.yml
       when: ansible_product_name == "VirtualBox"
 
-    - include_vars: group_vars/gazp9.yml
+    - include_vars: group_vars/gazelle.yml
       when: ansible_product_name == "Gazelle Professional"
 
-    - include_vars: group_vars/xps13.yml
+    - include_vars: group_vars/xps.yml
       when: ansible_product_name == "XPS 13 9350"
 
   roles:
@@ -27,10 +27,10 @@
     - include_vars: group_vars/vbox.yml
       when: ansible_product_name == "VirtualBox"
 
-    - include_vars: group_vars/gazp9.yml
+    - include_vars: group_vars/gazelle.yml
       when: ansible_product_name == "Gazelle Professional"
 
-    - include_vars: group_vars/xps13.yml
+    - include_vars: group_vars/xps.yml
       when: ansible_product_name == "XPS 13 9350"
 
   roles:
