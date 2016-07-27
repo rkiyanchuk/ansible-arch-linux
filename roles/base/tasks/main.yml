@@ -1,0 +1,10 @@
+---
+- include: shell.yml
+- include: cron.yml
+
+- name: install intel microcode
+  pacman: name=intel-ucode state=present
+  notify:
+    - rebuild grub
+  when: "'GenuineIntel' in ansible_processor" }
+
