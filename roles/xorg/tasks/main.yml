@@ -16,10 +16,10 @@
     - lxqt-notificationd
 
 - name: configure scrolling
-  copy: src=20-scrolling.conf dst=/etc/X11/xorg.conf.d/
+  copy: src=20-scrolling.conf dest=/etc/X11/xorg.conf.d/
 
 - name: configure touchpad
-  copy: src=30-touchpad.conf dst=/etc/X11/xorg.conf.d/
+  copy: src=30-touchpad.conf dest=/etc/X11/xorg.conf.d/
 
 - name: add user to video group
   user: name={{ user.name }} groups=video append=yes
