@@ -6,7 +6,7 @@
 - name: install Xorg server and related apps
   pacman: name={{ item }} state=present update_cache=yes
   with_items:
-    - xf86-input-evdev
+    - xf86-input-libinput
     - xorg-server
     - xorg-xinit
     - xorg-apps

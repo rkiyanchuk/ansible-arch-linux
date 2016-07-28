@@ -3,3 +3,55 @@ hostname: xps
 drivers:
   video:
     - xf86-video-intel
+
+# Define hardware disks partitioning layout.
+# Required fields for partition:
+#   - name
+#   - start
+#   - end
+#   - type
+#
+# Optional fields:
+#   - fstype
+#   - mountpoint
+#   - lvm_group
+#
+# If `lvm_group` is specified, the physical volume is created on that partition
+# and then added to the group.
+disks:
+  - device: /dev/sda
+    table: gpt
+    partitions:
+
+      - name: efi
+        start: 1MiB
+        end: 512MiB
+        type: EPS
+        fstype: vfat
+        mountpoint: /boot/efi
+
+      - name: lvm
+        start: 512MiB
+        end: 100%
+        type: primary
+        lvm_group: arch
+
+# Define logical LVM volumes.
+# Each group contains list of logical volumes.
+lvm:
+  - group: arch
+    volumes:
+      - name: root
+        size: 20G
+        fstype: ext4
+        mountpoint: /
+
+      - name: var
+        size: 5G
+        fstype: reiserfs
+        mountpoint: /var
+
+      - name: home
+        size: 100%FREE
+        fstype: ext4
+        mountpoint: /home

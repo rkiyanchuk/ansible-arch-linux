@@ -27,6 +27,7 @@ pacman:
   - tig
   - tmux
   - vifm
+  - wpa_supplicant
 
 aur:
   - cower

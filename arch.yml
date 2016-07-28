@@ -28,4 +28,6 @@
     - networkmanager
     - udisks
     - media
+    - sound
     - web
+    - xmonad

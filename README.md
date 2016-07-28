@@ -19,7 +19,7 @@ cd zoresvit-archible…
 Install Ansible with Python 2 and passlib for creating password:
 
 ```
-pacman -Sy reflector ansible python2-passlib
+pacman -Sy ansible python2-passlib
 ```
 
 Run Ansible to provision base system:

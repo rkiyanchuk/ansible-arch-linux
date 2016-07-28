@@ -1,0 +1,3 @@
+
+- name: install xmonad
+  pacman: name=xmonad state=present update_cache=yes

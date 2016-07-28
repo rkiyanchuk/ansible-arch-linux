@@ -4,3 +4,6 @@
 
 - name: enable LXDM service
   service: name=lxdm enabled=yes
+
+- name: enable LXDM service
+  copy: src=lxdm.conf dest=/etc/lxdm/lxdm.conf backup=yes

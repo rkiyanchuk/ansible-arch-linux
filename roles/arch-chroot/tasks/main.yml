@@ -36,6 +36,10 @@
 - name: copy sudo configuration
   template: src=sudoers.j2 dest=/etc/sudoers mode=440
 
+- name: install base packages
+  pacman: name={{ item }} state=present
+  with_items: "{{ pacman }}"
+
 - include: bootloader.yml
 
 - name: lock root account
