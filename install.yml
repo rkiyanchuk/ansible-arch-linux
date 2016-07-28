@@ -35,6 +35,7 @@
 
   roles:
     - arch-chroot
+    - xorg
 
   vars_prompt:
     - name: user_password

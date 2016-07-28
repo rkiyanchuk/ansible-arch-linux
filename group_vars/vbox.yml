@@ -1,25 +1,10 @@
 hostname: vbox
 
 drivers:
-  video:
-    - nvidia-340xx-libgl
-    - virtualbox-guest-modules-arch
-    - virtualbox-guest-utils
+  - nvidia-340xx-libgl
+  - virtualbox-guest-modules-arch
+  - virtualbox-guest-utils
 
-# Define hardware disks partitioning layout.
-# Required fields for partition:
-#   - name
-#   - start
-#   - end
-#   - type
-#
-# Optional fields:
-#   - fstype
-#   - mountpoint
-#   - lvm_group
-#
-# If `lvm_group` is specified, the physical volume is created on that partition
-# and then added to the group.
 disks:
   - device: /dev/sda
     table: gpt
@@ -38,8 +23,6 @@ disks:
         type: primary
         lvm_group: arch
 
-# Define logical LVM volumes.
-# Each group contains list of logical volumes.
 lvm:
   - group: arch
     volumes:

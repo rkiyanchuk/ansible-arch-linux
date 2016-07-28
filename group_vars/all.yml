@@ -1,6 +1,9 @@
 repartition: True
 arch_root: /mnt
 country: United States
+locales:
+  - en_US
+  - uk_UA
 
 user:
   name: zoresvit

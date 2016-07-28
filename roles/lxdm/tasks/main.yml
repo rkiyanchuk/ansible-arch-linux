@@ -1,9 +1,12 @@
 ---
 - name: install LXDM display manager
-  pacman: name=lxdm state=present update_cache=yes
+  aur: name=lxdm-git user={{ user.name }}
 
 - name: enable LXDM service
   service: name=lxdm enabled=yes
 
-- name: enable LXDM service
+- name: push LXDM config file
   copy: src=lxdm.conf dest=/etc/lxdm/lxdm.conf backup=yes
+
+- name: install LXDM PostLogin hook
+  copy: src=PostLogin dest=/etc/lxdm/PostLogin

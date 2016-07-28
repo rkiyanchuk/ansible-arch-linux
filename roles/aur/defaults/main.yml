@@ -1,4 +1,5 @@
-aur:
-  - cower
-  - downgrade
-  - pacaur
+packages:
+  aur:
+    - cower
+    - downgrade
+    - pacaur

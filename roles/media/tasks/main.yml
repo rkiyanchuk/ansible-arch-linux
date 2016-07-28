@@ -1,3 +1,15 @@
+- name: install udisks2 for automount
+  pacman: name={{ item }} state=present
+  with_items:
+    - udisks2
+    - udiskie
+
+- name: ensure /media exists
+  file: path=/media state=directory
+
+- name: set rule to mount to /media
+  copy: src=99-udisks2.rules dest=/etc/udev/rules.d/99-udisks2.rules
+
 - name: install media codecs and helpers
   pacman: name={{ item }} state=present
   with_items:
@@ -8,3 +20,4 @@
     - exiv2
     - perl-image-exiftool
     - opus-tools
+

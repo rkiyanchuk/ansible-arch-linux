@@ -1,6 +1,10 @@
 ---
-- name: Install alsa-utils
-  pacman: name=alsa-utils state=present
+- name: install sound utils
+  pacman: name={{ item }} state=present
+  with_items:
+    - alsa-utils 
+    - pulseaudio
+    - pavucontrol
 
-- name: Copy udev rule for USB audio device switching
+- name: copy udev rule for USB audio device switching
   copy: src=udev.rules dest=/etc/udev/rules.d/00-local.rules

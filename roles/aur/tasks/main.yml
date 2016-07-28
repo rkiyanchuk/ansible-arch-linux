@@ -6,4 +6,4 @@
 
 - name: install AUR essential packages
   aur: name={{ item }} user={{ user.name }}
-  with_items: '{{ aur }}'
+  with_items: '{{ packages.aur }}'

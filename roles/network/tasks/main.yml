@@ -5,7 +5,6 @@
       - networkmanager
       - networkmanager-openvpn
       - network-manager-applet
-      - xfce4-notifyd
       - gnome-keyring
 
 - name: Enable and start NetworkManager

@@ -3,13 +3,13 @@
 - name: configure repository mirrors
   command: reflector --sort score -p https --country '{{ country }}' --save /etc/pacman.d/mirrorlist
 
-- name: set console font
-  lineinfile: dest=/etc/vconsole.conf state=present create=yes line="FONT=Lat2-Terminus16"
+- name: enable DHCP discovery
+  command: systemctl enable dhcpcd.service
 
 - include: locales.yml
 
-- name: enable DHCP discovery
-  command: systemctl enable dhcpcd.service
+- name: set console font
+  lineinfile: dest=/etc/vconsole.conf state=present create=yes line="FONT=Lat2-Terminus16"
 
 - name: set hostname
   lineinfile: dest=/etc/hostname create=yes line='{{ hostname }}'
@@ -20,7 +20,7 @@
 - name: create user group
   group: name={{ user.group }} state=present
 
-- name: create user and assign to group
+- name: create user
   user: >
     name={{ user.name }}
     group={{ user.group }}
@@ -38,7 +38,7 @@
 
 - name: install base packages
   pacman: name={{ item }} state=present
-  with_items: "{{ pacman }}"
+  with_items: "{{ packages.pacman }}"
 
 - include: bootloader.yml
 

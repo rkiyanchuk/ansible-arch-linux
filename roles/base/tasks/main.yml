@@ -17,20 +17,6 @@
     - freetype2-infinality
     - fontconfig-infinality
 
-- name: install network tools
-  pacman: name={{ item }} state=present
-  with_items:
-    - openvpn
-    - mtr
-    - whois
-    - nmap
-    - tcpdump
-
-- name: install text editors
-  pacman: name={{ item }} state=present
-  with_items:
-    - vim
-
 - name: install filesystem packages
   pacman: name={{ item }} state=present
   with_items:
@@ -38,7 +24,6 @@
     - hfsprogs
     - ntfs-3g
     - exfat-utils
-
 
 - name: install archive utilities
   pacman: name={{ item }} state=present

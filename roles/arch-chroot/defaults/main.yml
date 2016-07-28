@@ -10,5 +10,23 @@ user:
   group: user
   groups:
     - wheel
-  shell: /usr/bin/bash
+  shell: /bin/bash
   email: 
+
+packages:
+  pacman:
+    - arch-wiki-lite
+    - coreutils
+    - dialog
+    - git
+    - glances
+    - lsof
+    - moreutils
+    - networkmanager
+    - openssh
+    - rsync
+    - sysstat
+    - tmux
+    - upower
+    - vifm
+    - wpa_supplicant
