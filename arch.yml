@@ -25,3 +25,7 @@
     - ssh
     - xorg
     - lxdm
+    - networkmanager
+    - udisks
+    - media
+    - web

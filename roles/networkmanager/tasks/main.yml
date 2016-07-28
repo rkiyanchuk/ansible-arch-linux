@@ -1,0 +1,12 @@
+---
+- name: install NetworkManager and dependencies
+  pacman: name={{ item }} state=present
+  with_items:
+      - networkmanager
+      - networkmanager-openvpn
+      - network-manager-applet
+      - xfce4-notifyd
+      - gnome-keyring
+
+- name: Enable and start NetworkManager
+  service: name=NetworkManager.service enabled=yes state=started
