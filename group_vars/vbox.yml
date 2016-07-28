@@ -1,5 +1,11 @@
 hostname: vbox
 
+drivers:
+  video:
+    - xf86-video-intel
+    - virtualbox-guest-modules-arch
+    - virtualbox-guest-utils
+
 # Define hardware disks partitioning layout.
 # Required fields for partition:
 #   - name

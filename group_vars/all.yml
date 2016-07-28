@@ -8,7 +8,7 @@ user:
   group: zoresvit
   groups:
     - wheel
-  shell: /usr/bin/bash
+  shell: /bin/bash
   email: ruslan.kiianchuk@gmail.com
 
 pacman:
