@@ -1,7 +1,7 @@
 ---
 - name: install video drivers
   pacman: name={{ item }} state=present update_cache=yes
-  with_items: "{{ drivers.video }}"
+  with_items: "{{ drivers }}"
 
 - name: install Xorg server and related apps
   pacman: name={{ item }} state=present update_cache=yes
