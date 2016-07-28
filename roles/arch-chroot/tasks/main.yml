@@ -37,3 +37,6 @@
   template: src=sudoers.j2 dest=/etc/sudoers mode=440
 
 - include: bootloader.yml
+
+- name: lock root account
+  command: passwd -l root
