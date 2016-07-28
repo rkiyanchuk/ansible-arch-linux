@@ -50,5 +50,8 @@
     - name: unmount partitions with Arch system
       command: umount -Rf {{ arch_root }}
 
+    - name: lock root account
+      command: passwd -l root
+
     - name: initiate reboot
       command: reboot
