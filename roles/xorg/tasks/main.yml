@@ -1,20 +1,24 @@
 ---
+- name: install video drivers
+  pacman: name={{ item }} state=present update_cache=yes
+  with_items: "{{ drivers.video }}"
+
 - name: install Xorg server and related apps
-  pacman: name={{ item }} state=present
+  pacman: name={{ item }} state=present update_cache=yes
   with_items:
+    - xf86-input-evdev
     - xorg-server
     - xorg-xinit
     - xorg-apps
-
-- name: install video drivers
-  pacman: name={{ item }} state=present
-  with_items: "{{ drivers.video }}"
+    - xorg-utils
+    - xorg-server-utils
+    - xterm
 
 - name: add user to video group
   user: name={{ user.name }} groups=video append=yes
 
 - name: install useful GUI applications
-  pacman: name={{ item }} state=present
+  pacman: name={{ item }} state=present update_cache=yes
   with_items:
     - autocutsel
     - sxhkd

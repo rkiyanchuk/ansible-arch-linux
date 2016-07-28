@@ -22,6 +22,5 @@
     - pacman
     - aur
     - base
-    - grsec
     - ssh
     - xorg

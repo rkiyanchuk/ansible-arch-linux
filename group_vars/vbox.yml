@@ -2,7 +2,7 @@ hostname: vbox
 
 drivers:
   video:
-    - xf86-video-intel
+    - nvidia-340xx-libgl
     - virtualbox-guest-modules-arch
     - virtualbox-guest-utils
 
