@@ -1,6 +1,6 @@
 ---
 - name: configure Pacman
-  copy: src=pacman.conf dest=/etc/pacman.conf
+  copy: src=pacman.conf dest=/etc/pacman.conf backup=yes
 
 - name: refresh pacman mirrors and upgrade system
   pacman: update_cache=yes upgrade=yes

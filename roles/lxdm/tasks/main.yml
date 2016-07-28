@@ -1,0 +1,6 @@
+---
+- name: install LXDM display manager
+  pacman: name=lxdm state=present update_cache=yes
+
+- name: enable LXDM service
+  service: name=lxdm enabled=yes
