@@ -1,0 +1,21 @@
+---
+- name: install TLP power management
+  pacman: name={{ item }} state=present
+  with_items:
+      - tlp
+      - tlp-rdw
+      - acpid
+
+- name: mask systemd radio service
+  command: systemctl mask systemd-rfkill.service
+
+- name: Enable TLP
+  service: name=tlp.service enabled=yes
+
+- name: Enable TLP sleep
+  service: name=tlp-sleep.service enabled=yes
+
+- name: configure systemd logind.conf
+  copy: src=logind.conf dest=/etc/systemd/logind.conf
+
+- include: lowbatt.yml
