@@ -23,10 +23,11 @@
     - aur
     - base
     - ssh
-    - xorg
-    - lxdm
     - network
     - media
     - sound
-    - web
+    - xorg
+    - lxdm
     - xmonad
+    - web
+    - laptop
