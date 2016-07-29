@@ -2,6 +2,7 @@
 - name: install video drivers
   pacman: name={{ item }} state=present update_cache=yes
   with_items: "{{ drivers }}"
+  when: drivers is defined
 
 - name: install Xorg server and related apps
   pacman: name={{ item }} state=present update_cache=yes
@@ -13,7 +14,6 @@
     - xorg-utils
     - xorg-xinit
     - xterm
-    - lxqt-notificationd
 
 - name: configure scrolling
   copy: src=20-scrolling.conf dest=/etc/X11/xorg.conf.d/

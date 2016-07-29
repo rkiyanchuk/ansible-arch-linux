@@ -1,6 +1,12 @@
 ---
 - name: install LXDM display manager
-  aur: name=lxdm-git user={{ user.name }}
+  pacman: name=lxdm state=present
+
+- name: install LXDM display manager
+  aur: name=lxdm-themes user={{ user.name }}
+
+- name: remove ugly login label
+  file: path=/usr/share/lxdm/themes/Arch-Dark/login.png state=absent
 
 - name: enable LXDM service
   service: name=lxdm enabled=yes

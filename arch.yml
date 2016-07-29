@@ -26,8 +26,8 @@
     - network
     - media
     - sound
-    - xorg
     - lxdm
     - xmonad
     - web
     - laptop
+    - desktop

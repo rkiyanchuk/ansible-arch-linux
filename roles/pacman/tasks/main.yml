@@ -2,6 +2,12 @@
 - name: configure Pacman
   copy: src=pacman.conf dest=/etc/pacman.conf backup=yes
 
+- name: add key for ArchHaskell repo
+  command: pacman-key -r 4209170B 
+  
+- name: trust ArchHaskell repo key
+  command: pacman-key --lsign-key 4209170B
+
 - name: refresh pacman mirrors and upgrade system
   pacman: update_cache=yes upgrade=yes
 

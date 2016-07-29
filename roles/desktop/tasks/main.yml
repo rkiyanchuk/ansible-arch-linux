@@ -1,0 +1,7 @@
+
+- name: install packages for desktop environment
+  pacman: name={{ item }} state=present
+  with_items:
+    - lxqt-notificationd
+    - gnome-screensaver
+    - rxvt-unicode
