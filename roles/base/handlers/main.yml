@@ -7,3 +7,11 @@
 
 - name: reload systemd config
   command: systemctl daemon-reload
+
+- name: install infinality font enhancements
+  pacman: name={{ item }} state=present
+  with_items:
+    - infinality-bundle
+    - ibfonts-meta-base
+    - ibfonts-meta-extended
+    - ttf-liberation-ib

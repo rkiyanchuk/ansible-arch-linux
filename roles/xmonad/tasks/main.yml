@@ -1,9 +1,3 @@
-- name: add key for ArchHaskell repo
-  command: pacman-key -r 4209170B 
-  
-- name: sign key for ArchHaskell repo
-  command: pacman-key --lsign-key 4209170B
-
 - name: install xmonad
   pacman: name={{ item }} force=yes update_cache=yes 
   with_items:

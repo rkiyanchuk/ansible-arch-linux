@@ -11,12 +11,6 @@
     - rebuild grub
   when: "'GenuineIntel' in ansible_processor"
   
-- name: install infinality font enhancements
-  aur: name={{ item }} user={{ user.name }}
-  with_items:
-    - freetype2-infinality
-    - fontconfig-infinality
-
 - name: install filesystem packages
   pacman: name={{ item }} state=present
   with_items:

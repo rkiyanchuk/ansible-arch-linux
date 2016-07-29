@@ -2,6 +2,18 @@
 - name: configure Pacman
   copy: src=pacman.conf dest=/etc/pacman.conf backup=yes
 
+- name: add infinality bundle key
+  command: pacman-key -r 962DDE58
+
+- name: sign infinality bundle key
+  command: pacman-key --lsign-key 962DDE58
+
+- name: add key for ArchHaskell repo
+  command: pacman-key -r 4209170B
+
+- name: sign key for ArchHaskell repo
+  command: pacman-key --lsign-key 4209170B
+
 - name: refresh pacman mirrors and upgrade system
   pacman: update_cache=yes upgrade=yes
 
