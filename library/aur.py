@@ -52,7 +52,7 @@ from ansible.module_utils.basic import AnsibleModule
 AUR_DIR = '/tmp'
 AUR_URL = 'https://aur.archlinux.org'
 SNAPSHOT_DIR = '/cgit/aur.git/snapshot/'
-MAKEPKG = 'sudo -u {user} makepkg --noconfirm --noprogressbar --needed {opts}'
+MAKEPKG = 'sudo -u {user} makepkg --noconfirm --noprogressbar {opts}'
 
 
 class AurError(Exception):
@@ -119,11 +119,21 @@ def aur_build(package, user):
         raise AurError('Failed to build package {0}'.format(package))
 
 
+def pacaur_install(package, user):
+    os.chdir(AUR_DIR)
+    cmd = 'sudo -u {user} pacaur --noedit --noconfirm -y {pkg}'
+
+    error = subprocess.call(shlex.split(cmd.format(user=user, pkg=package)))
+
+    if error:
+        raise AurError('Failed to install package {0}'.format(package))
+
+
 def aur_install(package, user):
     """Install AUR package."""
     os.chdir(os.path.join(AUR_DIR, package))
 
-    error = subprocess.call(shlex.split(MAKEPKG.format(user=user, opts='-i')))
+    error = subprocess.call(shlex.split(MAKEPKG.format(user=user, opts='-fi')))
 
     if error:
         raise AurError('Failed to install package {0}'.format(package))
@@ -157,9 +167,13 @@ def main():
                 msg='Package {0} would be installed'.format(package))
 
     try:
-        aur_download(package, user)
-        aur_build(package, user)
-        aur_install(package, user)
+        if package_installed('pacaur'):
+            pacaur_install(package, user)
+        else:
+            # Fallback to manual building.
+            aur_download(package, user)
+            aur_build(package, user)
+            aur_install(package, user)
     except AurError as exc:
         module.fail_json(msg=exc.message)
 
