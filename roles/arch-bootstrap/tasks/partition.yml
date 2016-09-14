@@ -14,6 +14,7 @@
     start='{{ item.1.start }}'
     end='{{ item.1.end }}'
     type='{{ item.1.type }}'
+    flags='{{ item.1.flags|default(omit) }}'
     fstype='{{ item.1.fstype|default(omit) }}'
     lvm_group='{{ item.1.lvm_group|default(omit) }}'
   with_subelements:

@@ -14,4 +14,3 @@
 
 - name: set time standard to UTC
   command: hwclock --systohc --utc
-

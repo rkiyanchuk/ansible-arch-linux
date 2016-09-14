@@ -13,20 +13,20 @@ user:
   shell: /bin/bash
   email: 
 
-packages:
-  pacman:
-    - arch-wiki-lite
-    - coreutils
-    - dialog
-    - git
-    - glances
-    - lsof
-    - moreutils
-    - networkmanager
-    - openssh
-    - rsync
-    - sysstat
-    - tmux
-    - upower
-    - vifm
-    - wpa_supplicant
+pacman:
+  - arch-wiki-lite
+  - coreutils
+  - dialog
+  - git
+  - glances
+  - gnupg
+  - lsof
+  - moreutils
+  - rsync
+  - strace
+  - wpa_supplicant
+
+aur:
+  - cower
+  - downgrade
+  - pacaur
