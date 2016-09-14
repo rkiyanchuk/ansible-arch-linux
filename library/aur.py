@@ -23,7 +23,9 @@ author: Ruslan Kiianchuk (@zoresvit)
 module: aur
 short_description: Install packages from Arch User Repository (AUR)
 description:
-  - Install packages from AUR using `pacaur` helper.
+  - Install packages from AUR using `pacaur` helper. If `pacaur` is not installed the module
+    falls back to downloading the package, building and installing with `makepkg` as would be done
+    manually.
 
 options:
 
