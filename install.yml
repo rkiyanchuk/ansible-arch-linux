@@ -35,7 +35,6 @@
 
   roles:
     - arch-chroot
-    - xorg
 
   vars_prompt:
     - name: user_password
@@ -51,5 +50,5 @@
     - name: unmount partitions with Arch system
       command: umount -Rf {{ arch_root }}
 
-    - name: initiate reboot
-      command: reboot
+    #- name: initiate reboot
+    #- command: reboot

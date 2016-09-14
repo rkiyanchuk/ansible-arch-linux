@@ -1,4 +1,5 @@
 hostname: vbox
+uefi: false
 
 drivers:
   - nvidia-340xx-libgl

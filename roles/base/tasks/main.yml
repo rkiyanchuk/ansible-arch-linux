@@ -2,6 +2,11 @@
 - include: shell.yml
 - include: cron.yml
 
+- name: install custom drivers
+  pacman: name={{ item }} state=present update_cache=yes upgrade=yes
+  with_items: "{{ drivers }}"
+  when: drivers is defined
+
 - name: Enable systemd-timesyncd
   command: timedatectl set-ntp true
 

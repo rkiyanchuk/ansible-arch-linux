@@ -20,6 +20,7 @@
 
 - name: create /boot/efi directory
   file: path={{ arch_root }}/boot/efi state=directory
+  when: uefi == true
 
 - name: mount raw volumes
   mount: >
