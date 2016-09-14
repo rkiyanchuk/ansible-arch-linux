@@ -5,13 +5,39 @@ drivers:
   - virtualbox-guest-modules-arch
   - virtualbox-guest-utils
 
+# UEFI/GPT
+#disks:
+#  - device: /dev/sda
+#    table: gpt
+#    partitions:
+#
+#      - name: efi
+#        start: 1MiB
+#        end: 512MiB
+#        type: EPS
+#        fstype: vfat
+#        mountpoint: /boot/efi
+#
+#      - name: lvm
+#        start: 512MiB
+#        end: 100%
+#        type: primary
+#        lvm_group: arch
+
+
+# BIOS/GPT
 disks:
   - device: /dev/sda
     table: gpt
     partitions:
 
+      - name: bios_grub
+        start: 0MiB
+        end: 2MiB
+        type: bios_grub
+
       - name: efi
-        start: 1MiB
+        start: 2MiB
         end: 512MiB
         type: EPS
         fstype: vfat
@@ -32,8 +58,8 @@ lvm:
         mountpoint: /
 
       - name: var
-        size: 5G
-        fstype: reiserfs
+        size: 2G
+        fstype: ext4
         mountpoint: /var
 
       - name: home

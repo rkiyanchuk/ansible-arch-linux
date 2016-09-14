@@ -1,8 +1,5 @@
 hostname: xps
 
-drivers:
-  - xf86-video-intel
-
 disks:
   - device: /dev/sda
     table: gpt
@@ -31,7 +28,7 @@ lvm:
 
       - name: var
         size: 5G
-        fstype: reiserfs
+        fstype: ext4
         mountpoint: /var
 
       - name: home

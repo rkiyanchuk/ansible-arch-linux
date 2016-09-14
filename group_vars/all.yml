@@ -10,29 +10,8 @@ user:
   comment: Ruslan Kiianchuk
   group: zoresvit
   groups:
+    - sys
+    - video
     - wheel
   shell: /bin/bash
   email: ruslan.kiianchuk@gmail.com
-
-pacman:
-  - arch-wiki-lite
-  - bc
-  - coreutils
-  - dialog
-  - git
-  - glances
-  - gnupg
-  - lsof
-  - moreutils
-  - rsync
-  - strace
-  - sysstat
-  - tig
-  - tmux
-  - vifm
-  - wpa_supplicant
-
-aur:
-  - cower
-  - downgrade
-  - pacaur

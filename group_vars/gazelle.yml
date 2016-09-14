@@ -1,1 +1,52 @@
 hostname: gazp
+
+disks:
+  - device: /dev/disk/by-uuid/ata-INTEL_SSDSC2BW120A4_CVDA336001ZK1207GN
+    table: gpt
+    partitions:
+
+      - name: bios_grub
+        start: 0MiB
+        end: 2MiB
+        type: bios_grub
+
+      - name: efi
+        start: 2MiB
+        end: 512MiB
+        type: EPS
+        fstype: vfat
+        mountpoint: /boot/efi
+
+      - name: lvm
+        start: 512MiB
+        end: 100%
+        type: primary
+        lvm_group: arch
+
+  - device: ata-Samsung_SSD_850_EVO_250GB_S21NNSAG845105P
+    table: gpt
+    partitions:
+
+      - name: lvm
+        start: 1MiB
+        end: 100%
+        type: primary
+        lvm_group: arch
+
+lvm:
+  - group: arch
+    volumes:
+      - name: root
+        size: 20G
+        fstype: ext4
+        mountpoint: /
+
+      - name: var
+        size: 10G
+        fstype: ext4
+        mountpoint: /var
+
+      - name: home
+        size: 100%FREE
+        fstype: ext4
+        mountpoint: /home
