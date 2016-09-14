@@ -25,7 +25,7 @@ module: partition
 short_description: Partition block devices
 description:
   - Create partitions on block devices using parted.
-  Read `man parted` before usage.
+    Read `man parted` before usage.
 
 options:
 
