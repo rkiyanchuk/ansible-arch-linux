@@ -38,7 +38,7 @@
 
 - name: install base packages
   pacman: name={{ item }} state=present
-  with_items: "{{ packages.pacman }}"
+  with_items: "{{ packages }}"
 
 - name: install essential AUR packages
   aur: name={{ item }} user={{ user.name }}

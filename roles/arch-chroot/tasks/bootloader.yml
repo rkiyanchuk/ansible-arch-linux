@@ -1,4 +1,9 @@
 ---
+
+- name: detect boot firmware (UEFI or BIOS)
+  shell: '[ -d /sys/firmware/efi ] && echo UEFI || echo BIOS'
+  register: firmware
+
 - name: install bootloader packages
   pacman: name={{ item }} state=present update_cache=yes
   with_items:
@@ -13,6 +18,12 @@
 
 - name: install Grub bootloader for UEFI
   command: grub-install --recheck
+  when: firmware.stdout == 'UEFI'
+
+- name: install Grub bootloader for BIOS
+  command: grub-install --recheck {{ item.device }}
+  with_items: '{{ disks }}'
+  when: firmware.stdout == 'BIOS'
 
 - name: create Grub config
   command: grub-mkconfig -o /boot/grub/grub.cfg
