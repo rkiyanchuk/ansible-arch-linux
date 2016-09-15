@@ -1,5 +1,4 @@
 hostname: vbox
-uefi: false
 
 drivers:
   - nvidia-340xx-libgl
@@ -33,12 +32,13 @@ disks:
     partitions:
 
       - name: bios_grub
-        start: 0MiB
-        end: 2MiB
-        type: bios_grub
+        start: 1MiB
+        end: 3MiB
+        type: primary
+        flags: bios_grub
 
       - name: efi
-        start: 2MiB
+        start: 3MiB
         end: 512MiB
         type: EPS
         fstype: vfat

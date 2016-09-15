@@ -1,6 +1,5 @@
 arch_root: /mnt
 repartition: False
-uefi: true
 
 # Define hardware disks partitioning layout.
 # Required fields for partition:
