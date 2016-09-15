@@ -1,5 +1,9 @@
 ---
 
+- name: remove LVM volume groups
+  command: vgremove -f {{ item.group }}
+  with_items: '{{ lvm }}'
+
 - name: clean up existing LVM records
   command: dmsetup remove_all
 
