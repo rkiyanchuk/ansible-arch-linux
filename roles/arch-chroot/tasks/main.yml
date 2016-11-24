@@ -11,7 +11,7 @@
 - name: set console font
   lineinfile: dest=/etc/vconsole.conf state=present create=yes line="FONT=Lat2-Terminus16"
 
-- name: set hostname
+- name: configure hostname
   lineinfile: dest=/etc/hostname create=yes line='{{ hostname }}'
 
 - name: append hostname to /etc/hosts file
@@ -42,7 +42,7 @@
 
 - name: install essential AUR packages
   aur: name={{ item }} user={{ user.name }}
-  with_items: "{{ packages.pacman }}"
+  with_items: "{{ aur_packages }}"
 
 - include: bootloader.yml
 

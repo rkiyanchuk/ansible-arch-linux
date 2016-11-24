@@ -1,5 +1,6 @@
 repartition: True
 arch_root: /mnt
+
 country: United States
 locales:
   - en_US
