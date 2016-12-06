@@ -4,15 +4,7 @@
   connection: local
 
   pre_tasks:
-
-    - include_vars: group_vars/vbox.yml
-      when: ansible_product_name == "VirtualBox"
-
-    - include_vars: group_vars/gazelle.yml
-      when: ansible_product_name == "Gazelle Professional"
-
-    - include_vars: group_vars/xps.yml
-      when: ansible_product_name == "XPS 13 9350"
+    - include_vars: {{ machine_aliases[ansible_product_name] }}
 
   roles:
     - arch-bootstrap
@@ -23,15 +15,7 @@
   connection: arch_chroot
 
   pre_tasks:
-
-    - include_vars: group_vars/vbox.yml
-      when: ansible_product_name == "VirtualBox"
-
-    - include_vars: group_vars/gazelle.yml
-      when: ansible_product_name == "Gazelle Professional"
-
-    - include_vars: group_vars/xps.yml
-      when: ansible_product_name == "XPS 13 9350"
+    - include_vars: {{ machine_aliases[ansible_product_name] }}
 
   roles:
     - arch-chroot
