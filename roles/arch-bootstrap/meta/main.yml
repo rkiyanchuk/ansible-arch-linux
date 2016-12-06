@@ -1,6 +1,6 @@
 galaxy_info:
   author: Ruslan Kiianchuk
-  description: Bootstrap Arch Linux
+  description: Bootstrap ArchLinux
 
   license: GPLv3
   min_ansible_version: 2.0

@@ -8,21 +8,21 @@ Overview
 
 Provisioning is done in 2 stages:
 
-1. Bootstrap ArchLinux base system.
-2. Reboot into newly installed system and finish full system configuration.
+1. Bootstrap ArchLinux base system:
+2. Reboot into newly installed system, install and configure additional software.
 
 
 
-Quickstart usage
-================
+Quickstart
+==========
 
 Boot into Live ArchLinux.
 
 Download and decompress playbook from GitHub:
 
 ```
-curl -L https://github.com/zoresvit/archible/tarball/master | tar xz
-cd zoresvit-archible…
+curl -L https://github.com/zoresvit/archible/archive/master.tar.gz | tar xz
+cd zoresvit-archible
 ```
 
 Install Ansible with Python 2 and `passlib` (for creating password):
@@ -37,7 +37,8 @@ Run Ansible to provision base system:
 ansible-playbook -i localhost install.yml
 ```
 
-After reboot login to the system and run Ansible to configure Arch:
+After reboot login to the system and run Ansible to install and configure
+full-featured ArchLinux:
 
 ```
 ansible-playbook -i localhost arch.yml

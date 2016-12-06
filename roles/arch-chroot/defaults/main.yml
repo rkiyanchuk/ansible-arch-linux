@@ -19,7 +19,6 @@ packages:
   - dialog
   - git
   - glances
-  - gnupg
   - lsof
   - moreutils
   - rsync
