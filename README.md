@@ -3,18 +3,29 @@ Archible
 
 A set of Ansible playbooks for provisioning Arch Linux.
 
-Overview
---------
+Instructions
+============
 
-Provisioning is done in 2 stages:
+Download Arch Linux ISO image and signature:
 
-1. Bootstrap ArchLinux base system:
-2. Reboot into newly installed system, install and configure additional software.
+```
+wget http://mirror.rackspace.com/archlinux/iso/$VERSION/archlinux-$VERSION-dual.iso
+wget https://www.archlinux.org/iso/$VERSION/archlinux-$VERSION-dual.iso.sig
+```
 
+For more download options see [Arch Linux Downloads](https://www.archlinux.org/download/).
 
+Verify the ISO image:
 
-Quickstart
-==========
+```
+gpg --keyserver-options auto-key-retrieve --verify archlinux-$VERSION-dual.iso.sig
+```
+
+Write the ISO image to a USB flash drive:
+
+```
+dd bs=4M if=archlinux-$VERSION-dual.iso of=/dev/sdX status=progress && sync
+```
 
 Boot into Live ArchLinux.
 
