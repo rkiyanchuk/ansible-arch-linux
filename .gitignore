@@ -1,2 +1,4 @@
 *.retry
 *.pyc
+*.iso
+*.sig
