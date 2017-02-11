@@ -121,16 +121,6 @@ def aur_build(package, user):
         raise AurError('Failed to build package {0}'.format(package))
 
 
-def pacaur_install(package, user):
-    os.chdir(AUR_DIR)
-    cmd = 'sudo -u {user} pacaur --silent --noedit --noconfirm -y {pkg}'
-
-    error = subprocess.call(shlex.split(cmd.format(user=user, pkg=package)))
-
-    if error:
-        raise AurError('Failed to install package {0}'.format(package))
-
-
 def aur_install(package, user):
     """Install AUR package."""
     os.chdir(os.path.join(AUR_DIR, package))
@@ -169,13 +159,9 @@ def main():
                 msg='Package {0} would be installed'.format(package))
 
     try:
-        if package_installed('pacaur'):
-            pacaur_install(package, user)
-        else:
-            # Fallback to manual building.
-            aur_download(package, user)
-            aur_build(package, user)
-            aur_install(package, user)
+        aur_download(package, user)
+        aur_build(package, user)
+        aur_install(package, user)
     except AurError as exc:
         module.fail_json(msg=exc.message)
 
