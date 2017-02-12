@@ -4,10 +4,21 @@
   connection: local
 
   pre_tasks:
-    - include_vars: {{ machine_aliases[ansible_product_name] }}
+    - include_vars: "{{ machine_aliases[ansible_product_name] }}"
 
-  roles:
-    - arch-bootstrap
+# roles:
+#   - arch-bootstrap
+
+  vars_prompt:
+    - name: user_password
+      prompt: "User password:"
+      encrypt: "sha512_crypt"
+      private: yes
+      confirm: yes
+
+  post_tasks:
+    - set_fact:
+        user_password: "{{ user_password }}"
 
 
 - hosts: chroot
@@ -15,17 +26,11 @@
   connection: arch_chroot
 
   pre_tasks:
-    - include_vars: {{ machine_aliases[ansible_product_name] }}
+    - include_vars: "{{ machine_aliases[ansible_product_name] }}"
 
   roles:
     - arch-chroot
 
-  vars_prompt:
-    - name: user_password
-      prompt: "user password:"
-      encrypt: "sha512_crypt"
-      private: yes
-      confirm: yes
 
 #- hosts: localhost
 #  connection: local
