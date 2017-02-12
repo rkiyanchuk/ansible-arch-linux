@@ -4,10 +4,10 @@
   connection: local
 
   pre_tasks:
-    - include_vars: "{{ machine_aliases[ansible_product_name] }}"
+    - include_vars: "group_vars/{{ machine_aliases[ansible_product_name] }}"
 
-# roles:
-#   - arch-bootstrap
+  #  roles:
+  #    - arch-bootstrap
 
   vars_prompt:
     - name: user_password
@@ -20,13 +20,33 @@
     - set_fact:
         user_password: "{{ user_password }}"
 
+    - mount:
+        name: "{{ arch_root }}/proc"
+        src: proc
+        fstype: proc
+        state: mounted
+
+    - name: mount sys
+      command: "mount -o bind /sys {{ arch_root }}/sys"
+
+    - name: mount dev
+      command: "mount -o bind /dev {{ arch_root }}/dev"
+
+    - name: mount run
+      command: "mount -o bind /run {{ arch_root }}/run"
+
+    - name: copy resolv.conf into chroot
+      copy:
+        src: /etc/resolv.conf
+        dest: "{{ arch_root }}/etc/resolv.conf"
+
 
 - hosts: chroot
   name: install Arch Linux
-  connection: arch_chroot
+  connection: chroot
 
   pre_tasks:
-    - include_vars: "{{ machine_aliases[ansible_product_name] }}"
+    - include_vars: "group_vars/{{ machine_aliases[ansible_product_name] }}"
 
   roles:
     - arch-chroot
