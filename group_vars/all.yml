@@ -2,13 +2,13 @@ repartition: True
 arch_root: /mnt
 
 
-# These are aliases that define file name with group vars for specific machine.
+# These are aliases that define file names with group vars for specific machine.
 # The name is obtained from `ansible_product_name` fact and matched to
 # corresponding file in `group_vars`.
 machine_aliases:
-  Virtual Box: vbox
-  Gazelle Professional: gazelle
-  XPS 13 9350: xps
+  VirtualBox: vbox.yml
+  Gazelle Professional: gazelle.yml
+  XPS 13 9350: xps.yml
 
 country: United States
 locales:

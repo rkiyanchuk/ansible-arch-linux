@@ -11,7 +11,7 @@
     - efibootmgr
 
 - name: add LVM to initramfs build hook
-  lineinfile: dest=/etc/mkinitcpio.conf regexp=^HOOKS= line=HOOKS="base udev autodetect modconf block lvm2 filesystems keyboard fsck"
+  lineinfile: dest=/etc/mkinitcpio.conf regexp=^HOOKS= line={{ initramfs_hooks }}
 
 - name: rebuild initramfs
   command: mkinitcpio -p linux

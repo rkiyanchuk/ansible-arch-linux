@@ -3,7 +3,7 @@
 - name: configure repository mirrors
   command: reflector --sort score -p https --country '{{ country }}' --save /etc/pacman.d/mirrorlist
 
-- name: upgrade the system to latest state
+- name: upgrade system to latest state
   pacman: update_cache=yes upgrade=yes
 
 - include: locales.yml
@@ -40,9 +40,9 @@
   pacman: name={{ item }} state=present
   with_items: "{{ packages }}"
 
-- name: install essential AUR packages
-  aur: name={{ item }} user={{ user.name }}
-  with_items: "{{ aur_packages }}"
+  #- name: install essential AUR packages
+  #  aur: name={{ item }} user={{ user.name }}
+  #  with_items: "{{ aur_packages }}"
 
 - include: bootloader.yml
 

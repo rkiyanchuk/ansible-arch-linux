@@ -6,12 +6,12 @@ locales:
 
 user:
   name: user
-  comment: 
+  comment:
   group: user
   groups:
     - wheel
   shell: /bin/bash
-  email: 
+  email:
 
 packages:
   - arch-wiki-lite
@@ -25,7 +25,10 @@ packages:
   - strace
   - wpa_supplicant
 
-aur_packages:
-  - cower
-  - downgrade
-  - pacaur
+initramfs_hooks: HOOKS="base udev autodetect modconf block lvm2 filesystems keyboard fsck"
+
+#aur_packages:
+#  - cower
+#  - downgrade
+#  - pacaur
+

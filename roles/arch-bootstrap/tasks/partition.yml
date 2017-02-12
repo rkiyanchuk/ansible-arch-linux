@@ -1,13 +1,14 @@
 ---
 
-- name: remove LVM volume groups
+- name: remove existing LVM volume groups
   command: vgremove -f {{ item.group }}
+  ignore_errors: yes
   with_items: '{{ lvm }}'
 
 - name: clean up existing LVM records
   command: dmsetup remove_all
 
-- name: create partition tables on disks
+- name: create partition table on disks
   partition: dev={{ item.device }} table={{ item.table }} force=yes
   with_items: '{{ disks }}'
 
