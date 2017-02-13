@@ -6,12 +6,12 @@
   pre_tasks:
     - include_vars: "group_vars/{{ machine_aliases[ansible_product_name] }}"
 
-  #  roles:
-  #    - arch-bootstrap
+  roles:
+     - arch-bootstrap
 
   vars_prompt:
     - name: user_password
-      prompt: "User password:"
+      prompt: "user password:"
       encrypt: "sha512_crypt"
       private: yes
       confirm: yes
@@ -26,14 +26,13 @@
         fstype: proc
         state: mounted
 
-    - name: mount sys
-      command: "mount -o bind /sys {{ arch_root }}/sys"
 
-    - name: mount dev
-      command: "mount -o bind /dev {{ arch_root }}/dev"
-
-    - name: mount run
-      command: "mount -o bind /run {{ arch_root }}/run"
+    - name: mount temporary api systems
+      command: "mount -o bind /{{ item }} {{ arch_root }}/{{ item }}"
+      with_items:
+        - sys
+        - dev
+        - run
 
     - name: copy resolv.conf into chroot
       copy:
