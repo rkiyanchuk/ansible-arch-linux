@@ -71,11 +71,6 @@ options:
     description:
       - Stop complaining and do what I say!
 
-  lvm_group:
-    description:
-      - Create physical LVM volume on the partition and add it to specified
-        volume group.
-
 """
 
 import os
@@ -98,14 +93,8 @@ class PartitionError(Exception):
         super(PartitionError, self).__init__(msg)
 
 
-class LVMError(Exception):
-    def __init__(self, msg):
-        super(LVMError, self).__init__(msg)
-
-
 class MkfsError(Exception):
-    def __init__(self, msg):
-        super(MkfsError, self).__init__(msg)
+    pass
 
 
 def shell_cmd(cmd):
@@ -148,27 +137,6 @@ def is_installed(program):
     return True
 
 
-def add_to_lvm_group(device, group):
-    """Create LVM physical volume on partition"""
-    is_installed('pvcreate')
-    is_installed('vgcreate')
-    error, output = shell_cmd('pvcreate -ffy {0}'.format(device))
-
-    if error:
-        raise LVMError(output)
-
-    # Check if volume group exists
-    error, _ = shell_cmd('vgdisplay {0}'.format(group))
-    if error:  # group doesn't exist, create it with specified device.
-        err, out = shell_cmd('vgcreate {0} {1}'.format(group, device))
-    else:
-        err, out = shell_cmd('vgextend {0} {1}'.format(group, device))
-
-    if err:
-        raise LVMError(
-            'Could not add {0} to group {1}: {2}'.format(device, group, out))
-
-
 def mkfs(partition, fstype, force=False):
     """Create filesystem on partition"""
     cmd_map = {
@@ -179,7 +147,8 @@ def mkfs(partition, fstype, force=False):
         'ext4dev': {'cmd': 'mkfs.ext4', 'force': '-F'},
         'xfs': {'cmd': 'mkfs.xfs', 'force': '-f'},
         'vfat': {'cmd': 'mkfs.vfat', 'force': str()},
-        'btrfs': {'cmd': 'mkfs.btrfs', 'force': '-f'}
+        'btrfs': {'cmd': 'mkfs.btrfs', 'force': '-f'},
+        'linux-swap': {'cmd': 'mkswap', 'force': '-f'},
     }
     cmd = '{0} {1}'.format(cmd_map[fstype]['cmd'],
                            cmd_map[fstype]['force'] if force else str())
@@ -316,7 +285,6 @@ def main():
         'fstype': {'required': False},
         'flags': {'required': False},
         'force': {'required': False, 'default': 'false', 'type': 'bool'},
-        'lvm_group': {'required': False},
         'rm': {'required': False, 'type': 'int'},
     }
 
@@ -347,9 +315,6 @@ def main():
                 mkfs(partition, args['fstype'], force=args['force'])
                 Partition.changed = True
 
-            if args['lvm_group']:
-                add_to_lvm_group(partition, args['lvm_group'])
-                Partition.changed = True
         else:
             if args['fstype']:
                 mkfs(device.path, args['fstype'], force=args['force'])
@@ -359,8 +324,8 @@ def main():
             device.remove(args['rm'])
             Partition.changed = True
 
-    except (PartitionError, LVMError, MkfsError, OSError) as exc:
-        module.fail_json(msg=exc.message)
+    except (PartitionError, MkfsError) as error:
+        module.fail_json(msg=error)
 
     module.exit_json(changed=Partition.changed)
 

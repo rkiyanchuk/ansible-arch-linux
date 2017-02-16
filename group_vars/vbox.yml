@@ -6,39 +6,13 @@ drivers:
   - virtualbox-guest-utils
 
 # UEFI/GPT
-disks:
-  - device: /dev/sda
-    table: gpt
-    partitions:
-
-      - name: efi
-        start: 1MiB
-        end: 512MiB
-        type: EPS
-        fstype: vfat
-        mountpoint: /boot/efi
-
-      - name: lvm
-        start: 512MiB
-        end: 100%
-        type: primary
-        lvm_group: arch
-
-
-# BIOS/GPT
 #disks:
 #  - device: /dev/sda
 #    table: gpt
 #    partitions:
 #
-#      - name: bios_grub
-#        start: 1MiB
-#        end: 3MiB
-#        type: primary
-#        flags: bios_grub
-#
 #      - name: efi
-#        start: 3MiB
+#        start: 1MiB
 #        end: 512MiB
 #        type: EPS
 #        fstype: vfat
@@ -49,21 +23,54 @@ disks:
 #        end: 100%
 #        type: primary
 #        lvm_group: arch
+initramfs_hooks: HOOKS="base udev autodetect modconf keyboard block encrypt lvm2 filesystems keyboard fsck"
+
+# BIOS/GPT
+disk:
+  device: /dev/sda
+  table: gpt
+  partitions:
+
+    - name: bios_grub
+      start: 1MiB
+      end: 3MiB
+      type: primary
+      flags: bios_grub
+
+    - name: boot
+      start: 3MiB
+      end: 512MiB
+      type: primary
+      fstype: ext4
+      mountpoint: /boot
+
+    - name: lvm
+      start: 512MiB
+      end: 100%
+      type: primary
+      lvm_group: arch
+
+encrypt_partition: "{{ disk.partitions[2].name }}"
 
 lvm:
-  - group: arch
-    volumes:
-      - name: root
-        size: 10G
-        fstype: ext4
-        mountpoint: /
+  group: arch
+  volumes:
 
-      - name: var
-        size: 2G
-        fstype: ext4
-        mountpoint: /var
+    - name: root
+      size: 10G
+      fstype: ext4
+      mountpoint: /
 
-      - name: home
-        size: 100%FREE
-        fstype: ext4
-        mountpoint: /home
+    - name: var
+      size: 1G
+      fstype: ext4
+      mountpoint: /var
+
+    - name: swap
+      size: 1G
+      fstype: linux-swap
+
+    - name: home
+      size: 100%FREE
+      fstype: ext4
+      mountpoint: /home

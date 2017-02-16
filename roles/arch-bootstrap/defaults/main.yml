@@ -15,28 +15,29 @@ repartition: False
 #
 # If `lvm_group` is specified, the physical volume is created on that partition
 # and then added to the group.
-disks:
-  - device: /dev/sda
-    table: gpt
-    partitions:
+disk:
+  device: /dev/sda
+  table: gpt
+  partitions:
 
-      - name: efi
-        start: 1MiB
-        end: 512MiB
-        type: EPS
-        fstype: vfat
-        mountpoint: /boot/efi
+    - name: efi
+      start: 1MiB
+      end: 512MiB
+      type: EPS
+      fstype: vfat
+      mountpoint: /boot/efi
 
-      - name: lvm
-        start: 512MiB
-        end: 100%
-        type: primary
-        lvm_group: arch
+    - name: lvm
+      start: 512MiB
+      end: 100%
+      type: primary
+      lvm_group: arch
 
 # Define logical LVM volumes.
 # Each group contains list of logical volumes.
 lvm:
-  arch:
+  group: arch
+  volumes:
     - name: root
       size: 100%FREE
       fstype: ext4

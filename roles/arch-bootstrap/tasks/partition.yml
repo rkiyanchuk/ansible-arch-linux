@@ -1,39 +1,64 @@
 ---
 
-- name: remove existing LVM volume groups
-  command: vgremove -f {{ item.group }}
+- name: remove existing LVM volume group
+  command: vgremove -f {{ lvm.group }}
   ignore_errors: yes
-  with_items: '{{ lvm }}'
 
 - name: clean up existing LVM records
   command: dmsetup remove_all
 
 - name: create partition table on disks
-  partition: dev={{ item.device }} table={{ item.table }} force=yes
-  with_items: '{{ disks }}'
+  partition: dev={{ disk.device }} table={{ disk.table }} force=yes
 
-- name: create partitions
+- name: create disk partitions
   partition: >
-    dev='{{ item.0.device }}'
-    name='{{ item.1.name }}'
-    start='{{ item.1.start }}'
-    end='{{ item.1.end }}'
-    type='{{ item.1.type }}'
-    flags='{{ item.1.flags|default(omit) }}'
-    fstype='{{ item.1.fstype|default(omit) }}'
-    lvm_group='{{ item.1.lvm_group|default(omit) }}'
-  with_subelements:
-    - '{{ disks }}'
-    - partitions
+    dev="{{ disk.device }}"
+    name="{{ item.name }}"
+    start="{{ item.start }}"
+    end="{{ item.end }}"
+    type="{{ item.type }}"
+    flags="{{ item.flags|default(omit) }}"
+    fstype="{{ item.fstype|default(omit) }}"
+  with_items:
+    - "{{ disk.partitions }}"
+
+- name: encrypt device
+  expect:
+    command: "cryptsetup -q luksFormat /dev/disk/by-partlabel/{{ encrypt_partition }}"
+    responses:
+      (?i)passphrase: "{{ hostvars.localhost.luks_passphrase }}"
+
+- name: open encrypted device
+  expect:
+    command: cryptsetup luksOpen /dev/disk/by-partlabel/{{ encrypt_partition }} {{ lvm.group }}
+    responses:
+      (?i)passphrase: "{{ hostvars.localhost.luks_passphrase }}"
+
+- set_fact:
+    encrypted_device_open: true
+
+- name: create LVM physical volumes and groups
+  lvg:
+    # partitions list is indexed from 0 but parted counts partitions from 1.
+    pvs: "/dev/mapper/{{ item.lvm_group }}"
+    vg: "{{ item.lvm_group }}"
+  with_items: "{{ disk.partitions }}"
+  when: item.lvm_group is defined
 
 - name: create LVM logical volumes
-  lvol: vg={{ item.0.group }} lv={{ item.1.name }} size={{ item.1.size }}
-  with_subelements:
-    - '{{ lvm }}'
-    - volumes
+  lvol: vg={{ lvm.group }} lv={{ item.name }} size={{ item.size }}
+  with_items: "{{ lvm.volumes }}"
 
 - name: create filesystems on LVM volumes
-  partition: dev=/dev/{{ item.0.group }}/{{ item.1.name }} fstype={{ item.1.fstype }} force=true
-  with_subelements:
-    - '{{ lvm }}'
-    - volumes
+  partition: dev=/dev/{{ lvm.group }}/{{ item.name }} fstype={{ item.fstype }} force=true
+  with_items: "{{ lvm.volumes }}"
+
+- name: create swap
+  command: "mkswap /dev/{{ lvm.group }}/{{ item.name }}"
+  with_items: "{{ lvm.volumes }}"
+  when: item.fstype == "linux-swap"
+
+- name: enable swap
+  command: "swapon /dev/{{ lvm.group }}/{{ item.name }}"
+  with_items: "{{ lvm.volumes }}"
+  when: item.fstype == "linux-swap"

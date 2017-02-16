@@ -3,12 +3,6 @@
   name: bootstrap base Arch Linux system
   connection: local
 
-  pre_tasks:
-    - include_vars: "group_vars/{{ machine_aliases[ansible_product_name] }}"
-
-  roles:
-     - arch-bootstrap
-
   vars_prompt:
     - name: user_password
       prompt: "user password:"
@@ -16,9 +10,24 @@
       private: yes
       confirm: yes
 
-  post_tasks:
+    - name: luks_passphrase
+      prompt: "encryption passphrase:"
+      private: yes
+      confirm: yes
+
+  pre_tasks:
+    - include_vars: "group_vars/{{ machine_aliases[ansible_product_name] }}"
+
     - set_fact:
         user_password: "{{ user_password }}"
+
+    - set_fact:
+        luks_passphrase: "{{ luks_passphrase }}"
+
+  roles:
+     - arch-bootstrap
+
+  post_tasks:
 
     - mount:
         name: "{{ arch_root }}/proc"

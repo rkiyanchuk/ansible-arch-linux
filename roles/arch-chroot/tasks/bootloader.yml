@@ -10,7 +10,16 @@
     - grub
     - efibootmgr
 
-- name: add LVM to initramfs build hook
+- name: detect UUID of encrypted device
+  command: blkid -s PARTUUID -o value /dev/disk/by-partlabel/{{ encrypt_partition }}
+  register: cryptdevice_uuid
+  when: encrypt_partition is defined
+
+- name: configure encrypted device for GRUB
+  lineinfile: dest=/etc/default/grub regexp=^GRUB_CMDLINE_LINUX= line=GRUB_CMDLINE_LINUX="cryptdevice=PARTUUID={{ cryptdevice_uuid.stdout }}:arch"
+  when: encrypt_partition is defined
+
+- name: configure initramfs build hooks
   lineinfile: dest=/etc/mkinitcpio.conf regexp=^HOOKS= line={{ initramfs_hooks }}
 
 - name: rebuild initramfs
@@ -21,8 +30,7 @@
   when: firmware.stdout == 'UEFI'
 
 - name: install Grub bootloader for BIOS
-  command: grub-install --recheck {{ item.device }}
-  with_items: '{{ disks }}'
+  command: grub-install --recheck {{ disk.device }}
   when: firmware.stdout == 'BIOS'
 
 - name: create Grub config

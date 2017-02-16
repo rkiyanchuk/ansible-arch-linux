@@ -32,7 +32,7 @@ Usage
 5. Install Ansible with Python 2 and `passlib` (for creating password):
 
   ```
-  pacman -Sy ansible python2-passlib
+  pacman -Sy ansible python2-passlib python2-pexpect
   ```
 
 6. Run Ansible to provision base system:

@@ -7,30 +7,33 @@
   include: partition.yml
   when: repartition == True
 
+- name: open encrypted device
+  expect:
+    command: cryptsetup luksOpen /dev/disk/by-partlabel/{{ encrypt_partition }} {{ item.lvm_group }}
+    responses:
+      (?i)passphrase: "{{ hostvars.localhost.luks_passphrase }}"
+  when: encrypt_partition is defined and encrypted_device_open is not defined
+
 - name: mount LVM volumes
   mount: >
-    name='{{ arch_root }}{{ item.1.mountpoint }}'
-    src='/dev/{{ item.0.group }}/{{ item.1.name }}'
-    fstype='{{ item.1.fstype }}'
+    name="{{ arch_root }}{{ item.mountpoint }}"
+    src="/dev/{{ lvm.group }}/{{ item.name }}"
+    fstype='{{ item.fstype }}'
     state=mounted
-  with_subelements:
-    - '{{ lvm }}'
-    - volumes
-  when: item.1.mountpoint is defined
+  with_items: "{{ lvm.volumes }}"
+  when: item.mountpoint is defined
 
 - name: create /boot/efi directory
   file: path={{ arch_root }}/boot/efi state=directory
 
 - name: mount raw volumes
   mount: >
-    name='{{ arch_root }}{{ item.1.mountpoint }}'
-    src='PARTLABEL={{ item.1.name }}'
-    fstype='{{ item.1.fstype }}'
+    name='{{ arch_root }}{{ item.mountpoint }}'
+    src='PARTLABEL={{ item.name }}'
+    fstype='{{ item.fstype }}'
     state=mounted
-  with_subelements:
-    - '{{ disks }}'
-    - partitions
-  when: item.1.mountpoint is defined
+  with_items: "{{ disk.partitions }}"
+  when: item.mountpoint is defined
 
 - name: create /etc directory
   file: path={{ arch_root }}/etc state=directory
