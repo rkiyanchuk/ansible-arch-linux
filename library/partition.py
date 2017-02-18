@@ -325,7 +325,7 @@ def main():
             Partition.changed = True
 
     except (PartitionError, MkfsError) as error:
-        module.fail_json(msg=error)
+        module.fail_json(msg=error.message)
 
     module.exit_json(changed=Partition.changed)
 
