@@ -41,7 +41,14 @@
 - name: create Grub config
   command: grub-mkconfig -o /boot/grub/grub.cfg
 
-  #- name: create UEFI boot entry
-  #  command: efibootmgr --create --disk {{ disk.device }} --part {{ efi_partition_number.stdout }} --loader /EFI/arch/grubx64.efi --label "Arch Linux"
-  #  when: firmware.stdout == 'UEFI'
-  #  ignore_errors: yes
+- name: create UEFI boot entry
+  command: efibootmgr --create --disk {{ disk.device }} --part {{ efi_partition_number.stdout }} --loader /EFI/arch/grubx64.efi --label "Arch Linux"
+  when: firmware.stdout == 'UEFI'
+  ignore_errors: yes
+
+- name: write EFI entry for VirtualBox
+  lineinfile:
+    dest: /boot/efi/startup.nsh
+    line: "EFI\\arch\\grubx64.efi"
+    create: yes
+  when: ansible_product_name == "VirtualBox"
