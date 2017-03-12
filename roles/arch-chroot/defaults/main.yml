@@ -4,14 +4,18 @@ country: United States
 locales:
   - en_US
 
-user:
-  name: user
-  comment:
-  group: user
-  groups:
-    - wheel
-  shell: /bin/bash
-  email:
+initramfs_hooks: 
+  - base 
+  - udev 
+  - autodetect
+  - modconf
+  - keyboard
+  - block
+  - encrypt
+  - lvm2
+  - filesystems
+  - keyboard
+  - fsck
 
 packages:
   - arch-wiki-lite
@@ -22,13 +26,4 @@ packages:
   - lsof
   - moreutils
   - rsync
-  - strace
   - wpa_supplicant
-
-initramfs_hooks: HOOKS="base udev autodetect modconf block lvm2 filesystems keyboard fsck"
-
-#aur_packages:
-#  - cower
-#  - downgrade
-#  - pacaur
-

@@ -4,15 +4,18 @@
   shell: '[ -d /sys/firmware/efi ] && echo UEFI || echo BIOS'
   register: firmware
 
-- name: detect UUID of encrypted device
-  command: blkid -s PARTUUID -o value /dev/disk/by-partlabel/{{ encrypt_partition }}
-  register: cryptdevice_uuid
-  when: encrypt_partition is defined
+- name: create /boot/efi directory
+  file: path=/boot/efi state=directory
+  when: firmware.stdout == 'UEFI'
 
 - name: find out EFI partition number
   shell: "file /dev/disk/by-partlabel/efi | grep -o '.$'"
   register: efi_partition_number
   when: firmware.stdout == 'UEFI'
+
+- name: detect UUID of encrypted device
+  command: blkid -s PARTUUID -o value /dev/disk/by-partlabel/{{ encrypt_partition }}
+  register: cryptdevice_uuid
 
 - name: install bootloader packages
   pacman: name={{ item }} state=present update_cache=yes
@@ -21,11 +24,17 @@
     - efibootmgr
 
 - name: configure encrypted device for GRUB
-  lineinfile: dest=/etc/default/grub regexp=^GRUB_CMDLINE_LINUX= line=GRUB_CMDLINE_LINUX="cryptdevice=PARTUUID={{ cryptdevice_uuid.stdout }}:arch"
+  lineinfile: 
+    dest: /etc/default/grub
+    regexp: ^GRUB_CMDLINE_LINUX= 
+    line: GRUB_CMDLINE_LINUX="cryptdevice=PARTUUID={{ cryptdevice_uuid.stdout }}:arch"
   when: encrypt_partition is defined
 
 - name: configure initramfs build hooks
-  lineinfile: dest=/etc/mkinitcpio.conf regexp=^HOOKS= line={{ initramfs_hooks }}
+  lineinfile: 
+    dest: /etc/mkinitcpio.conf
+    regexp: ^HOOKS=
+    line: HOOKS="{{ initramfs_hooks | join(" ") }}"
 
 - name: rebuild initramfs
   command: mkinitcpio -p linux

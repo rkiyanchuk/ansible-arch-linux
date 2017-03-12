@@ -5,14 +5,6 @@
 
 - name: repartition hard drives
   include: partition.yml
-  when: repartition == True
-
-- name: open encrypted device
-  expect:
-    command: cryptsetup luksOpen /dev/disk/by-partlabel/{{ encrypt_partition }} {{ item.lvm_group }}
-    responses:
-      (?i)passphrase: "{{ hostvars.localhost.luks_passphrase }}"
-  when: encrypt_partition is defined and encrypted_device_open is not defined
 
 - name: mount LVM volumes
   mount: >
@@ -22,9 +14,6 @@
     state=mounted
   with_items: "{{ lvm.volumes }}"
   when: item.mountpoint is defined
-
-- name: create /boot/efi directory
-  file: path={{ arch_root }}/boot/efi state=directory
 
 - name: mount raw volumes
   mount: >

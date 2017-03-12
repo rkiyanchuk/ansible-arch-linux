@@ -14,21 +14,8 @@
 - name: configure hostname
   lineinfile: dest=/etc/hostname create=yes line='{{ hostname }}'
 
-- name: append hostname to /etc/hosts file
+- name: set hostname in /etc/hosts file
   template: src=hosts.j2 dest=/etc/hosts mode=644
-
-- name: create user group
-  group: name={{ user.group }} state=present
-
-- name: create user
-  user: >
-    name={{ user.name }}
-    group={{ user.group }}
-    append=yes
-    groups={{ user.groups | join(',') }}
-    comment={{ user.comment }}
-    password={{ hostvars.localhost.user_password }}
-    update_password=on_create
 
 - name: install sudo
   pacman: name=sudo state=present update_cache=yes
@@ -40,11 +27,4 @@
   pacman: name={{ item }} state=present
   with_items: "{{ packages }}"
 
-  #- name: install essential AUR packages
-  #  aur: name={{ item }} user={{ user.name }}
-  #  with_items: "{{ aur_packages }}"
-
 - include: bootloader.yml
-
-- name: lock root account
-  command: passwd -l root

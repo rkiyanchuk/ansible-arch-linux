@@ -34,12 +34,8 @@
     responses:
       (?i)passphrase: "{{ hostvars.localhost.luks_passphrase }}"
 
-- set_fact:
-    encrypted_device_open: true
-
 - name: create LVM physical volumes and groups
   lvg:
-    # partitions list is indexed from 0 but parted counts partitions from 1.
     pvs: "/dev/mapper/{{ item.lvm_group }}"
     vg: "{{ item.lvm_group }}"
   with_items: "{{ disk.partitions }}"

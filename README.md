@@ -5,6 +5,15 @@ A set of Ansible playbooks for provisioning Arch Linux.
 
 Inspired by: https://github.com/pigmonkey/spark
 
+How to clone:
+
+```
+   git clone https://github.com/zoresvit/archible
+   cd archible
+   git submodule init
+   git submodule update
+```
+
 Usage
 =====
 
@@ -55,4 +64,37 @@ TODO
 Fonts to show asian characters:
 ```
  ttf-freefont, ttf-arphic-uming, ttf-baekmuk
+```
+
+AUR packages:
+```
+   cower
+   downgrade
+   pacaur
+
+
+  #- name: install essential AUR packages
+  #  aur: name={{ item }} user={{ user.name }}
+  #  with_items: "{{ aur_packages }}"
+```
+
+User:
+```
+
+- name: create user group
+  group: name={{ user.group }} state=present
+
+- name: create user
+  user: >
+    name={{ user.name }}
+    group={{ user.group }}
+    append=yes
+    groups={{ user.groups | join(',') }}
+    comment={{ user.comment }}
+    password={{ hostvars.localhost.user_password }}
+    update_password=on_create
+
+
+- name: lock root account
+  command: passwd -l root
 ```

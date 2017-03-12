@@ -1,5 +1,4 @@
 arch_root: /mnt
-repartition: False
 
 # Define hardware disks partitioning layout.
 # Required fields for partition:
@@ -32,6 +31,8 @@ disk:
       end: 100%
       type: primary
       lvm_group: arch
+
+encrypt_partition: "{{ disk.partitions[1].name }}"
 
 # Define logical LVM volumes.
 # Each group contains list of logical volumes.

@@ -29,12 +29,13 @@
 
   post_tasks:
 
-    - mount:
+    # Prepare directory for chroot.
+    - name: mount proc
+      mount:
         name: "{{ arch_root }}/proc"
         src: proc
         fstype: proc
         state: mounted
-
 
     - name: mount temporary api systems
       command: "mount -o bind /{{ item }} {{ arch_root }}/{{ item }}"
@@ -60,12 +61,17 @@
     - arch-chroot
 
 
-#- hosts: localhost
-#  connection: local
-#  name: reboot into newly installed system
-#  tasks:
-#    - name: unmount partitions with Arch system
-#      command: umount -Rf {{ arch_root }}
-#
-#    - name: initiate reboot
-#    - command: reboot
+- hosts: localhost
+  connection: local
+  name: finish up installation
+  tasks:
+    - name: copy playbook to newly installed system
+      copy: 
+        src: "{{ playbook_dir }}" 
+        dest: "{{ arch_root }}/archible"
+
+    - name: unmount partitions with Arch system
+      command: umount -Rf {{ arch_root }}
+
+    - name: reboot
+      command: reboot

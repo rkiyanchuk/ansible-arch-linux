@@ -1,6 +1,4 @@
-repartition: True
 arch_root: /mnt
-
 
 # These are aliases that define file names with group vars for specific machine.
 # The name is obtained from `ansible_product_name` fact and matched to

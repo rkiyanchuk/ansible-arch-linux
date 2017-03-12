@@ -32,7 +32,6 @@ disk:
       lvm_group: arch
 
 encrypt_partition: "{{ disk.partitions[2].name }}"
-initramfs_hooks: HOOKS="base udev autodetect modconf keyboard block encrypt lvm2 filesystems keyboard fsck"
 
 # BIOS/GPT
 #disk:
