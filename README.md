@@ -47,3 +47,12 @@ Usage
   ```
   ansible-playbook -i localhost arch.yml
   ```
+
+
+TODO
+====
+
+Fonts to show asian characters:
+```
+ ttf-freefont, ttf-arphic-uming, ttf-baekmuk
+```
