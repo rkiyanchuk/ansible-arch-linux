@@ -66,8 +66,8 @@
   name: finish up installation
   tasks:
     - name: copy playbook to newly installed system
-      copy: 
-        src: "{{ playbook_dir }}" 
+      copy:
+        src: "{{ playbook_dir }}"
         dest: "{{ arch_root }}/archible"
 
     - name: unmount partitions with Arch system

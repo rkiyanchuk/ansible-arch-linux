@@ -1,33 +1,40 @@
 hostname: xps
 
-disks:
-  - device: /dev/sda
-    table: gpt
-    partitions:
+disk:
+  device: /dev/sda
+  table: gpt
+  partitions:
 
-      - name: efi
-        start: 1MiB
-        end: 512MiB
-        type: EPS
-        fstype: vfat
-        mountpoint: /boot/efi
+    - name: boot
+      start: 1MiB
+      end: 256MiB
+      fstype: ext4
+      mountpoint: /boot
 
-      - name: lvm
-        start: 512MiB
-        end: 100%
-        type: primary
-        lvm_group: arch
+    - name: efi
+      start: 256MiB
+      end: 512MiB
+      type: EPS
+      fstype: vfat
+      mountpoint: /boot/efi
+
+    - name: lvm
+      start: 512MiB
+      end: 100%
+      lvm_group: arch
+
+encrypt_partition: "{{ disk.partitions[2].name }}"
 
 lvm:
   - group: arch
     volumes:
       - name: root
-        size: 20G
+        size: 30G
         fstype: ext4
         mountpoint: /
 
       - name: var
-        size: 5G
+        size: 20G
         fstype: ext4
         mountpoint: /var
 

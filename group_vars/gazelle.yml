@@ -1,52 +1,47 @@
 hostname: gazp
 
-disks:
-  - device: /dev/disk/by-uuid/ata-INTEL_SSDSC2BW120A4_CVDA336001ZK1207GN
-    table: gpt
-    partitions:
+disk:
+  device: /dev/disk/by-uuid/ata-INTEL_SSDSC2BW120A4_CVDA336001ZK1207GN
+  table: gpt
+  partitions:
 
-      - name: bios_grub
-        start: 0MiB
-        end: 2MiB
-        type: bios_grub
+    - name: bios_grub
+      start: 1MiB
+      end: 3MiB
+      type: bios_grub
 
-      - name: efi
-        start: 2MiB
-        end: 512MiB
-        type: EPS
-        fstype: vfat
-        mountpoint: /boot/efi
+    - name: boot
+      start: 3MiB
+      end: 256MiB
+      fstype: ext4
+      mountpoint: /boot
 
-      - name: lvm
-        start: 512MiB
-        end: 100%
-        type: primary
-        lvm_group: arch
+    - name: lvm
+      start: 256MiB
+      end: 100%
+      lvm_group: arch
 
-  - device: ata-Samsung_SSD_850_EVO_250GB_S21NNSAG845105P
-    table: gpt
-    partitions:
-
-      - name: lvm
-        start: 1MiB
-        end: 100%
-        type: primary
-        lvm_group: arch
+encrypt_partition: "{{ disk.partitions[2].name }}"
 
 lvm:
-  - group: arch
-    volumes:
-      - name: root
-        size: 20G
-        fstype: ext4
-        mountpoint: /
+  group: arch
+  volumes:
 
-      - name: var
-        size: 10G
-        fstype: ext4
-        mountpoint: /var
+    - name: root
+      size: 20G
+      fstype: ext4
+      mountpoint: /
 
-      - name: home
-        size: 100%FREE
-        fstype: ext4
-        mountpoint: /home
+    - name: var
+      size: 10G
+      fstype: ext4
+      mountpoint: /var
+
+    - name: swap
+      size: 1G
+      fstype: linux-swap
+
+    - name: home
+      size: 100%FREE
+      fstype: ext4
+      mountpoint: /home

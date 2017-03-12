@@ -12,26 +12,24 @@ disk:
   partitions:
 
     - name: boot
-      start: 512MiB
-      end: 1GiB
+      start: 1MiB
+      end: 256MiB
       type: primary
       fstype: ext4
       mountpoint: /boot
 
     - name: efi
-      start: 1MiB
+      start: 256MiB
       end: 512MiB
       type: EPS
       fstype: vfat
       mountpoint: /boot/efi
 
     - name: lvm
-      start: 1GiB
+      start: 512MiB
       end: 100%
       type: primary
       lvm_group: arch
-
-encrypt_partition: "{{ disk.partitions[2].name }}"
 
 # BIOS/GPT
 #disk:
@@ -58,6 +56,7 @@ encrypt_partition: "{{ disk.partitions[2].name }}"
 #      type: primary
 #      lvm_group: arch
 
+encrypt_partition: "{{ disk.partitions[2].name }}"
 
 lvm:
   group: arch
