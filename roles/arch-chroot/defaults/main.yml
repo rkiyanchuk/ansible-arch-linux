@@ -21,7 +21,6 @@ packages:
   - arch-wiki-lite
   - coreutils
   - dialog
-  - git
   - glances
   - lsof
   - moreutils

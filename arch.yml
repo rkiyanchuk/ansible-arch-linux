@@ -5,15 +5,7 @@
   become: yes
 
   pre_tasks:
-
-    - include_vars: group_vars/vbox.yml
-      when: ansible_product_name == "VirtualBox"
-
-    - include_vars: group_vars/gazelle.yml
-      when: ansible_product_name == "Gazelle Professional"
-
-    - include_vars: group_vars/xps.yml
-      when: ansible_product_name == "XPS 13 9350"
+    - include_vars: "group_vars/{{ machine_aliases[ansible_product_name] }}"
 
     - name: update repository mirrors
       command: reflector --sort score -p https --country '{{ country }}' --save /etc/pacman.d/mirrorlist

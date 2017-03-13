@@ -1,4 +1,11 @@
 ---
+
+- name: install sudo
+  pacman: name=sudo state=present update_cache=yes
+
+- name: copy sudo configuration
+  template: src=sudoers.j2 dest=/etc/sudoers mode=440
+
 - include: shell.yml
 - include: cron.yml
 
