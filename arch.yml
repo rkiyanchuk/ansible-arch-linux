@@ -11,14 +11,11 @@
       command: reflector --sort score -p https --country '{{ country }}' --save /etc/pacman.d/mirrorlist
 
   roles:
-    - xorg
     - pacman
-    - aur
     - base
+    - xorg
     - ssh
     - network
-    - media
-    - sound
     - lxdm
     - xmonad
     - web

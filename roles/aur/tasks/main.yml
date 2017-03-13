@@ -1,9 +1,0 @@
----
-- name: add cower signing key
-  command: gpg --recv-keys --keyserver hkp://pgp.mit.edu 1EB2638FF56C0C53
-  become: True
-  become_user: '{{ user.name }}'
-
-- name: install AUR essential packages
-  aur: name={{ item }} user={{ user.name }}
-  with_items: '{{ packages.aur }}'

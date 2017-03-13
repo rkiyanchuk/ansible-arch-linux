@@ -22,12 +22,6 @@
     - bluez-utils
     - bt-dw1560-firmware
 
-
-- name: install AUR packages
-  aur: name={{ item }} user={{ user.name }}
-  with_items:
-    - dmenu2
-
 - name: generate SSH key
   command: sudo -u {{ user.name }} ssh-keygen -b 4096 -C {{ user.email }} -P {{ passphrase }} -f ~/.ssh/id_rsa_xps -q
 

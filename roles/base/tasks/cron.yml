@@ -1,6 +1,0 @@
----
-- name: install cronie
-  pacman: name=cronie state=present
-
-- name: enable cronie
-  service: name=cronie.service enabled=yes state=started

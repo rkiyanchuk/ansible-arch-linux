@@ -25,4 +25,5 @@ packages:
   - lsof
   - moreutils
   - rsync
+  - sysstat
   - wpa_supplicant
