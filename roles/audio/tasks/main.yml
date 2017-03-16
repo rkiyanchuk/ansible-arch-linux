@@ -1,0 +1,19 @@
+---
+- name: install sound utils
+  pacman: name={{ item }} state=present
+  with_items:
+    - alsa-utils
+    - pulseaudio
+    - pavucontrol
+    - pamixer
+    - pavucontrol
+    - paprefs
+
+- aur: name={{ item }} user={{ user.name }}
+  with_items:
+    - paman
+    - pavumeter
+    - pasystray
+
+- name: copy udev rule for USB audio device switching
+  copy: src=udev-audio.rules dest=/etc/udev/rules.d/10-audio.rules
