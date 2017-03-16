@@ -27,6 +27,7 @@
   with_items:
     - unclutter
     - xclip
+    - mate-notification-daemon
 
 - name: install extra AUR packages
   aur: name={{ item }} user={{ user.name }}

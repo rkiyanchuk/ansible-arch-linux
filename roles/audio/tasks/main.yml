@@ -4,16 +4,22 @@
   with_items:
     - alsa-utils
     - pulseaudio
+    - pulseaudio-alsa
+    - pulseaudio-bluetooth
+    - pulseaudio-jack
+    - pavucontrol
     - pavucontrol
     - pamixer
-    - pavucontrol
     - paprefs
 
 - aur: name={{ item }} user={{ user.name }}
   with_items:
     - paman
+    - pasystray-gtk2-standalone
     - pavumeter
-    - pasystray
 
-- name: copy udev rule for USB audio device switching
-  copy: src=udev-audio.rules dest=/etc/udev/rules.d/10-audio.rules
+- name: Switch output to newly connected devices
+  lineinfile:
+    dest: /etc/pulse/default.pa
+    state: present
+    line: "load-module module-switch-on-connect"
