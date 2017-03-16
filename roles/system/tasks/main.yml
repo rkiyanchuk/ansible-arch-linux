@@ -1,5 +1,5 @@
 ---
-- name: install custom drivers
+- name: install additional drivers
   pacman: name={{ item }} state=present update_cache=yes upgrade=yes
   with_items: "{{ drivers }}"
   when: drivers is defined
@@ -10,23 +10,27 @@
     - rebuild grub
   when: "'GenuineIntel' in ansible_processor"
 
-- name: install linux firmware
-  pacman: name=linux-firmware state=present
+- name: install udev rule for IO scheduler
+  copy: src=udev/scheduler.rules dest=/etc/udev/rules.d/20-scheduler.rules
 
 - name: Enable systemd-timesyncd
   command: timedatectl set-ntp true
 
 - name: install cronie
   pacman: name=cronie state=present
+  notify:
+    - enable cronie
 
-- name: enable cronie
-  service: name=cronie.service enabled=yes state=started
-
-- name: install udev rule for IO scheduler
-  copy: src=udev/scheduler.rules dest=/etc/udev/rules.d/20-scheduler.rules
-
+- include: pacman.yml
 - include: user.yml
 - include: shell.yml
 - include: aur.yml
-- include: audio.yml
 - include: media.yml
+
+- name: install packages
+  pacman: name={{ item }} state=present update_cache=yes upgrade=yes
+  with_items: "{{ packages }}"
+
+- name: install AUR packages
+  aur: name={{ item }} user={{ user.name }}
+  with_items: {{ aur_packages }}

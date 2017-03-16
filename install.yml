@@ -1,6 +1,6 @@
 ---
 - hosts: localhost
-  name: bootstrap base Arch Linux system
+  name: bootstrap Arch Linux system
   connection: local
 
   vars_prompt:
@@ -51,7 +51,7 @@
 
 
 - hosts: chroot
-  name: install Arch Linux
+  name: install minimal Arch Linux
   connection: chroot
 
   pre_tasks:

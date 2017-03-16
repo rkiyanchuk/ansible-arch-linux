@@ -1,3 +1,0 @@
----
-- name: restart paccache
-  service: name=paccache.timer state=restarted

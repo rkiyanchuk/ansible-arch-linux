@@ -1,5 +1,5 @@
 ---
-- name: install Xorg server and related apps
+- name: install Xorg server
   pacman: name={{ item }} state=present update_cache=yes
   with_items:
     - xf86-input-libinput
@@ -22,14 +22,13 @@
 - name: add user to video group
   user: name={{ user.name }} groups=video append=yes
 
-- name: install apps for GUI improvement
+- name: install extra packages
   pacman: name={{ item }} state=present update_cache=yes
   with_items:
     - unclutter
+    - xclip
 
-- name: install AUR apps for GUI improvement
+- name: install extra AUR packages
   aur: name={{ item }} user={{ user.name }}
   with_items:
     - acpilight
-    - breeze-default-cursor-theme
-    - breeze-hacked-cursor-theme

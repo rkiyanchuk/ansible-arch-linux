@@ -1,0 +1,20 @@
+---
+packages:
+  - linux-firmware
+  - mlocate
+  # Filesystem
+  - dosfstools
+  - hfsprogs
+  - ntfs-3g
+  - exfat-utils
+  # Archive
+  - zip
+  - unzip
+  - p7zip
+  - unrar
+  - atool
+
+aur_packages:
+  - cower
+  - downgrade
+  - pacaur

@@ -1,3 +1,4 @@
+---
 - name: install GnuPG
   pacman: name=gnupg state=present
 
@@ -6,7 +7,3 @@
     dest: "{{ user.name }}/.gnupg/gpg.conf"
     regexp: ^#keyserver-options
     line: "keyserver-options auto-key-retrieve"
-
-- name: install essential AUR packages
-  aur: name={{ item }} user={{ user.name }}
-  with_items: '{{ aur }}'
