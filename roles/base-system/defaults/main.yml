@@ -2,6 +2,7 @@
 packages:
   - linux-firmware
   - mlocate
+  - reflector
   # Filesystem
   - dosfstools
   - hfsprogs

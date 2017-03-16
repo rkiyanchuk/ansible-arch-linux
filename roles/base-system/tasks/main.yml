@@ -19,7 +19,7 @@
 - name: install cronie
   pacman: name=cronie state=present
   notify:
-    - enable cronie
+    - start cron
 
 - include: pacman.yml
 - include: user.yml

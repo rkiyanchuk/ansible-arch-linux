@@ -1,6 +1,6 @@
 ---
-- name: restart cron
-  service: name=cronie.service state=restarted
+- name: start cron
+  service: name=cronie.service enabled=yes state=started
 
 - name: rebuild grub
   command: grub-mkconfig -o /boot/grub/grub.cfg
