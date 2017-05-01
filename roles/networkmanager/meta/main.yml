@@ -1,6 +1,6 @@
 galaxy_info:
   author: Ruslan Kiianchuk
-  description: Install audio packages for Arch Linux
+  description: Install Network Manager for Arch Linux
 
   min_ansible_version: 2.0
   platforms:
@@ -10,3 +10,4 @@ galaxy_info:
 
 dependencies: 
   - role: xorg
+

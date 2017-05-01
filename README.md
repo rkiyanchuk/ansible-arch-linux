@@ -83,4 +83,10 @@ pacman:
   - p7zip
   - unrar
   - atool
+  -
+    - breeze-default-cursor-theme
+    - breeze-hacked-cursor-theme
+
 ```
+
+- Add NetworkManager hook for updating mirrors via reflector

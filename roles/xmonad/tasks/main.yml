@@ -1,8 +1,8 @@
 - name: install xmonad
   pacman: name={{ item }} force=yes update_cache=yes 
   with_items:
-    - haskell-xmonad
-    - haskell-xmonad-contrib
+    - xmonad
+    - xmonad-contrib
 
 - name: install xmonad-extras
   aur: name=xmonad-extras-darcs user={{ user.name }}

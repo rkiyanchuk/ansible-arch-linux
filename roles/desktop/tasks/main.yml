@@ -1,25 +1,22 @@
 
+- include: audio.yml
+
 - name: install packages for desktop environment
   pacman: name={{ item }} state=present
   with_items:
-    - lxqt-notificationd
+    - mate-notification-daemon
     - gnome-screensaver
     - rxvt-unicode
     - stow
-    - keepassx2
+    - keepassxc
     - xmobar
     - stalonetray
     - conky
     - python-pip
     - gvim
-    - nigrogen
-    - xxkb
     - compton
     - vlc
     - cheese
-    - blueman
-    - bluez
-    - bluez-utils
     - bt-dw1560-firmware
 
 - name: generate SSH key

@@ -2,17 +2,14 @@
 - name: install LXDM display manager
   pacman: name=lxdm state=present
 
-- name: install LXDM display manager
+- name: install LXDM themes
   aur: name=lxdm-themes user={{ user.name }}
-
-- name: remove ugly login label
-  file: path=/usr/share/lxdm/themes/Arch-Dark/login.png state=absent
 
 - name: enable LXDM service
   service: name=lxdm enabled=yes
 
-- name: push LXDM config file
+- name: configure LXDM display manager
   copy: src=lxdm.conf dest=/etc/lxdm/lxdm.conf backup=yes
 
-- name: install LXDM PostLogin hook
+- name: configure LXDM PostLogin hook
   copy: src=PostLogin dest=/etc/lxdm/PostLogin

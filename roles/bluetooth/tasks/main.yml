@@ -1,0 +1,15 @@
+---
+- name: install bluetooth packages
+  pacman: name={{ item }} state=present
+  with_items:
+    - bluez
+    - bluez-utils
+    - blueman
+    - pulseaudio-bluetooth 
+    - bluez-libs
+    - bluez-firmware
+  notify:
+    - enable bluetooth
+
+- name: add user to lp group
+  user: name={{ user.name }} groups=lp append=yes

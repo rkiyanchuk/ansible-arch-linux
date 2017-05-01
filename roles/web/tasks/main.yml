@@ -1,2 +1,0 @@
-- name: install Chromium browser
-  pacman: name=chromium state=present

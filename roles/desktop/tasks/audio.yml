@@ -5,7 +5,6 @@
     - alsa-utils
     - pulseaudio
     - pulseaudio-alsa
-    - pulseaudio-bluetooth
     - pulseaudio-jack
     - pavucontrol
     - pavucontrol

@@ -6,8 +6,6 @@
       - networkmanager-openvpn
       - network-manager-applet
       - gnome-keyring
-      - nmap
-      - tcpdump
 
 - name: enable NetworkManager
   service: name=NetworkManager.service enabled=yes state=started

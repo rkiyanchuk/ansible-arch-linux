@@ -5,7 +5,7 @@
     - openssh
     - keychain
 
-- name: push OpenSSH daemon configuration file
+- name: configure SSH daemon
   template: src=sshd_config.j2 dest=/etc/ssh/sshd_config backup=yes
   notify:
     - enable sshd
