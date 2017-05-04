@@ -34,4 +34,4 @@
   lineinfile: dest={{ arch_root }}/etc/fstab line="tmpfs /tmp tmpfs defaults,noatime,mode=1777 0 0"
 
 - name: Bootstrap base Arch Linux.
-  command: pacstrap {{ arch_root }} base base-devel sudo lvm2 reflector ansible
+  command: pacstrap {{ arch_root }} base base-devel sudo lvm2 reflector ansible python2-passlib

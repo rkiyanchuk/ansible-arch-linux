@@ -1,4 +1,10 @@
 ---
+
+- name: start DHCP to configure network
+  service:
+    name: dhcpcd
+    state: started
+
 - name: install additional drivers
   pacman: name={{ item }} state=present update_cache=yes upgrade=yes
   with_items: "{{ drivers }}"
@@ -24,7 +30,6 @@
 - include: pacman.yml
 - include: user.yml
 - include: shell.yml
-- include: aur.yml
 - include: media.yml
 
 - name: install packages
@@ -33,4 +38,4 @@
 
 - name: install AUR packages
   aur: name={{ item }} user={{ user.name }}
-  with_items: {{ aur_packages }}
+  with_items: "{{ aur_packages }}"
