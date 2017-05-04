@@ -1,0 +1,7 @@
+- name: install GnuPG
+  pacman: name=gnupg state=present
+
+- name: configure GnuPG
+  copy:
+    src: gpg.conf
+    dest: /home/{{ user.name }}/.gnupg/gpg.conf
