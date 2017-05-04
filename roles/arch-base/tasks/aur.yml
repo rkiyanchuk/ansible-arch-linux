@@ -1,0 +1,9 @@
+---
+- name: install GnuPG
+  pacman: name=gnupg state=present
+
+- name: configure auto-key-retrieve for AUR
+  lineinfile:
+    dest: "{{ user.name }}/.gnupg/gpg.conf"
+    regexp: ^#keyserver-options
+    line: "keyserver-options auto-key-retrieve"

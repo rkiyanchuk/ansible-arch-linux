@@ -1,8 +1,10 @@
 ---
 - name: install udiskie packages for automount
-  pacman: name="{{ item }}" state=present
+  pacman: name={{ item }} state=present
   with_items:
     - udiskie
+
+- aur: name=pmount user={{ user.name }}
 
 - name: create /media mount dir
   file: path=/media state=directory
@@ -11,7 +13,7 @@
   copy: src=udev/mount.rules dest=/etc/udev/rules.d/90-mount.rules
 
 - name: install media codecs and helpers
-  pacman: name="{{ item }}" state=present
+  pacman: name={{ item }} state=present
   with_items:
     - flac
     - lame
