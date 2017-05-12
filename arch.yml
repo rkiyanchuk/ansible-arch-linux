@@ -30,7 +30,6 @@
     - ssh
 
     # Desktop
-    - gnupg
     - lxdm
     - xmonad
     - laptop

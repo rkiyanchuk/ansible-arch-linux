@@ -15,7 +15,6 @@
   with_items:
     - paman
     - pasystray-gtk2-standalone
-    - pavumeter
 
 - name: Switch output to newly connected devices
   lineinfile:

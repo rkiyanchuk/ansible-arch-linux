@@ -24,13 +24,18 @@
 - include: pacman.yml
 - include: user.yml
 - include: shell.yml
-- include: aur.yml
 - include: media.yml
 
 - name: install packages
   pacman: name={{ item }} state=present update_cache=yes upgrade=yes
   with_items: "{{ packages }}"
 
+- name: retrieve trusted GPG keys for AUR
+  command: gpg --recv-keys --keyserver  {{ gpg_keyserver }} {{ item }}
+  become: true
+  become_user: "{{ user.name }}"
+  with_items: "{{ aur_gpg_trusted_keys }}"
+
 - name: install AUR packages
   aur: name={{ item }} user={{ user.name }}
-  with_items: {{ aur_packages }}
+  with_items: "{{ aur_packages }}"

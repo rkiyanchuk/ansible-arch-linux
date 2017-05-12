@@ -3,6 +3,3 @@
   with_items:
     - xmonad
     - xmonad-contrib
-
-- name: install xmonad-extras
-  aur: name=xmonad-extras-darcs user={{ user.name }}

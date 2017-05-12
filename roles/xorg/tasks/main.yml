@@ -3,11 +3,8 @@
   pacman: name={{ item }} state=present update_cache=yes
   with_items:
     - xf86-input-libinput
+    - xorg
     - xorg-apps
-    - xorg-server
-    - xorg-server-utils
-    - xorg-utils
-    - xorg-xinit
     - xterm
 
 - name: configure scrolling

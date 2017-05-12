@@ -2,9 +2,6 @@
 - name: install LXDM display manager
   pacman: name=lxdm state=present
 
-- name: install LXDM themes
-  aur: name=lxdm-themes user={{ user.name }}
-
 - name: enable LXDM service
   service: name=lxdm enabled=yes
 

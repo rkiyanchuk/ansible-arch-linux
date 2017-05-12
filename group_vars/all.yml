@@ -23,3 +23,6 @@ user:
     - wheel
   shell: /bin/bash
   email: ruslan.kiianchuk@gmail.com
+
+aur_gpg_trusted_keys:
+  - 1EB2638FF56C0C53
