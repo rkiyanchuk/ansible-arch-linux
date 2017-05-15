@@ -23,9 +23,9 @@ author: Ruslan Kiianchuk (@zoresvit)
 module: aur
 short_description: Install packages from Arch User Repository (AUR)
 description:
-  - Install packages from AUR using `pacaur` helper. If `pacaur` is not installed the module
-    falls back to downloading the package, building and installing with `makepkg` as would be done
-    manually.
+  - Install packages from AUR using `pacaur` helper. If `pacaur` is not
+    installed the module falls back to downloading the package, building and
+    installing with `makepkg` as would be done manually.
 
 options:
 
@@ -115,7 +115,7 @@ def aur_build(package, user):
     os.chdir(os.path.join(AUR_DIR, package))
 
     error = subprocess.call(
-        shlex.split(MAKEPKG.format(user=user, opts='-csrf')))
+        shlex.split(MAKEPKG.format(user=user, opts='-csf')))
 
     if error:
         raise AurError('Failed to build package {0}'.format(package))

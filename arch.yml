@@ -4,22 +4,11 @@
   connection: local
   become: yes
 
-  vars_prompt:
-    - name: user_password
-      prompt: "user password:"
-      encrypt: "sha512_crypt"
-      private: yes
-      confirm: yes
-
   pre_tasks:
     - include_vars: "group_vars/{{ machine_aliases[ansible_product_name] }}"
 
-    - set_fact:
-        user_password: "{{ user_password }}"
-
     - name: update repository mirrors
       command: reflector --sort score -p https --country '{{ country }}' --save /etc/pacman.d/mirrorlist
-
 
   roles:
     - arch-base

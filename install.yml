@@ -9,11 +9,21 @@
       private: yes
       confirm: yes
 
+    - name: user_password
+      prompt: "user password:"
+      encrypt: "sha512_crypt"
+      private: yes
+      confirm: yes
+
+
   pre_tasks:
     - include_vars: "group_vars/{{ machine_aliases[ansible_product_name] }}"
 
     - set_fact:
         luks_passphrase: "{{ luks_passphrase }}"
+
+    - set_fact:
+        user_password: "{{ user_password }}"
 
   roles:
      - arch-bootstrap
@@ -57,7 +67,7 @@
   name: finish up installation
   tasks:
     - name: copy playbook to newly installed system
-      command: "cp -ar {{ playbook_dir }} {{ arch_root }}/root/"
+      command: "cp -ar {{ playbook_dir }} {{ arch_root }}/home/{{ user.name }}"
 
     - name: unmount partitions with Arch system
       command: umount -Rf {{ arch_root }}

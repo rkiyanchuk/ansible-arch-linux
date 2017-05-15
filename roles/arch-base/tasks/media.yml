@@ -6,8 +6,6 @@
 
 - name: install pmount
   aur: name=pmount user={{ user.name }}
-  become: yes
-  become_user: "{{ user.name }}"
 
 - name: create /media mount dir
   file: path=/media state=directory

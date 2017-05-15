@@ -21,4 +21,5 @@
   pacman: name={{ item }} state=present
   with_items: "{{ packages }}"
 
+- include: user.yml
 - include: bootloader.yml
