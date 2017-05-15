@@ -10,6 +10,12 @@
     - name: update repository mirrors
       command: reflector --sort score -p https --country '{{ country }}' --save /etc/pacman.d/mirrorlist
 
+    - name: set nopasswd for makepkg during installation
+      lineinfile:
+        path: /etc/sudoers
+        state: present
+        line: '{{ user.name }} ALL=(ALL) NOPASSWD: ALL'
+
   roles:
     - arch-base
     - xorg
@@ -23,3 +29,10 @@
     - xmonad
     - laptop
     - desktop
+
+  post_tasks:
+    - name: remove nopasswd for makepkg after installation
+      lineinfile:
+        path: /etc/sudoers
+        state: absent
+        line: '{{ user.name }} ALL=(ALL) NOPASSWD: ALL'
