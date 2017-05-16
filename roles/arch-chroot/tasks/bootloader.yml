@@ -1,6 +1,6 @@
 ---
 
-- name: detect boot firmware (UEFI or BIOS)
+- name: 'detect boot firmware (UEFI or BIOS)'
   shell: '[ -d /sys/firmware/efi ] && echo UEFI || echo BIOS'
   register: firmware
 
@@ -18,20 +18,20 @@
   register: cryptdevice_uuid
 
 - name: install bootloader packages
-  pacman: name={{ item }} state=present update_cache=yes
+  pacman: name={{ item }} state=present
   with_items:
     - grub
     - efibootmgr
 
 - name: configure encrypted device for GRUB
-  lineinfile: 
+  lineinfile:
     dest: /etc/default/grub
-    regexp: ^GRUB_CMDLINE_LINUX= 
+    regexp: ^GRUB_CMDLINE_LINUX=
     line: GRUB_CMDLINE_LINUX="cryptdevice=PARTUUID={{ cryptdevice_uuid.stdout }}:arch"
   when: encrypt_partition is defined
 
 - name: configure initramfs build hooks
-  lineinfile: 
+  lineinfile:
     dest: /etc/mkinitcpio.conf
     regexp: ^HOOKS=
     line: HOOKS="{{ initramfs_hooks | join(" ") }}"
@@ -39,15 +39,15 @@
 - name: rebuild initramfs
   command: mkinitcpio -p linux
 
-- name: install Grub bootloader for UEFI
+- name: install GRUB bootloader for UEFI
   command: grub-install --recheck
   when: firmware.stdout == 'UEFI'
 
-- name: install Grub bootloader for BIOS
+- name: install GRUB bootloader for BIOS
   command: grub-install --recheck {{ disk.device }}
   when: firmware.stdout == 'BIOS'
 
-- name: create Grub config
+- name: configure GRUB
   command: grub-mkconfig -o /boot/grub/grub.cfg
 
 - name: create UEFI boot entry

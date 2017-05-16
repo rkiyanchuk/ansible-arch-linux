@@ -4,9 +4,9 @@ country: United States
 locales:
   - en_US
 
-initramfs_hooks: 
-  - base 
-  - udev 
+initramfs_hooks:
+  - base
+  - udev
   - autodetect
   - modconf
   - keyboard

@@ -1,8 +1,8 @@
 ---
 - name: install sudo
-  pacman: name=sudo state=present update_cache=yes
+  pacman: name=sudo state=present
 
-- name: copy sudo configuration
+- name: configure sudoers
   template: src=sudoers.j2 dest=/etc/sudoers mode=440
 
 - name: create user group
