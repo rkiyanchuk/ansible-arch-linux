@@ -1,5 +1,5 @@
-Archible
-========
+ansible-arch-linux
+==================
 
 A set of Ansible playbooks for provisioning Arch Linux.
 
@@ -25,8 +25,8 @@ Usage
 4. Download and decompress playbook from GitHub:
 
   ```
-  curl -L https://github.com/zoresvit/archible/archive/master.tar.gz | tar -x
-  cd zoresvit-archible
+  curl -L https://github.com/zoresvit/ansible-arch-linux/archive/master.tar.gz | tar -x
+  cd zoresvit-ansible-arch-linux
   ```
 
 5. Install Ansible, `passlib` (for creating password) and `pexpect` (for 
