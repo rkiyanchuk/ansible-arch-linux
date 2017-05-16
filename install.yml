@@ -19,6 +19,7 @@
   pre_tasks:
     - include_vars: "group_vars/{{ machine_aliases[ansible_product_name] }}"
 
+      # Make prompted vars available for all plays.
     - set_fact:
         luks_passphrase: "{{ luks_passphrase }}"
 
@@ -30,7 +31,7 @@
 
   post_tasks:
 
-    # Prepare directory for chroot.
+    # Prepare for chroot to new install location.
     - name: mount proc
       mount:
         name: "{{ arch_root }}/proc"
@@ -52,7 +53,7 @@
 
 
 - hosts: chroot
-  name: install minimal Arch Linux
+  name: install minimal Arch Linux system
   connection: chroot
 
   pre_tasks:
@@ -69,7 +70,7 @@
     - name: copy playbook to newly installed system
       command: "cp -ar {{ playbook_dir }} {{ arch_root }}/home/{{ user.name }}"
 
-    - name: unmount partitions with Arch system
+    - name: unmount partitions with the new system
       command: umount -Rf {{ arch_root }}
 
     - name: reboot

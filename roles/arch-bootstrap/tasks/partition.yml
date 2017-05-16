@@ -7,10 +7,10 @@
 - name: clean up existing LVM records
   command: dmsetup remove_all
 
-- name: create partition table on disks
+- name: create partition table on device
   partition: dev={{ disk.device }} table={{ disk.table }} force=yes
 
-- name: create disk partitions
+- name: create device partitions
   partition: >
     dev="{{ disk.device }}"
     name="{{ item.name }}"

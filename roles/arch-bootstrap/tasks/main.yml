@@ -1,9 +1,9 @@
 ---
 
-- name: sync time
+- name: enable time sync
   command: timedatectl set-ntp true
 
-- name: repartition hard drives
+- name: partition hard drive
   include: partition.yml
 
 - name: mount LVM volumes
@@ -30,8 +30,8 @@
 - name: generate fstab file
   shell: genfstab -U {{ arch_root }} > {{ arch_root }}/etc/fstab
 
-- name: mount /tmp onto tmpfs
+- name: configure fstab to mount /tmp onto tmpfs
   lineinfile: dest={{ arch_root }}/etc/fstab line="tmpfs /tmp tmpfs defaults,noatime,mode=1777 0 0"
 
 - name: Bootstrap base Arch Linux.
-  command: pacstrap {{ arch_root }} base base-devel sudo lvm2 reflector ansible
+  command: pacstrap {{ arch_root }} base base-devel lvm2 reflector ansible

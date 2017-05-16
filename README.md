@@ -5,15 +5,6 @@ A set of Ansible playbooks for provisioning Arch Linux.
 
 Inspired by: https://github.com/pigmonkey/spark
 
-How to clone:
-
-```
-   git clone https://github.com/zoresvit/archible
-   cd archible
-   git submodule init
-   git submodule update
-```
-
 Usage
 =====
 
@@ -29,7 +20,7 @@ Usage
   dd bs=4M if=archlinux-$VERSION-dual.iso of=/dev/sdX status=progress && sync
   ```
 
-3. Boot into Live ArchLinux.
+3. Boot into ArchLinux Live CD.
 
 4. Download and decompress playbook from GitHub:
 
@@ -38,7 +29,8 @@ Usage
   cd zoresvit-archible
   ```
 
-5. Install Ansible with Python 2 and `passlib` (for creating password):
+5. Install Ansible, `passlib` (for creating password) and `pexpect` (for 
+   automating interactive commands):
 
   ```
   pacman -Sy ansible python2-passlib python2-pexpect
@@ -50,11 +42,11 @@ Usage
   ansible-playbook -i localhost install.yml
   ```
 
-7. After the reboot login into the system and run Ansible to install and configure
-  full-featured ArchLinux:
+7. After the reboot login into the new system and run Ansible to install and
+  configure full-featured ArchLinux:
 
   ```
-  ansible-playbook -i localhost arch.yml
+  ansible-playbook -ask-become-pass -i localhost config.yml
   ```
 
 
