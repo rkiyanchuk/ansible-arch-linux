@@ -10,7 +10,8 @@
     - name: update repository mirrors
       command: reflector --sort score -p https --country '{{ country }}' --save /etc/pacman.d/mirrorlist
 
-    - name: set nopasswd for makepkg during installation
+      # Avoid interactive password prompts while installing AUR packages.
+    - name: set nopasswd for makepkg
       lineinfile:
         path: /etc/sudoers
         state: present
@@ -31,7 +32,7 @@
     - desktop
 
   post_tasks:
-    - name: remove nopasswd for makepkg after installation
+    - name: remove nopasswd for makepkg
       lineinfile:
         path: /etc/sudoers
         state: absent
