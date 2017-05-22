@@ -21,6 +21,7 @@ user:
     - sys
     - video
     - wheel
+    - systemd-journal
   shell: /bin/bash
   email: ruslan.kiianchuk@gmail.com
 

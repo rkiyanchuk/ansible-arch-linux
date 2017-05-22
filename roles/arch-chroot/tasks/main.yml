@@ -21,5 +21,14 @@
   pacman: name={{ item }} state=present
   with_items: "{{ packages }}"
 
+- name: install additional drivers
+  pacman: name={{ item }} state=present update_cache=yes upgrade=yes
+  with_items: "{{ drivers }}"
+  when: drivers is defined
+
+- name: install intel microcode
+  pacman: name=intel-ucode state=present
+  when: "'GenuineIntel' in ansible_processor"
+
 - include: user.yml
 - include: bootloader.yml

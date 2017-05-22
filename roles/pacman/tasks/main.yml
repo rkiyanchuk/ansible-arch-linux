@@ -14,7 +14,10 @@
   copy: src=paccache.timer dest=/etc/systemd/system/paccache.timer
   notify:
     - reload systemd config
-    - restart paccache
+    - enable paccache timer
 
-- name: enable and start pacman cache cleanup timer
-  service: name=paccache.timer enabled=yes state=started
+- name: install default packages
+  pacman: name={{ item }} state=present
+  with_items: "{{ packages }}"
+
+- include: aur.yml

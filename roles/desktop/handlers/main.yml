@@ -3,3 +3,7 @@
   systemd: name=pulseaudio.service user=yes state=restarted
   become: yes
   become_user: "{{ user.name }}"
+
+- name: enable cron
+  service: name=cronie.service enabled=yes state=started
+

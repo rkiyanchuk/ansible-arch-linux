@@ -1,25 +1,25 @@
 ---
-packages:
+default_packages:
   - linux-firmware
   - mlocate
   - reflector
+
   # Filesystem
   - dosfstools
   - hfsprogs
   - ntfs-3g
   - exfat-utils
-  # Archive
+
+  # Archives
   - zip
   - unzip
   - p7zip
   - unrar
-  - atool
 
-aur_packages:
+default_aur_packages:
   - cower
   - downgrade
   - pacaur
 
 aur_gpg_trusted_keys: []
-
-gpg_keyserver: hkp://pgp.mit.edu
+gpg_keyserver: "hkp://pgp.mit.edu"

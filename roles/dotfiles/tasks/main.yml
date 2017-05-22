@@ -1,0 +1,5 @@
+---
+- name: install Bash completion
+  pacman: name={{ item }} state=present
+  with_items:
+    - bash-completion

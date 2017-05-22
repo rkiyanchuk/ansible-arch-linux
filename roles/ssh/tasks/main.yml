@@ -5,6 +5,10 @@
     - openssh
     - keychain
 
+- name: stop SSH daemon if already running
+  service: name=sshd state=stopped
+  ignore_errors: yes
+
 - name: configure SSH daemon
   template: src=sshd_config.j2 dest=/etc/ssh/sshd_config backup=yes
   notify:

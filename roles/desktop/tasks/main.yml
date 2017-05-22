@@ -1,5 +1,11 @@
 
+- include: media.yml
 - include: audio.yml
+
+- name: install cronie
+  pacman: name=cronie state=present
+  notify:
+    - enable cron
 
 - name: install packages for desktop environment
   pacman: name={{ item }} state=present

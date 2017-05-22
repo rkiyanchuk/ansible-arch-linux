@@ -1,6 +1,6 @@
 ---
 - name: install Xorg server
-  pacman: name={{ item }} state=present update_cache=yes
+  pacman: name={{ item }} state=present
   with_items:
     - xf86-input-libinput
     - xorg
@@ -20,9 +20,8 @@
   user: name={{ user.name }} groups=video append=yes
 
 - name: install extra packages
-  pacman: name={{ item }} state=present update_cache=yes
+  pacman: name={{ item }} state=present
   with_items:
-    - unclutter
     - xclip
     - mate-notification-daemon
 

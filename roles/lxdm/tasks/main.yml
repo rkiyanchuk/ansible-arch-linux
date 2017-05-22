@@ -2,11 +2,23 @@
 - name: install LXDM display manager
   pacman: name=lxdm state=present
 
-- name: enable LXDM service
-  service: name=lxdm enabled=yes
+- name: install dependencies
+  pacman: name={{ item }} state=present
+  with_items:
+    - gnome-screensaver
+    - unclutter 
+
+- name: install AUR dependencies
+  aur: name={{ item }} state=present
+  with_items:
+    - xsettingsd-git
+    - lxdm-themes
 
 - name: configure LXDM display manager
   copy: src=lxdm.conf dest=/etc/lxdm/lxdm.conf backup=yes
 
 - name: configure LXDM PostLogin hook
   copy: src=PostLogin dest=/etc/lxdm/PostLogin
+
+- name: enable LXDM daemon
+  service: name=lxdm enabled=yes

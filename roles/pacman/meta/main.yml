@@ -1,13 +1,12 @@
 galaxy_info:
   author: Ruslan Kiianchuk
-  description: Install Network Manager for Arch Linux
+  description: Configure Pacman and Pacaur
 
+  license: GPLv3
   min_ansible_version: 2.0
   platforms:
   - name: Arch
 
   galaxy_tags: ['arch', 'linux', 'install']
 
-dependencies: 
-  - role: pacman
-  - role: xorg
+dependencies: []

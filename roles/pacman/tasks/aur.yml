@@ -1,0 +1,10 @@
+---
+- name: retrieve trusted GPG keys for AUR
+  command: gpg --recv-keys --keyserver  {{ gpg_keyserver }} {{ item }}
+  become: true
+  become_user: "{{ user.name }}"
+  with_items: "{{ aur_gpg_trusted_keys }}"
+
+- name: install default AUR packages
+  aur: name={{ item }} user={{ user.name }}
+  with_items: "{{ aur_packages }}"

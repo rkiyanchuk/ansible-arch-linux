@@ -10,15 +10,19 @@
     - name: update repository mirrors
       command: reflector --sort score -p https --country '{{ country }}' --save /etc/pacman.d/mirrorlist
 
-      # Avoid interactive password prompts while installing AUR packages.
+    - name: enable time sync
+      command: timedatectl set-ntp true
+
+    # Avoid interactive password prompts while installing AUR packages.
     - name: set nopasswd for makepkg
       lineinfile:
         path: /etc/sudoers
         state: present
         line: '{{ user.name }} ALL=(ALL) NOPASSWD: ALL'
 
+
   roles:
-    - arch-base
+    - pacman
     - xorg
 
     # Network
