@@ -7,4 +7,4 @@
 
 - name: install default AUR packages
   aur: name={{ item }} user={{ user.name }}
-  with_items: "{{ aur_packages }}"
+  with_items: "{{ default_aur_packages }}"

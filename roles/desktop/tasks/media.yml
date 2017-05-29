@@ -10,9 +10,6 @@
 - name: create /media mount dir
   file: path=/media state=directory
 
-- name: add rule to mount removable storage to /media
-  copy: src=udev/mount.rules dest=/etc/udev/rules.d/90-mount.rules
-
 - name: install media codecs and helpers
   pacman: name={{ item }} state=present
   with_items:

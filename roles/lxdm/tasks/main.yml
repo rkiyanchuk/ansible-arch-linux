@@ -6,10 +6,10 @@
   pacman: name={{ item }} state=present
   with_items:
     - gnome-screensaver
-    - unclutter 
+    - unclutter
 
 - name: install AUR dependencies
-  aur: name={{ item }} state=present
+  aur: name={{ item }} user={{ user.name }}
   with_items:
     - xsettingsd-git
     - lxdm-themes
