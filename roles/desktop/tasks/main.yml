@@ -23,3 +23,10 @@
     - compton
     - vlc
 
+- name: install extra packages
+  pacman: name={{ item }} state=present
+  with_items: "{{ extra_packages }}"
+
+- name: install extra AUR packages
+  aur: name={{ item }} user={{ user.name }}
+  with_items: "{{ extra_aur_packages }}"

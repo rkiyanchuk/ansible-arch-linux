@@ -1,23 +1,28 @@
 ---
-- name: configure Pacman
-  copy: src=pacman.conf dest=/etc/pacman.conf backup=yes
+- name: 'configure Pacman: enable color'
+  lineinfile:
+    path: /etc/pacman.conf
+    regexp: '^#?Color$'
+    line: Color
+
+- name: 'configure Pacman: enable verbose package lists'
+  lineinfile:
+    path: /etc/pacman.conf
+    regexp: '^#?VerbosePkgLists$'
+    line: VerbosePkgLists
 
 - name: refresh pacman mirrors and upgrade system
   pacman: update_cache=yes upgrade=yes
 
-- name: push pacman cache cleanup service
+- name: install pacman cache cleanup service
   copy: src=paccache.service dest=/etc/systemd/system/paccache.service
   notify:
     - reload systemd config
 
-- name: push pacman cache cleanup timer
+- name: install pacman cache cleanup timer
   copy: src=paccache.timer dest=/etc/systemd/system/paccache.timer
   notify:
     - reload systemd config
     - enable paccache timer
-
-- name: install default packages
-  pacman: name={{ item }} state=present
-  with_items: "{{ default_packages }}"
 
 - include: aur.yml

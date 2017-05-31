@@ -25,5 +25,25 @@ user:
   shell: /bin/bash
   email: ruslan.kiianchuk@gmail.com
 
+extra_packages:
+  - mlocate
+
+  # Filesystem
+  - dosfstools
+  - hfsprogs
+  - ntfs-3g
+  - exfat-utils
+
+  # Archives
+  - zip
+  - unzip
+  - p7zip
+  - unrar
+
+extra_aur_packages:
+  - cower
+  - downgrade
+  - pacaur
+
 aur_gpg_trusted_keys:
   - 1EB2638FF56C0C53

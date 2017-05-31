@@ -22,6 +22,7 @@ packages:
   - coreutils
   - dialog
   - glances
+  - linux-firmware
   - lsof
   - moreutils
   - rsync
