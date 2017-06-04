@@ -6,6 +6,8 @@
     - xorg
     - xorg-apps
     - xterm
+    - xclip
+    - mate-notification-daemon
 
 - name: configure scrolling
   copy: src=30-scrolling.conf dest=/etc/X11/xorg.conf.d/
@@ -19,13 +21,7 @@
 - name: add user to video group
   user: name={{ user.name }} groups=video append=yes
 
-- name: install extra packages
-  pacman: name={{ item }} state=present
-  with_items:
-    - xclip
-    - mate-notification-daemon
-
-- name: install extra AUR packages
+- name: install acpilight from AUR
   aur: name={{ item }} user={{ user.name }}
   with_items:
     - acpilight
