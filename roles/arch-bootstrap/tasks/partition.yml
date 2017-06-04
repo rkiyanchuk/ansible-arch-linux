@@ -23,16 +23,10 @@
     - "{{ disk.partitions }}"
 
 - name: encrypt device
-  expect:
-    command: "cryptsetup -q luksFormat /dev/disk/by-partlabel/{{ encrypt_partition }}"
-    responses:
-      (?i)passphrase: "{{ hostvars.localhost.luks_passphrase }}"
+  shell: "echo -n {{ hostvars.localhost.luks_passphrase }} | cryptsetup -q luksFormat /dev/disk/by-partlabel/{{ encrypt_partition }}"
 
 - name: open encrypted device
-  expect:
-    command: cryptsetup luksOpen /dev/disk/by-partlabel/{{ encrypt_partition }} {{ lvm.group }}
-    responses:
-      (?i)passphrase: "{{ hostvars.localhost.luks_passphrase }}"
+  shell: "echo -n {{ hostvars.localhost.luks_passphrase }} | cryptsetup luksOpen /dev/disk/by-partlabel/{{ encrypt_partition }} {{ lvm.group }}"
 
 - name: create LVM physical volumes and groups
   lvg:
