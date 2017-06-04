@@ -31,9 +31,13 @@
 
     # Desktop
     - lxdm
+    - bluetooth
+    - pulseaudio
+    - cron
     - xmonad
-    - laptop
     - desktop
+    - tlp  # power management
+
 
   post_tasks:
     - name: remove nopasswd for makepkg

@@ -1,5 +1,5 @@
 ---
-- name: install sound utils
+- name: install pulseaudio
   pacman: name={{ item }} state=present
   with_items:
     - alsa-utils
@@ -7,16 +7,16 @@
     - pulseaudio-alsa
     - pulseaudio-jack
     - pavucontrol
-    - pavucontrol
     - pamixer
     - paprefs
 
-- aur: name={{ item }} user={{ user.name }}
+- name: install audio management utilities from AUR
+  aur: name={{ item }} user={{ user.name }}
   with_items:
     - paman
-    - pasystray-gtk2-standalone
+    - pasystray-gtk3-standalone
 
-- name: Switch output to newly connected devices
+- name: configure to switch audio output to newly connected devices
   lineinfile:
     dest: /etc/pulse/default.pa
     state: present

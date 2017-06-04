@@ -29,6 +29,7 @@ extra_packages:
   - keepassxc
   - mlocate
   - vlc
+  - rxvt-unicode
 
   # Filesystem
   - dosfstools

@@ -1,3 +1,3 @@
 ---
 - name: enable bluetooth
-  systemd: name=bluetooth.service enable=yes state=started
+  systemd: name=bluetooth.service enabled=yes state=started

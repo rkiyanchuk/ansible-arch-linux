@@ -3,3 +3,11 @@
   with_items:
     - xmonad
     - xmonad-contrib
+
+- name: install packages for desktop environment
+  pacman: name={{ item }} state=present
+  with_items:
+    - xmobar
+    - stalonetray
+    - conky
+    - compton

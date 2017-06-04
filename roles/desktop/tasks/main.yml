@@ -1,23 +1,13 @@
+- name: install udiskie for automount
+  pacman: name=udiskie state=present
+
+- name: install pmount
+  aur: name=pmount user={{ user.name }}
+
+- name: ensure /media mount dir exists
+  file: path=/media state=directory
 
 - include: media.yml
-- include: audio.yml
-
-- name: install cronie
-  pacman: name=cronie state=present
-  notify:
-    - enable cron
-
-- name: install packages for desktop environment
-  pacman: name={{ item }} state=present
-  with_items:
-    - mate-notification-daemon
-    - gnome-screensaver
-    - rxvt-unicode
-    - stow
-    - xmobar
-    - stalonetray
-    - conky
-    - compton
 
 - name: install extra packages from repo
   pacman: name={{ item }} state=present
@@ -27,12 +17,12 @@
   aur: name={{ item }} user={{ user.name }}
   with_items: "{{ extra_aur_packages }}"
 
-- name: install host-specific packages repo
+- name: install host-specific packages from repo
   pacman: name={{ item }} state=present
   with_items: "{{ host_extra_packages }}"
   when: host_extra_packages is defined
 
 - name: install host-specific packages from AUR
-  pacman: name={{ item }} state=present
+  aur: name={{ item }} user={{ user.name }}
   with_items: "{{ host_extra_aur_packages }}"
   when: host_extra_aur_packages is defined

@@ -1,6 +1,6 @@
 galaxy_info:
   author: Ruslan Kiianchuk
-  description: Install OpenSSH for Arch Linux
+  description: Configure power management for Arch Linux via TLP.
 
   min_ansible_version: 2.0
   platforms:
@@ -8,5 +8,4 @@ galaxy_info:
 
   galaxy_tags: ['arch', 'linux', 'install']
 
-dependencies: 
-  - role: xorg
+dependencies: []
