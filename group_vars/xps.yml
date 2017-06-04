@@ -1,5 +1,8 @@
 hostname: xps
 
+host_extra_aur_packages:
+  - bcm4350-firmware
+
 disk:
   device: /dev/sda
   table: gpt

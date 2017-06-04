@@ -14,19 +14,25 @@
     - gnome-screensaver
     - rxvt-unicode
     - stow
-    - keepassxc
     - xmobar
     - stalonetray
     - conky
-    - python-pip
-    - gvim
     - compton
-    - vlc
 
-- name: install extra packages
+- name: install extra packages from repo
   pacman: name={{ item }} state=present
   with_items: "{{ extra_packages }}"
 
-- name: install extra AUR packages
+- name: install extra packages from AUR
   aur: name={{ item }} user={{ user.name }}
   with_items: "{{ extra_aur_packages }}"
+
+- name: install host-specific packages repo
+  pacman: name={{ item }} state=present
+  with_items: "{{ host_extra_packages }}"
+  when: host_extra_packages is defined
+
+- name: install host-specific packages from AUR
+  pacman: name={{ item }} state=present
+  with_items: "{{ host_extra_aur_packages }}"
+  when: host_extra_aur_packages is defined

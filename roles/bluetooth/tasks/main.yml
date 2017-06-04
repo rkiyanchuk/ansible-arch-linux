@@ -11,7 +11,5 @@
   notify:
     - enable bluetooth
 
-    # aur:    - bt-dw1560-firmware
-
 - name: add user to lp group
   user: name={{ user.name }} groups=lp append=yes

@@ -1,6 +1,6 @@
 hostname: vbox
 
-drivers:
+host_extra_packages:
   - nvidia-340xx-libgl
   - virtualbox-guest-modules-arch
   - virtualbox-guest-utils

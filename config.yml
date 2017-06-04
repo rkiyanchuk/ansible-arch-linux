@@ -23,17 +23,17 @@
 
   roles:
     - pacman
-    #    - xorg
-    #
-    #    # Network
-    #    - networkmanager
-    #    - ssh
-    #
-    #    # Desktop
-    #    - lxdm
-    #    - xmonad
-    #    - laptop
-    #    - desktop
+    - xorg
+
+    # Network
+    - networkmanager
+    - ssh
+
+    # Desktop
+    - lxdm
+    - xmonad
+    - laptop
+    - desktop
 
   post_tasks:
     - name: remove nopasswd for makepkg
