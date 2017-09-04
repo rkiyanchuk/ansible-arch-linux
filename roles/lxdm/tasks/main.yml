@@ -11,7 +11,6 @@
 - name: install AUR dependencies
   aur: name={{ item }} user={{ user.name }}
   with_items:
-    - xsettingsd-git
     - lxdm-themes
 
 - name: configure LXDM display manager

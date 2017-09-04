@@ -1,9 +1,10 @@
 ---
-- name: install Bash completion
-  pacman: name={{ item }} state=present
-  with_items:
-    - bash-completion
 
+- name: install stow to manage symlinks
+  pacman: name=stow
 
+- name: clone dotfiles repo
+  command: git clone {{ dotfiles_repo }} ~/dotfiles
 
-#   - stow
+- name: install dotfiles
+  command: chdir=~/dotfiles {{ dotfiles_install_cmd }}

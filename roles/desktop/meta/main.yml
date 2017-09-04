@@ -1,6 +1,6 @@
 galaxy_info:
   author: Ruslan Kiianchuk
-  description: Install XMonad for Arch Linux
+  description: Configure desktop environment based on XMonad
 
   min_ansible_version: 2.0
   platforms:
@@ -8,5 +8,5 @@ galaxy_info:
 
   galaxy_tags: ['arch', 'linux', 'install']
 
-dependencies: 
+dependencies:
   - role: xorg

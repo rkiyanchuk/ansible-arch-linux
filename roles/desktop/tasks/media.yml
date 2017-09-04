@@ -1,8 +1,6 @@
 ---
-- name: install udiskie packages for automount
-  pacman: name={{ item }} state=present
-  with_items:
-    - udiskie
+- name: install udiskie for automount
+  pacman: name=udiskie state=present
 
 - name: install pmount
   aur: name=pmount user={{ user.name }}

@@ -30,6 +30,9 @@ extra_packages:
   - mlocate
   - vlc
   - rxvt-unicode
+  - bash-completion
+  - goldendict
+  - vim
 
   # Filesystem
   - dosfstools
@@ -47,6 +50,12 @@ extra_aur_packages:
   - cower
   - downgrade
   - pacaur
+  - google-chrome
 
 aur_gpg_trusted_keys:
   - 1EB2638FF56C0C53
+
+dotfiles_repo: "https://github.com/zoresvit/dotfiles"
+dotfiles_install_cmd: "stow -S bash chrome conky git goldendict gtk mime python tmux urxvt vim xmonad xorg"
+dotfiles_deps:
+  - conky

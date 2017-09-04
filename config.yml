@@ -35,8 +35,8 @@
     - pulseaudio
     - cron
     - xmonad
-    - desktop
     - tlp  # power management
+    - desktop
 
 
   post_tasks:
