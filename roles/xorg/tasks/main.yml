@@ -6,6 +6,7 @@
     - xorg
     - xorg-apps
     - xterm
+    - xorg-xsetroot
     - xclip
     - mate-notification-daemon
 
