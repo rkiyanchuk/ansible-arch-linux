@@ -5,7 +5,7 @@ arch_root: /mnt
 # corresponding file in `group_vars`.
 machine_aliases:
   VirtualBox: vbox.yml
-  Gazelle Professional: gazelle.yml
+  Gazelle Professional: gzp.yml
   XPS 13 9350: xps.yml
 
 country: United States

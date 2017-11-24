@@ -17,7 +17,7 @@
 
 
   pre_tasks:
-    - include_vars: "group_vars/{{ machine_aliases[ansible_product_name] }}"
+    - include_vars: "host_vars/{{ machine_aliases[ansible_product_name] }}"
 
       # Make prompted vars available for all plays.
     - set_fact:
@@ -57,7 +57,7 @@
   connection: chroot
 
   pre_tasks:
-    - include_vars: "group_vars/{{ machine_aliases[ansible_product_name] }}"
+    - include_vars: "host_vars/{{ machine_aliases[ansible_product_name] }}"
 
   roles:
     - arch-chroot

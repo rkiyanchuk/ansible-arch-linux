@@ -45,3 +45,4 @@ lvm:
       size: 100%FREE
       fstype: ext4
       mountpoint: /home
+

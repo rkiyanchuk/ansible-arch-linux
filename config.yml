@@ -5,7 +5,7 @@
   become: yes
 
   pre_tasks:
-    - include_vars: "group_vars/{{ machine_aliases[ansible_product_name] }}"
+    - include_vars: "host_vars/{{ machine_aliases[ansible_product_name] }}"
 
     - name: update repository mirrors
       command: reflector --sort score -p https --country '{{ country }}' --save /etc/pacman.d/mirrorlist
