@@ -26,52 +26,52 @@
     - set_fact:
         user_password: "{{ user_password }}"
 
-  roles:
-     - arch-bootstrap
+  import_role:
+     name: arch-bootstrap
 
-  post_tasks:
-
-    # Prepare for chroot to new install location.
-    - name: mount proc
-      mount:
-        name: "{{ arch_root }}/proc"
-        src: proc
-        fstype: proc
-        state: mounted
-
-    - name: mount temporary api systems
-      command: "mount -o bind /{{ item }} {{ arch_root }}/{{ item }}"
-      with_items:
-        - sys
-        - dev
-        - run
-
-    - name: copy resolv.conf into chroot
-      copy:
-        src: /etc/resolv.conf
-        dest: "{{ arch_root }}/etc/resolv.conf"
-
-
-- hosts: chroot
-  name: install minimal Arch Linux system
-  connection: chroot
-
-  pre_tasks:
-    - include_vars: "host_vars/{{ machine_aliases[ansible_product_name] }}"
-
-  roles:
-    - arch-chroot
-
-
-- hosts: localhost
-  connection: local
-  name: finish up installation
-  tasks:
-    - name: copy playbook to newly installed system
-      command: "cp -ar {{ playbook_dir }} {{ arch_root }}/home/{{ user.name }}"
-
-    - name: unmount partitions with the new system
-      command: umount -Rf {{ arch_root }}
-
-    - name: reboot
-      command: reboot
+#  post_tasks:
+#
+#    # Prepare for chroot to new install location.
+#    - name: mount proc
+#      mount:
+#        name: "{{ arch_root }}/proc"
+#        src: proc
+#        fstype: proc
+#        state: mounted
+#
+#    - name: mount temporary api systems
+#      command: "mount -o bind /{{ item }} {{ arch_root }}/{{ item }}"
+#      with_items:
+#        - sys
+#        - dev
+#        - run
+#
+#    - name: copy resolv.conf into chroot
+#      copy:
+#        src: /etc/resolv.conf
+#        dest: "{{ arch_root }}/etc/resolv.conf"
+#
+#
+#- hosts: chroot
+#  name: install minimal Arch Linux system
+#  connection: chroot
+#
+#  pre_tasks:
+#    - include_vars: "host_vars/{{ machine_aliases[ansible_product_name] }}"
+#
+#  roles:
+#    - arch-chroot
+#
+#
+#- hosts: localhost
+#  connection: local
+#  name: finish up installation
+#  tasks:
+#    - name: copy playbook to newly installed system
+#      command: "cp -ar {{ playbook_dir }} {{ arch_root }}/home/{{ user.name }}"
+#
+#    - name: unmount partitions with the new system
+#      command: umount -Rf {{ arch_root }}
+#
+#    - name: reboot
+#      command: reboot

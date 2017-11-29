@@ -1,47 +1,46 @@
 ---
-
-- name: remove existing LVM volume group
-  command: vgremove -f {{ lvm.group }}
-  ignore_errors: yes
-
-- name: clean up existing LVM records
-  command: dmsetup remove_all
-
 - name: create partition table on device
-  partition: dev={{ disk.device }} table={{ disk.table }} force=yes
+  parted: 
+    device: {{ disk.device }}
+    label: {{ disk.table }}
+    state: present
 
 - name: create device partitions
-  partition: >
-    dev="{{ disk.device }}"
-    name="{{ item.name }}"
-    start="{{ item.start }}"
-    end="{{ item.end }}"
-    type="{{ item.type }}"
-    flags="{{ item.flags|default(omit) }}"
-    fstype="{{ item.fstype|default(omit) }}"
-  with_items:
+  parted:
+    device: "{{ disk.device }}"
+    number: "{{ item.0 }}"
+    name: "{{ item.1.name }}"
+    part_start: "{{ item.1.start }}"
+    part_end: "{{ item.1.end }}"
+    part_type: "{{ item.1.type|default(omit) }}"
+    flags: "{{ item.1.flags|default(omit) }}"
+    state: present
+  with_indexed_items:
     - "{{ disk.partitions }}"
 
 - name: encrypt device
-  shell: "echo -n {{ hostvars.localhost.luks_passphrase }} | cryptsetup -q luksFormat /dev/disk/by-partlabel/{{ encrypt_partition }}"
+  shell: >
+    "echo -n {{ hostvars.localhost.luks_passphrase }} | 
+    cryptsetup -q luksFormat /dev/disk/by-partlabel/{{ item.name }}"
+  with_items:
+    - "{{ disk.partitions }}"
+  when: item.encrypt
+
 
 - name: open encrypted device
-  shell: "echo -n {{ hostvars.localhost.luks_passphrase }} | cryptsetup luksOpen /dev/disk/by-partlabel/{{ encrypt_partition }} {{ lvm.group }}"
+  shell: >
+    "echo -n {{ hostvars.localhost.luks_passphrase }} |
+    cryptsetup luksOpen /dev/disk/by-partlabel/{{ item.name }} arch-{{ item.name }}"
+  with_items:
+    - "{{ disk.partitions }}"
+  when: item.encrypt
 
-- name: create LVM physical volumes and groups
-  lvg:
-    pvs: "/dev/mapper/{{ item.lvm_group }}"
-    vg: "{{ item.lvm_group }}"
-  with_items: "{{ disk.partitions }}"
-  when: item.lvm_group is defined
-
-- name: create LVM logical volumes
-  lvol: vg={{ lvm.group }} lv={{ item.name }} size={{ item.size }}
-  with_items: "{{ lvm.volumes }}"
-
-- name: create filesystems on LVM volumes
-  partition: dev=/dev/{{ lvm.group }}/{{ item.name }} fstype={{ item.fstype }} force=true
-  with_items: "{{ lvm.volumes }}"
+- name: create filesystems on partitions
+  filesystem:
+    dev: "{{ disk.device }}{{ item.0 }}"
+    fstype: "{{ item.1.filesystem }}"
+  with_indexed_items:
+    - "{{ disk.partitions }}"
 
 - name: create swap
   command: "mkswap /dev/{{ lvm.group }}/{{ item.name }}"

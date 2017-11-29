@@ -5,41 +5,26 @@ arch_root: /mnt
 #   - name
 #   - start
 #   - end
-#   - type
 #
 # Optional fields:
-#   - fstype
+#   - filesystem
 #   - mountpoint
-#   - lvm_group
-#
-# If `lvm_group` is specified, the physical volume is created on that partition
-# and then added to the group.
 disk:
   device: /dev/sda
   table: gpt
   partitions:
 
     - name: efi
-      start: 1MiB
+      start: 0%
       end: 512MiB
-      type: EPS
-      fstype: vfat
+      flags:
+        - boot
+      filesystem: vfat
       mountpoint: /boot/efi
 
-    - name: lvm
+    - name: root
       start: 512MiB
       end: 100%
-      type: primary
-      lvm_group: arch
-
-encrypt_partition: "{{ disk.partitions[1].name }}"
-
-# Define logical LVM volumes.
-# Each group contains list of logical volumes.
-lvm:
-  group: arch
-  volumes:
-    - name: root
-      size: 100%FREE
-      fstype: ext4
+      filesystem: ext4
       mountpoint: /
+      encrypt: true

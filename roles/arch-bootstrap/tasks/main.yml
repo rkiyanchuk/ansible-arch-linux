@@ -1,6 +1,6 @@
 ---
 
-- name: enable time sync
+- name: sync system clock
   command: timedatectl set-ntp true
 
 - name: partition hard drive
