@@ -3,26 +3,8 @@
 - name: sync system clock
   command: timedatectl set-ntp true
 
-- name: partition hard drive
+- name: partition storage drive
   include: partition.yml
-
-- name: mount LVM volumes
-  mount: >
-    name="{{ arch_root }}{{ item.mountpoint }}"
-    src="/dev/{{ lvm.group }}/{{ item.name }}"
-    fstype='{{ item.fstype }}'
-    state=mounted
-  with_items: "{{ lvm.volumes }}"
-  when: item.mountpoint is defined
-
-- name: mount raw volumes
-  mount: >
-    name='{{ arch_root }}{{ item.mountpoint }}'
-    src='PARTLABEL={{ item.name }}'
-    fstype='{{ item.fstype }}'
-    state=mounted
-  with_items: "{{ disk.partitions }}"
-  when: item.mountpoint is defined
 
 - name: create /etc directory
   file: path={{ arch_root }}/etc state=directory
@@ -30,8 +12,5 @@
 - name: generate fstab file
   shell: genfstab -U {{ arch_root }} > {{ arch_root }}/etc/fstab
 
-- name: configure fstab to mount /tmp onto tmpfs
-  lineinfile: dest={{ arch_root }}/etc/fstab line="tmpfs /tmp tmpfs defaults,noatime,mode=1777 0 0"
-
 - name: Bootstrap base Arch Linux.
-  command: pacstrap {{ arch_root }} base base-devel lvm2 reflector ansible
+  command: pacstrap {{ arch_root }} base base-devel reflector ansible

@@ -1,15 +1,16 @@
 arch_root: /mnt
 
-# Define hardware disks partitioning layout.
+# Define storage partitioning layout.
 # Required fields for partition:
 #   - name
 #   - start
 #   - end
 #
 # Optional fields:
+#   - flags
 #   - filesystem
 #   - mountpoint
-disk:
+drive:
   device: /dev/sda
   table: gpt
   partitions:
@@ -21,6 +22,7 @@ disk:
         - boot
       filesystem: vfat
       mountpoint: /boot/efi
+      encrypt: false
 
     - name: root
       start: 512MiB

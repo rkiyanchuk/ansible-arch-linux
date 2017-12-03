@@ -1,14 +1,11 @@
 ---
-- name: create partition table on device
-  parted: 
-    device: {{ disk.device }}
-    label: {{ disk.table }}
-    state: present
 
 - name: create device partitions
   parted:
-    device: "{{ disk.device }}"
-    number: "{{ item.0 }}"
+    label: "{{ drive.table }}"
+    device: "{{ drive.device }}"
+    # Parted indexes partitions from 1:
+    number: "{{ item.0 + 1 }}"
     name: "{{ item.1.name }}"
     part_start: "{{ item.1.start }}"
     part_end: "{{ item.1.end }}"
@@ -16,38 +13,61 @@
     flags: "{{ item.1.flags|default(omit) }}"
     state: present
   with_indexed_items:
-    - "{{ disk.partitions }}"
+    - "{{ drive.partitions }}"
 
-- name: encrypt device
+- name: create key file for encrypting non-root devices
+  command: dd if=/dev/urandom of=/luks.key bs=1024 count=8
+
+- name: encrypt root device
   shell: >
-    "echo -n {{ hostvars.localhost.luks_passphrase }} | 
-    cryptsetup -q luksFormat /dev/disk/by-partlabel/{{ item.name }}"
+    echo -n {{ hostvars.localhost.luks_passphrase }} |
+    cryptsetup -qv luksFormat /dev/disk/by-partlabel/{{ item.name }}
   with_items:
-    - "{{ disk.partitions }}"
+    - "{{ drive.partitions }}"
+  when: item.encrypt and item.name == 'root'
+
+- name: encrypt non-root devices using key file
+  command: "cryptsetup -q --key-file /luks.key luksFormat /dev/disk/by-partlabel/{{ item.name }}"
+  with_items:
+    - "{{ drive.partitions }}"
+  when: item.encrypt and item.name != 'root'
+
+- name: open encrypted root device
+  shell: >
+    echo -n {{ hostvars.localhost.luks_passphrase }} |
+    cryptsetup luksOpen /dev/disk/by-partlabel/{{ item.name }} arch-{{ item.name }}
+  with_items:
+    - "{{ drive.partitions }}"
+  when: item.encrypt and item.name == 'root'
+
+- name: open encrypted non-root devices
+  command: "cryptsetup --key-file /luks.key luksOpen /dev/disk/by-partlabel/{{ item.name }} arch-{{ item.name }}"
+  with_items:
+    - "{{ drive.partitions }}"
+  when: item.encrypt and item.name != 'root'
+
+# File systems are explicitely created using mkfs command because Ansible
+# filesystem module doesn't support vfat at the moment.
+# See: https://github.com/ansible/ansible/pull/23527
+- name: create filesystems on unencrypted partitions
+  command: mkfs.{{ item.filesystem }} /dev/disk/by-partlabel/{{ item.name }}
+  with_items:
+    - "{{ drive.partitions }}"
+  when: not item.encrypt
+
+- name: create filesystems on encrypted partitions
+  command: mkfs.{{ item.filesystem }} /dev/mapper/arch-{{ item.name }}
+  with_items:
+    - "{{ drive.partitions }}"
   when: item.encrypt
 
-
-- name: open encrypted device
-  shell: >
-    "echo -n {{ hostvars.localhost.luks_passphrase }} |
-    cryptsetup luksOpen /dev/disk/by-partlabel/{{ item.name }} arch-{{ item.name }}"
-  with_items:
-    - "{{ disk.partitions }}"
-  when: item.encrypt
-
-- name: create filesystems on partitions
-  filesystem:
-    dev: "{{ disk.device }}{{ item.0 }}"
-    fstype: "{{ item.1.filesystem }}"
-  with_indexed_items:
-    - "{{ disk.partitions }}"
-
-- name: create swap
-  command: "mkswap /dev/{{ lvm.group }}/{{ item.name }}"
-  with_items: "{{ lvm.volumes }}"
-  when: item.fstype == "linux-swap"
-
-- name: enable swap
-  command: "swapon /dev/{{ lvm.group }}/{{ item.name }}"
-  with_items: "{{ lvm.volumes }}"
-  when: item.fstype == "linux-swap"
+  # TODO: rework to mount unencrypted boot partition separately, and then mount
+  # encrypted partitions.
+- name: mount unencrypted partitions
+  mount:
+    name: "{{ arch_root }}{{ item.mountpoint }}"
+    src: "PARTLABEL={{ item.name }}"
+    fstype: "{{ item.filesystem }}"
+    state: mounted
+  with_items: "{{ drive.partitions }}"
+  when: item.mountpoint is defined
