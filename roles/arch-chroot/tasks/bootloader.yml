@@ -8,15 +8,6 @@
   file: path=/boot/efi state=directory
   when: firmware.stdout == 'UEFI'
 
-- name: find out EFI partition number
-  shell: "file /dev/disk/by-partlabel/efi | grep -o '.$'"
-  register: efi_partition_number
-  when: firmware.stdout == 'UEFI'
-
-- name: detect UUID of encrypted device
-  command: blkid -s PARTUUID -o value /dev/disk/by-partlabel/{{ encrypt_partition }}
-  register: cryptdevice_uuid
-
 - name: install bootloader packages
   pacman: name={{ item }} state=present
   with_items:
@@ -27,8 +18,9 @@
   lineinfile:
     dest: /etc/default/grub
     regexp: ^GRUB_CMDLINE_LINUX=
-    line: GRUB_CMDLINE_LINUX="cryptdevice=PARTUUID={{ cryptdevice_uuid.stdout }}:arch"
-  when: encrypt_partition is defined
+    line: GRUB_CMDLINE_LINUX="cryptdevice=PARTUUID={{ item.stdout }}:arch"
+  with_items: "{{ hostvars.localhost.part_uuids.results }}"
+  when: item.item == 'root'
 
 - name: configure initramfs build hooks
   lineinfile:
@@ -44,15 +36,16 @@
   when: firmware.stdout == 'UEFI'
 
 - name: install GRUB bootloader for BIOS
-  command: grub-install --recheck {{ disk.device }}
+  command: grub-install --recheck {{ drive.device }}
   when: firmware.stdout == 'BIOS'
 
 - name: configure GRUB
   command: grub-mkconfig -o /boot/grub/grub.cfg
 
 - name: create UEFI boot entry
-  command: efibootmgr --create --disk {{ disk.device }} --part {{ efi_partition_number.stdout }} --loader /EFI/arch/grubx64.efi --label "Arch Linux"
-  when: firmware.stdout == 'UEFI'
+  command: efibootmgr --create --disk {{ disk.device }} --part {{ item.0 }} --loader /EFI/arch/grubx64.efi --label "Arch Linux"
+  when: firmware.stdout == 'UEFI' and item.1.name == 'efi'
+  with_indexed_items: "{{ drive.partitions }}"
   ignore_errors: yes
 
 - name: write EFI entry for VirtualBox

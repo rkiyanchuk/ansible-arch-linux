@@ -12,7 +12,6 @@ initramfs_hooks:
   - keyboard
   - block
   - encrypt
-  - lvm2
   - filesystems
   - keyboard
   - fsck

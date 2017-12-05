@@ -1,22 +1,7 @@
 ---
 
-- name: create device partitions
-  parted:
-    label: "{{ drive.table }}"
-    device: "{{ drive.device }}"
-    # Parted indexes partitions from 1:
-    number: "{{ item.0 + 1 }}"
-    name: "{{ item.1.name }}"
-    part_start: "{{ item.1.start }}"
-    part_end: "{{ item.1.end }}"
-    part_type: "{{ item.1.type|default(omit) }}"
-    flags: "{{ item.1.flags|default(omit) }}"
-    state: present
-  with_indexed_items:
-    - "{{ drive.partitions }}"
-
 - name: create key file for encrypting non-root devices
-  command: dd if=/dev/urandom of=/luks.key bs=1024 count=8
+  command: dd if=/dev/urandom of=/{{ luks_key_name }} bs=1024 count=8
 
 - name: encrypt root device
   shell: >
@@ -27,7 +12,7 @@
   when: item.encrypt and item.name == 'root'
 
 - name: encrypt non-root devices using key file
-  command: "cryptsetup -q --key-file /luks.key luksFormat /dev/disk/by-partlabel/{{ item.name }}"
+  command: "cryptsetup -q --key-file /{{ luks_key_name }} luksFormat /dev/disk/by-partlabel/{{ item.name }}"
   with_items:
     - "{{ drive.partitions }}"
   when: item.encrypt and item.name != 'root'
@@ -41,7 +26,7 @@
   when: item.encrypt and item.name == 'root'
 
 - name: open encrypted non-root devices
-  command: "cryptsetup --key-file /luks.key luksOpen /dev/disk/by-partlabel/{{ item.name }} arch-{{ item.name }}"
+  command: "cryptsetup --key-file /{{ luks_key_name }} luksOpen /dev/disk/by-partlabel/{{ item.name }} arch-{{ item.name }}"
   with_items:
     - "{{ drive.partitions }}"
   when: item.encrypt and item.name != 'root'
@@ -49,20 +34,32 @@
 # File systems are explicitely created using mkfs command because Ansible
 # filesystem module doesn't support vfat at the moment.
 # See: https://github.com/ansible/ansible/pull/23527
-- name: create filesystems on unencrypted partitions
-  command: mkfs.{{ item.filesystem }} /dev/disk/by-partlabel/{{ item.name }}
-  with_items:
-    - "{{ drive.partitions }}"
-  when: not item.encrypt
-
 - name: create filesystems on encrypted partitions
   command: mkfs.{{ item.filesystem }} /dev/mapper/arch-{{ item.name }}
   with_items:
     - "{{ drive.partitions }}"
   when: item.encrypt
 
-  # TODO: rework to mount unencrypted boot partition separately, and then mount
-  # encrypted partitions.
+- name: create filesystems on unencrypted partitions
+  command: mkfs.{{ item.filesystem }} /dev/disk/by-partlabel/{{ item.name }}
+  with_items:
+    - "{{ drive.partitions }}"
+  when: not item.encrypt
+
+# NOTE: Encrypted root partition has to be mounted first as other partitions
+# need to be mounted inside of it.
+#
+# NOTE: With certain partition layout this can still fail to mount partitions
+# in the correct order. TODO: come up with a better implementation.
+- name: mount encrypted partitions
+  mount:
+    name: "{{ arch_root }}{{ item.mountpoint }}"
+    src: "/dev/mapper/arch-{{ item.name }}"
+    fstype: "{{ item.filesystem }}"
+    state: mounted
+  with_items: "{{ drive.partitions }}"
+  when: item.mountpoint is defined and item.encrypt
+
 - name: mount unencrypted partitions
   mount:
     name: "{{ arch_root }}{{ item.mountpoint }}"
@@ -70,4 +67,12 @@
     fstype: "{{ item.filesystem }}"
     state: mounted
   with_items: "{{ drive.partitions }}"
-  when: item.mountpoint is defined
+  when: item.mountpoint is defined and not item.encrypt
+
+- name: copy key file to root partition
+  copy:
+    src: /{{ luks_key_name }}
+    dest: /{{ arch_root }}/{{ luks_key_name }}
+
+- name: shred precreated LUKS key file
+  command: shred -u /{{ luks_key_name }}

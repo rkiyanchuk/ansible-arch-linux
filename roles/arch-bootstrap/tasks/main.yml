@@ -4,13 +4,39 @@
   command: timedatectl set-ntp true
 
 - name: partition storage drive
-  include: partition.yml
+  parted:
+    label: "{{ drive.table }}"
+    device: "{{ drive.device }}"
+    # Parted indexes partitions starting from 1:
+    number: "{{ item.0 + 1 }}"
+    name: "{{ item.1.name }}"
+    part_start: "{{ item.1.start }}"
+    part_end: "{{ item.1.end }}"
+    part_type: "{{ item.1.type|default(omit) }}"
+    flags: "{{ item.1.flags|default(omit) }}"
+    state: present
+  with_indexed_items:
+    - "{{ drive.partitions }}"
+ 
+- name: encrypt partitions
+  import_tasks: encrypt.yml
 
-- name: create /etc directory
-  file: path={{ arch_root }}/etc state=directory
+- name: Bootstrap base Arch Linux.
+  command: pacstrap {{ arch_root }} base base-devel reflector ansible
 
 - name: generate fstab file
   shell: genfstab -U {{ arch_root }} > {{ arch_root }}/etc/fstab
 
-- name: Bootstrap base Arch Linux.
-  command: pacstrap {{ arch_root }} base base-devel reflector ansible
+- name: retrieve UUIDs of encrypted partitions
+  command: blkid -s PARTUUID -o value /dev/disk/by-partlabel/{{ item.name }}
+  register: part_uuids
+  with_items: "{{ drive.partitions }}"
+  when: item.encrypt
+
+- name: generate crypttab file to unlock encrypted non-root partitions with key file
+  lineinfile:
+    path: /{{ arch_root }}/crypttab
+    line: "arch-{{ item.item }} UUID={{ item.stdout }} /{{ luks_key_name }} luks"
+    state: present
+  with_items: "{{ part_uuids.results }}"
+  when: item.item != 'root'
