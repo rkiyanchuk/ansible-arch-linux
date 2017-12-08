@@ -3,7 +3,7 @@
 - name: sync system clock
   command: timedatectl set-ntp true
 
-- name: partition storage drive
+- name: partition drive
   parted:
     label: "{{ drive.table }}"
     device: "{{ drive.device }}"
@@ -24,19 +24,21 @@
 - name: Bootstrap base Arch Linux.
   command: pacstrap {{ arch_root }} base base-devel reflector ansible
 
-- name: generate fstab file
-  shell: genfstab -U {{ arch_root }} > {{ arch_root }}/etc/fstab
-
 - name: retrieve UUIDs of encrypted partitions
-  command: blkid -s PARTUUID -o value /dev/disk/by-partlabel/{{ item.name }}
+  command: blkid -s UUID -o value /dev/disk/by-partlabel/{{ item.name }}
   register: part_uuids
   with_items: "{{ drive.partitions }}"
   when: item.encrypt
 
 - name: generate crypttab file to unlock encrypted non-root partitions with key file
   lineinfile:
-    path: /{{ arch_root }}/crypttab
-    line: "arch-{{ item.item }} UUID={{ item.stdout }} /{{ luks_key_name }} luks"
+    path: /{{ arch_root }}/etc/crypttab
+    line: "arch-{{ item.item.name }} UUID={{ item.stdout }} /{{ luks_key_name }} luks"
     state: present
+    create: true
   with_items: "{{ part_uuids.results }}"
-  when: item.item != 'root'
+  when: item.stdout is defined and item.item.name != 'root'
+
+- name: generate fstab file
+  shell: genfstab -U {{ arch_root }} > {{ arch_root }}/etc/fstab
+

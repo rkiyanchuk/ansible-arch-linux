@@ -6,14 +6,14 @@ locales:
 
 initramfs_hooks:
   - base
-  - udev
+  - systemd
   - autodetect
+  - keyboard
+  - sd-vconsole
   - modconf
-  - keyboard
   - block
-  - encrypt
+  - sd-encrypt
   - filesystems
-  - keyboard
   - fsck
 
 packages:

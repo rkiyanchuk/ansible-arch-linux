@@ -6,13 +6,19 @@
 - name: upgrade system to latest state
   pacman: update_cache=yes upgrade=yes
 
-- include: locales.yml
+- import_tasks: locales.yml
 
 - name: set console font
-  lineinfile: dest=/etc/vconsole.conf state=present create=yes line="FONT=Lat2-Terminus16"
+  lineinfile: 
+    path: /etc/vconsole.conf 
+    line: "FONT=Lat2-Terminus16"
+    create: yes
 
 - name: configure hostname
-  lineinfile: dest=/etc/hostname create=yes line='{{ hostname }}'
+  lineinfile: 
+    path: /etc/hostname
+    line: '{{ hostname }}'
+    create: yes
 
 - name: set hostname in /etc/hosts file
   template: src=hosts.j2 dest=/etc/hosts mode=644
@@ -25,5 +31,5 @@
   pacman: name=intel-ucode state=present
   when: "'GenuineIntel' in ansible_processor"
 
-- include: user.yml
-- include: bootloader.yml
+- import_tasks: user.yml
+- import_tasks: bootloader.yml
