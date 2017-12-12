@@ -10,6 +10,7 @@ luks_key_name: luks.key
 #   - name
 #   - start
 #   - end
+#   - encrypt
 #
 # Optional fields:
 #   - flags
@@ -24,15 +25,15 @@ drive:
     - name: root
       start: 512MiB
       end: 100%
+      encrypt: true
       filesystem: ext4
       mountpoint: /
-      encrypt: true
 
     - name: efi
       start: 0%
       end: 512MiB
+      encrypt: false
       flags:
         - boot
       filesystem: vfat
       mountpoint: /boot/efi
-      encrypt: false

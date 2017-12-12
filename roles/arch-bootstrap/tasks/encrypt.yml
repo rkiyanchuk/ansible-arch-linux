@@ -38,13 +38,13 @@
   command: mkfs.{{ item.filesystem }} /dev/mapper/arch-{{ item.name }}
   with_items:
     - "{{ drive.partitions }}"
-  when: item.encrypt
+  when: item.filesystem is defined and item.encrypt
 
 - name: create filesystems on unencrypted partitions
   command: mkfs.{{ item.filesystem }} /dev/disk/by-partlabel/{{ item.name }}
   with_items:
     - "{{ drive.partitions }}"
-  when: not item.encrypt
+  when: item.filesystem is defined and not item.encrypt
 
 # NOTE: Encrypted root partition has to be mounted first as other partitions
 # need to be mounted inside of it.

@@ -19,14 +19,14 @@
     path: /etc/default/grub
     regexp: ^GRUB_CMDLINE_LINUX=
     line: GRUB_CMDLINE_LINUX="luks.uuid={{ item.stdout }}"
-  with_items: "{{ hostvars.localhost.part_uuids.results }}"
+  with_items: "{{ hostvars.localhost.device_uuids.results }}"
   when: item.stdout is defined and item.item.name == 'root'
 
-- name: configure encrypted device for GRUB
+- name: enable GRUB to unlock encrypted /boot
   lineinfile:
     path: /etc/default/grub
     line: "GRUB_ENABLE_CRYPTODISK=y"
-  with_items: "{{ hostvars.localhost.part_uuids.results }}"
+  with_items: "{{ hostvars.localhost.device_uuids.results }}"
   when: item.stdout is defined and item.item.name == 'root'
 
 - name: configure initramfs build hooks

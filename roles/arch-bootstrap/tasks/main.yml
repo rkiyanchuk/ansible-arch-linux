@@ -26,7 +26,7 @@
 
 - name: retrieve UUIDs of encrypted partitions
   command: blkid -s UUID -o value /dev/disk/by-partlabel/{{ item.name }}
-  register: part_uuids
+  register: device_uuids
   with_items: "{{ drive.partitions }}"
   when: item.encrypt
 
@@ -36,7 +36,7 @@
     line: "arch-{{ item.item.name }} UUID={{ item.stdout }} /{{ luks_key_name }} luks"
     state: present
     create: true
-  with_items: "{{ part_uuids.results }}"
+  with_items: "{{ device_uuids.results }}"
   when: item.stdout is defined and item.item.name != 'root'
 
 - name: generate fstab file
