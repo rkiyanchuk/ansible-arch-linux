@@ -21,28 +21,14 @@
 - name: encrypt partitions
   import_tasks: encrypt.yml
 
-# NOTE: Encrypted root partition has to be mounted first as other partitions
-# need to be mounted inside of it.
-#
-# NOTE: With certain partition layout this can still fail to mount partitions
-# in the correct order. TODO: come up with a better implementation.
-- name: mount encrypted partitions
+- name: mount partitions
   mount:
     name: "{{ arch_root }}{{ item.mountpoint }}"
-    src: "/dev/mapper/arch-{{ item.name }}"
+    src: "{{ item.encrypt | ternary('/dev/mapper/arch-' + item.name, 'PARTLABEL=' + item.name) }}"
     fstype: "{{ item.filesystem }}"
     state: mounted
   with_items: "{{ drive.partitions }}"
-  when: item.mountpoint is defined and item.encrypt
-
-- name: mount unencrypted partitions
-  mount:
-    name: "{{ arch_root }}{{ item.mountpoint }}"
-    src: "PARTLABEL={{ item.name }}"
-    fstype: "{{ item.filesystem }}"
-    state: mounted
-  with_items: "{{ drive.partitions }}"
-  when: item.mountpoint is defined and not item.encrypt
+  when: item.mountpoint is defined
 
 - name: retrieve UUIDs of encrypted partitions
   command: blkid -s UUID -o value /dev/disk/by-partlabel/{{ item.name }}
