@@ -18,7 +18,7 @@
   lineinfile:
     path: /etc/default/grub
     regexp: ^GRUB_CMDLINE_LINUX=
-    line: GRUB_CMDLINE_LINUX="luks.uuid={{ item.stdout }}"
+    line: GRUB_CMDLINE_LINUX="rd.luks.uuid={{ item.stdout }} rd.luks.name={{ item.stdout }}=arch-root"
   with_items: "{{ hostvars.localhost.device_uuids.results }}"
   when: item.stdout is defined and item.item.name == 'root'
 

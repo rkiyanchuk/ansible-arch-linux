@@ -13,7 +13,7 @@ drive:
 
     - name: root
       start: 512MiB
-      end: 100%
+      end: 10GiB
       filesystem: ext4
       mountpoint: /
       encrypt: true
@@ -25,6 +25,20 @@ drive:
       filesystem: vfat
       mountpoint: /boot/efi
       encrypt: false
+
+    - name: var
+      start: 10GiB
+      end: 11GiB
+      filesystem: ext4
+      mountpoint: /var
+      encrypt: true
+
+    - name: home
+      start: 11GiB
+      end: 100%
+      filesystem: ext4
+      mountpoint: /home
+      encrypt: true
 
 # BIOS/GPT
 #disk:
