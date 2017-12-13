@@ -41,28 +41,34 @@ drive:
       encrypt: true
 
 # BIOS/GPT
-#disk:
+#drive:
 #  device: /dev/sda
 #  table: gpt
 #  partitions:
 #
 #    - name: bios_grub
 #      start: 1MiB
-#      end: 3MiB
-#      flags: bios_grub
-#      encrypt: false
-#
-#    - name: boot
-#      start: 3MiB
 #      end: 512MiB
-#      type: primary
-#      filesystem: ext4
-#      mountpoint: /boot
+#      flags: [bios_grub]
 #      encrypt: false
 #
 #    - name: root
 #      start: 512MiB
-#      end: 100%
+#      end: 10GiB
 #      filesystem: ext4
 #      mountpoint: /
+#      encrypt: true
+#
+#    - name: var
+#      start: 10GiB
+#      end: 11GiB
+#      filesystem: ext4
+#      mountpoint: /var
+#      encrypt: true
+#
+#    - name: home
+#      start: 11GiB
+#      end: 100%
+#      filesystem: ext4
+#      mountpoint: /home
 #      encrypt: true
