@@ -1,6 +1,6 @@
 arch_root: /mnt
 
-# Random data for encryption key used by dmcrypt to encrypt non-root
+# File name for encryption key used by dmcrypt to encrypt non-root
 # partitions. The key is stored on encrypted root partition which is unlocked
 # with a password.
 luks_key_name: luks.key
@@ -16,7 +16,7 @@ luks_key_name: luks.key
 #   - flags
 #   - filesystem
 #   - mountpoint
-#
+
 drive:
   device: /dev/sda
   table: gpt
