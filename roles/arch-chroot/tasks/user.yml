@@ -4,6 +4,7 @@
 
 - name: configure sudoers
   template: src=sudoers.j2 dest=/etc/sudoers mode=440
+  validate: 'visudo -cf %s'
 
 - name: create user group
   group: name={{ user.group }} state=present
