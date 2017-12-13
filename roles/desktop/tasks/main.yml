@@ -35,4 +35,3 @@
   aur: name={{ item }} user={{ user.name }}
   with_items: "{{ host_extra_aur_packages }}"
   when: host_extra_aur_packages is defined
-
