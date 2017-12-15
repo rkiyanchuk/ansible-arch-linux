@@ -1,6 +1,12 @@
 ---
-- name: retrieve trusted GPG keys for AUR
-  command: gpg --recv-keys --keyserver  {{ gpg_keyserver }} {{ item }}
-  become: true
-  become_user: "{{ user.name }}"
-  with_items: "{{ aur_gpg_trusted_keys }}"
+- name: install AUR package helper yay
+  aur:
+    name: yay
+    user: "{{ user.name }}"
+    dir: /tmp
+
+- name: install downgrade script for downgrading packages
+  aur:
+    name: downgrade
+    user: "{{ user.name }}"
+    dir: /tmp

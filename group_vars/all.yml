@@ -46,12 +46,6 @@ extra_packages:
   - p7zip
   - unrar
 
-extra_aur_packages:
-  - cower
-  - downgrade
-  - pacaur
-  - google-chrome
-
 dotfiles_repo: "https://github.com/zoresvit/dotfiles"
 dotfiles_install_cmd: "stow -S bash chrome conky git goldendict gtk mime python tmux urxvt vim xmonad xorg"
 dotfiles_deps:

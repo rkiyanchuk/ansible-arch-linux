@@ -1,172 +1,198 @@
 #!/usr/bin/python
 
-# Copyright (c) 2016, Ruslan Kiianchuk <ruslan.kiianchuk@gmail.com>
+# Ansible module for maintaining AUR packages.
+# Source: https://github.com/pigmonkey/ansible-aur/
+
+
+# The MIT License (MIT)
 #
-# This file is part of Ansible
+# Copyright (c) 2014 Austin Hyde
 #
-# Ansible is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
 #
-# Ansible is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
 #
-# You should have received a copy of the GNU General Public License
-# along with Ansible. If not, see <http://www.gnu.org/licenses/>.
-
-"""
----
-author: Ruslan Kiianchuk (@zoresvit)
-module: aur
-short_description: Install packages from Arch User Repository (AUR)
-description:
-  - Install packages from AUR using `pacaur` helper. If `pacaur` is not
-    installed the module falls back to downloading the package, building and
-    installing with `makepkg` as would be done manually.
-
-options:
-
-  name:
-    description:
-      - Name of AUR package to be installed.
-
-  user:
-    description:
-      - User to build AUR package.
-
-"""
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
 
 import os
 import pwd
-import shlex
-import subprocess
-import tarfile
-import urllib
-import shutil
-from urlparse import urljoin
-
-from ansible.module_utils.basic import AnsibleModule
+import platform
 
 
-AUR_DIR = '/tmp'
-AUR_URL = 'https://aur.archlinux.org'
-SNAPSHOT_DIR = '/cgit/aur.git/snapshot/'
-MAKEPKG = 'sudo -u {user} makepkg --noconfirm --noprogressbar {opts}'
+def cower_in_path(module):
+    """
+    Determine if cower is available.
+    """
+    rc, stdout, stderr = module.run_command('which cower', check_rc=False)
+    return rc == 0
 
 
-class AurError(Exception):
-    pass
+def pacman_in_path(module):
+    """
+    Determine if pacman is available.
+    """
+    rc, stdout, stderr = module.run_command('which pacman', check_rc=False)
+    return rc == 0
 
 
-def package_installed(package):
-    """Check if a package is already installed."""
-    status = subprocess.call(shlex.split('pacman -Q {0}'.format(package)))
-    return status == 0
+def package_installed(module, pkg):
+    """
+    Determine if a package is already installed.
+    """
+    rc, stdout, stderr = module.run_command('pacman -Q %s' % pkg, check_rc=False)
+    return rc == 0
 
 
-def chown(directory, user):
-    """Change directory owner to specified user."""
-    try:
-        uid = pwd.getpwnam(user).pw_uid
-        gid = pwd.getpwnam(user).pw_gid
-    except KeyError:
-        raise AurError('User {0} does not exist'.format(user))
+def check_packages(module, pkgs):
+    """
+    Inform the user what would change if the module were run.
+    """
+    would_be_changed = []
 
-    os.chown(directory, uid, gid)
+    for pkg in pkgs:
+        installed = package_installed(module, pkg)
+        if not installed:
+            would_be_changed.append(pkg)
 
-
-def remove(path):
-    try:
-        shutil.rmtree(path, ignore_errors=True)
-        os.remove(path)
-    except OSError as exc:
-        if exc.strerror == 'No such file or directory':
-            pass  # File is already removed, ignore.
+    if would_be_changed:
+        module.exit_json(changed=True, msg='%s package(s) would be installed' % (len(would_be_changed)))
+    else:
+        module.exit_json(changed=False, msg='all packages are already installed')
 
 
-def aur_download(package, user):
-    """Download and extract AUR snapshot."""
-    os.chdir(AUR_DIR)
-
-    snapshot = '{0}.tar.gz'.format(package)
-    aur_prefix = urljoin(AUR_URL, SNAPSHOT_DIR)
-    snapshot_url = urljoin(aur_prefix, snapshot)
-
-    # Try to clean up files from previous installations.
-    remove(package)
-    remove(snapshot)
-
-    try:
-        urllib.urlretrieve(snapshot_url, snapshot)
-    except IOError:
-        raise AurError('Failed to download package {0}'.format(package))
-
-    with tarfile.open(snapshot) as tar:
-        tar.extractall()
-
-    chown(package, user)
-
-
-def aur_build(package, user):
-    """Build package from AUR snapshot."""
-    os.chdir(os.path.join(AUR_DIR, package))
-
-    error = subprocess.call(
-        shlex.split(MAKEPKG.format(user=user, opts='-csf')))
-
-    if error:
-        raise AurError('Failed to build package {0}'.format(package))
+def download_packages(module, pkgs, dir, user):
+    """
+    Download the specified packages.
+    """
+    # Use cower, if available.
+    if cower_in_path(module):
+        cmds = ['sudo -u %s cower -dqf %s', ]
+    # Otherwise, fall back to cURL
+    else:
+        cmds = ['sudo -u %s curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/%s.tar.gz',
+                'sudo -u %s tar xzf %s.tar.gz']
+    for pkg in pkgs:
+        # If the package is already installed, skip the download.
+        if package_installed(module, pkg):
+            continue
+        # Change into the specified directory for download.
+        os.chdir(dir)
+        # Attempt to install the package.
+        for cmd in cmds:
+            rc, stdout, stderr = module.run_command(cmd % (user, pkg), check_rc=False)
+            if rc != 0:
+                module.fail_json(msg='failed to download package %s, because: %s' % (pkg,stderr))
 
 
-def aur_install(package, user):
-    """Install AUR package."""
-    os.chdir(os.path.join(AUR_DIR, package))
+def install_packages(module, pkgs, dir, user, virtual):
+    """
+    Install the specified packages via makepkg.
+    """
+    num_installed = 0
 
-    error = subprocess.call(shlex.split(MAKEPKG.format(user=user, opts='-i')))
-
-    if error:
-        raise AurError('Failed to install package {0}'.format(package))
-
-    # If succeeded remove clean up package files.
-    remove(package)
-    remove('{0}.tar.gz'.format(package))
+    if platform.machine().startswith('arm'):
+        makepkg_args = '-Acsri'
+    else:
+        makepkg_args = '-csri'
+    cmd = 'sudo -u %s PKGEXT=".pkg.tar" makepkg %s --noconfirm --needed --noprogressbar' % (user, makepkg_args)
+    if module.params['skip_pgp']:
+        cmd += ' --skippgpcheck'
+    for pkg in pkgs:
+        # If the package is already installed, skip the install.
+        if package_installed(module, pkg):
+            continue
+        
+        # Change into the package directory.
+        # Check if the package is a virtual package
+        if virtual:
+            os.chdir(os.path.join(dir, virtual))
+        else:
+            os.chdir(os.path.join(dir, pkg))
+        
+        # Attempt to install the directory
+        rc, stdout, stderr = module.run_command(cmd, check_rc=False)
+        if rc != 0:
+            module.fail_json(msg='failed to install package %s, because: %s' % (pkg,stderr))
+        num_installed += 1
+    # Exit with the number of packages succesfully installed.
+    if num_installed > 0:
+        module.exit_json(changed=True, msg='installed %s package(s)' % num_installed)
+    else:
+        module.exit_json(changed=False, msg='all packages were already installed')
 
 
 def main():
-    """Main Ansible module function."""
     module = AnsibleModule(
-        argument_spec=dict(
-            name=dict(required=True),
-            user=dict(required=False, default=os.environ.get('USER')),
+        argument_spec = dict(
+            name = dict(required=True),
+            user = dict(required=True),
+            dir  = dict(),
+            skip_pgp = dict(default=False, type='bool'),
+            virtual = dict(),
         ),
-        supports_check_mode=True
+        supports_check_mode = True
     )
 
-    package = module.params['name']
-    user = module.params['user']
+    # Fail of pacman is not available.
+    if not pacman_in_path(module):
+        module.fail_json(msg="could not locate pacman executable")
+
+    p = module.params
+
+    # Get all the requested package names.
+    pkgs = p['name'].split(',')
+
+    # Fail if the specified user does not exist.
+    try:
+        pwd.getpwnam(p['user'])
+    except KeyError:
+        module.fail_json(msg="user %s does not exist" % p['user'])
+    else:
+        user = p['user']
+
+    # If no directory was given, assume the packages should be downloaded to
+    # ~user/aur.
+    if not p['dir']:
+        home = os.path.expanduser('~%s' % user)
+        if not os.path.exists(home):
+            module.fail_json(msg="%s's home directory %s does not exist" % (user, home))
+
+        dir = os.path.join(home, 'aur')
+        if not os.path.exists(dir):
+            os.makedirs(dir)
+            uid = pwd.getpwnam(user).pw_uid
+            os.chown(dir, uid, -1)
+    else:
+        dir = os.path.expanduser(p['dir'])
+
+    # Fail if the specified directory does not exist.
+    if not os.path.exists(dir):
+        module.fail_json(msg="directory %s does not exist" % dir)
 
     if module.check_mode:
-        if package_installed(package):
-            module.exit_json(
-                changed=False,
-                msg='Package {0} already installed'.format(package))
-        else:
-            module.exit_json(
-                changed=True,
-                msg='Package {0} would be installed'.format(package))
+        check_packages(module, pkgs)
 
-    try:
-        aur_download(package, user)
-        aur_build(package, user)
-        aur_install(package, user)
-    except AurError as exc:
-        module.fail_json(msg=exc.message)
+    download_packages(module, pkgs, dir, user)
+    # Check if the package is virtual
+    if p['virtual']:
+        virtual = p['virtual']
+    else:
+        virtual = False
 
-    module.exit_json(msg='Package {0} installed'.format(package))
+    install_packages(module, pkgs, dir, user, virtual)
 
 
-if __name__ == "__main__":
-    main()
+from ansible.module_utils.basic import *
+main()

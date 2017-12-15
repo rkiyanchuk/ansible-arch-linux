@@ -5,13 +5,13 @@
     regexp: '^#?Color$'
     line: Color
 
-- name: 'configure Pacman: enable verbose package lists'
+- name: 'configure pacman: enable verbose package lists'
   lineinfile:
     path: /etc/pacman.conf
     regexp: '^#?VerbosePkgLists$'
     line: VerbosePkgLists
 
-- name: refresh pacman mirrors and upgrade system
+- name: refresh pacman cache and upgrade the system
   pacman: update_cache=yes upgrade=yes
 
 - name: install pacman cache cleanup service
@@ -25,4 +25,4 @@
     - reload systemd config
     - enable paccache timer
 
-- include: aur.yml
+- import_tasks: aur.yml
