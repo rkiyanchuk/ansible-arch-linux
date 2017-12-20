@@ -4,9 +4,11 @@
     name: yay
     user: "{{ user.name }}"
     dir: /tmp
+  tags: aur
 
 - name: install downgrade script for downgrading packages
   aur:
     name: downgrade
     user: "{{ user.name }}"
     dir: /tmp
+  tags: aur

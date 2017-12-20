@@ -8,16 +8,11 @@
     - gnome-screensaver
     - unclutter
 
-- name: install AUR dependencies
-  aur: name={{ item }} user={{ user.name }}
-  with_items:
-    - lxdm-themes
-
 - name: configure LXDM display manager
-  copy: src=lxdm.conf dest=/etc/lxdm/lxdm.conf backup=yes
+  copy: src=lxdm/lxdm.conf dest=/etc/lxdm/lxdm.conf backup=yes
 
 - name: configure LXDM PostLogin hook
-  copy: src=PostLogin dest=/etc/lxdm/PostLogin
+  copy: src=lxdm/PostLogin dest=/etc/lxdm/PostLogin
 
 - name: enable LXDM daemon
   service: name=lxdm enabled=yes

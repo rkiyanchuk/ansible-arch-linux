@@ -1,8 +1,8 @@
 arch_root: /mnt
 
-# These are aliases that define file names with group vars for specific machine.
+# These are aliases that define file names with group vars for a host.
 # The name is obtained from `ansible_product_name` fact and matched to
-# corresponding file in `group_vars`.
+# corresponding file in `host_vars`.
 machine_aliases:
   VirtualBox: vbox.yml
   Gazelle Professional: gzp.yml
@@ -15,28 +15,37 @@ locales:
 
 user:
   name: zoresvit
-  comment: Ruslan Kiianchuk
   group: zoresvit
+  uid: 1000
+  comment: Ruslan Kiyanchuk
   groups:
     - sys
     - video
     - wheel
     - systemd-journal
   shell: /bin/bash
-  email: ruslan.kiianchuk@gmail.com
+  email: ruslan.kiyanchuk@gmail.com
 
 extra_packages:
+  - gvim
+  - thunar
+  - thunar-archive-plugin
   - keepassxc
-  - mlocate
+
+  # Media
   - vlc
+  - goldendict
+
+  # Fonts
+  - ttf-hack
+
+  # Console
   - rxvt-unicode
   - bash-completion
-  - goldendict
-  - vim
+  - mlocate
 
-  # Filesystem
+  # Filesystems
   - dosfstools
-  - hfsprogs
   - ntfs-3g
   - exfat-utils
 
@@ -46,7 +55,13 @@ extra_packages:
   - p7zip
   - unrar
 
-dotfiles_repo: "https://github.com/zoresvit/dotfiles"
-dotfiles_install_cmd: "stow -S bash chrome conky git goldendict gtk mime python tmux urxvt vim xmonad xorg"
-dotfiles_deps:
-  - conky
+extra_aur_packages:
+  - dropbox
+  - albert
+  - thunar-dropbox
+
+dotfiles:
+  repo: "https://github.com/zoresvit/dotfiles"
+  install: "stow -S bash chrome conky git goldendict gtk mime python tmux urxvt vim xmonad xorg"
+  deps:
+    - conky

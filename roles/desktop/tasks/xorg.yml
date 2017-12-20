@@ -1,0 +1,20 @@
+---
+- name: install Xorg server
+  pacman: name={{ item }} state=present
+  with_items:
+    - xorg
+    - xterm
+    - notification-daemon
+    - xf86-input-libinput
+
+- name: configure input devices
+  copy: src=xorg/30-input.conf dest=/etc/X11/xorg.conf.d/30-input.conf
+
+- name: add user to video group
+  user: name={{ user.name }} groups=video append=yes
+
+# TODO: check if xbacklight works without out of the box.
+#- name: install acpilight from AUR
+#  aur: name={{ item }} user={{ user.name }}
+#  with_items:
+#    - acpilight

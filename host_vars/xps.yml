@@ -1,47 +1,38 @@
 hostname: xps
 
-host_extra_aur_packages:
-  - bcm4350-firmware
+host_extra_packages: []
+host_extra_aur_packages: []
 
-disk:
+drive:
   device: /dev/sda
   table: gpt
   partitions:
 
-    - name: boot
-      start: 1MiB
-      end: 256MiB
-      fstype: ext4
-      mountpoint: /boot
+    - name: root
+      start: 512MiB
+      end: 30GiB
+      filesystem: ext4
+      mountpoint: /
+      encrypt: true
 
     - name: efi
-      start: 256MiB
+      start: 0%
       end: 512MiB
-      type: EPS
-      fstype: vfat
+      flags: [boot]
+      filesystem: vfat
       mountpoint: /boot/efi
+      encrypt: false
 
-    - name: lvm
-      start: 512MiB
+    - name: var
+      start: 30GiB
+      end: 40GiB
+      filesystem: ext4
+      mountpoint: /var
+      encrypt: true
+
+    - name: home
+      start: 40GiB
       end: 100%
-      lvm_group: arch
-
-encrypt_partition: "{{ disk.partitions[2].name }}"
-
-lvm:
-  - group: arch
-    volumes:
-      - name: root
-        size: 30G
-        fstype: ext4
-        mountpoint: /
-
-      - name: var
-        size: 20G
-        fstype: ext4
-        mountpoint: /var
-
-      - name: home
-        size: 100%FREE
-        fstype: ext4
-        mountpoint: /home
+      filesystem: ext4
+      mountpoint: /home
+      encrypt: true

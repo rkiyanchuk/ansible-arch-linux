@@ -2,19 +2,31 @@
 - name: install udiskie for automount
   pacman: name=udiskie state=present
 
-- name: install pmount
-  aur: name=pmount user={{ user.name }}
-
-- name: ensure /media mount dir exists
-  file: path=/media state=directory
-
-- name: install media codecs and helpers
+- name: install media codecs
   pacman: name={{ item }} state=present
   with_items:
     - flac
     - lame
+    - opus
+    - gstreamer
     - gst-libav
+    - gstreamer-vaapi
     - gst-plugins-good
-    - exiv2
-    - perl-image-exiftool
-    - opus-tools
+    - gst-plugins-ugly
+
+- name: install pulseaudio
+  pacman: name={{ item }} state=present
+  with_items:
+    - alsa-utils
+    - pulseaudio
+    - pulseaudio-alsa
+    - pulseaudio-jack
+    - pavucontrol
+    - pamixer
+    - paprefs
+
+- name: configure to switch audio output to newly connected devices
+  lineinfile:
+    dest: /etc/pulse/default.pa
+    state: present
+    line: "load-module module-switch-on-connect"

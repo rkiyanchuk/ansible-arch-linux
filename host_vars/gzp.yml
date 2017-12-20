@@ -1,48 +1,36 @@
-hostname: gazp
+hostname: gzp
 
-disk:
+host_extra_packages: []
+host_extra_aur_packages: []
+
+drive:
   device: /dev/disk/by-uuid/ata-INTEL_SSDSC2BW120A4_CVDA336001ZK1207GN
   table: gpt
   partitions:
 
     - name: bios_grub
       start: 1MiB
-      end: 3MiB
-      type: bios_grub
-
-    - name: boot
-      start: 3MiB
-      end: 256MiB
-      fstype: ext4
-      mountpoint: /boot
-
-    - name: lvm
-      start: 256MiB
-      end: 100%
-      lvm_group: arch
-
-encrypt_partition: "{{ disk.partitions[2].name }}"
-
-lvm:
-  group: arch
-  volumes:
+      end: 512MiB
+      flags: [bios_grub]
+      encrypt: false
 
     - name: root
-      size: 20G
-      fstype: ext4
+      start: 512MiB
+      end: 30GiB
+      filesystem: ext4
       mountpoint: /
+      encrypt: true
 
     - name: var
-      size: 10G
-      fstype: ext4
+      start: 30GiB
+      end: 40GiB
+      filesystem: ext4
       mountpoint: /var
-
-    - name: swap
-      size: 1G
-      fstype: linux-swap
+      encrypt: true
 
     - name: home
-      size: 100%FREE
-      fstype: ext4
+      start: 40GiB
+      end: 100%
+      filesystem: ext4
       mountpoint: /home
-
+      encrypt: true

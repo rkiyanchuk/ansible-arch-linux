@@ -1,3 +1,0 @@
----
-- name: enable sshd
-  service: name=sshd.socket enabled=yes state=restarted

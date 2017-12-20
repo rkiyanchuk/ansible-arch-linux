@@ -10,6 +10,7 @@
     - pulseaudio-bluetooth 
   notify:
     - enable bluetooth
+    - restart pulseaudio as user
 
 - name: add user to lp group
   user: name={{ user.name }} groups=lp append=yes

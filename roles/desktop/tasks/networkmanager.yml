@@ -12,5 +12,5 @@
 
 - name: configure mirrors update hook
   copy:
-    src: mirrors-hook.sh
+    src: nm-mirrors-hook.sh
     dest: /etc/NetworkManager/dispatcher.d/99update-mirrors.sh

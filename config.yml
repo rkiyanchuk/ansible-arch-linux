@@ -13,36 +13,7 @@
     - name: enable time sync
       command: timedatectl set-ntp true
 
-    # Avoid interactive password prompts while installing AUR packages.
-    - name: set nopasswd for makepkg
-      lineinfile:
-        path: /etc/sudoers
-        state: present
-        line: '{{ user.name }} ALL=(ALL) NOPASSWD: ALL'
-        validate: 'visudo -cf %s'
-
-  roles:
-    - pacman
-    - xorg
-
-    # Network
-    - networkmanager
-    - ssh
-
-    # Desktop
-    - lxdm
-    - bluetooth
-    - pulseaudio
-    - cron
-    - xmonad
-    - tlp  # power management
-    - desktop
-
-
-  post_tasks:
-    - name: remove nopasswd for makepkg
-      lineinfile:
-        path: /etc/sudoers
-        state: absent
-        line: '{{ user.name }} ALL=(ALL) NOPASSWD: ALL'
-        validate: 'visudo -cf %s'
+  tasks:
+    - import_role: {name: pacman}
+    - import_role: {name: desktop}
+    - import_role: {name: laptop}

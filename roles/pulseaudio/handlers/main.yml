@@ -1,5 +1,0 @@
----
-- name: restart pulseaudio as user
-  systemd: name=pulseaudio.service user=yes state=restarted
-  become: yes
-  become_user: "{{ user.name }}"

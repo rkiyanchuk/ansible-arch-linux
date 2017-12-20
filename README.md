@@ -46,7 +46,7 @@ Usage
   configure full-featured ArchLinux:
 
   ```
-  ansible-playbook -ask-become-pass -i localhost config.yml
+  ansible-playbook --ask-become-pass -i localhost config.yml
   ```
 
 

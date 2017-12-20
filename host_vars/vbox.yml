@@ -5,6 +5,8 @@ host_extra_packages:
   - virtualbox-guest-modules-arch
   - virtualbox-guest-utils
 
+host_extra_aur_packages: []
+
 # UEFI/GPT
 drive:
   device: /dev/sda
@@ -28,13 +30,13 @@ drive:
 
     - name: var
       start: 10GiB
-      end: 11GiB
+      end: 15GiB
       filesystem: ext4
       mountpoint: /var
       encrypt: true
 
     - name: home
-      start: 11GiB
+      start: 15GiB
       end: 100%
       filesystem: ext4
       mountpoint: /home

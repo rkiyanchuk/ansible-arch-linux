@@ -1,5 +1,17 @@
 ---
 
+- import_tasks: xorg.yml
+- import_tasks: lxdm.yml
+- import_tasks: media.yml
+- import_tasks: networkmanager.yml
+- import_tasks: bluetooth.yml
+- import_tasks: ssh.yml
+
+- name: install cron
+  pacman: name=cronie state=present
+  notify:
+    - enable cron
+
 - name: install packages for desktop environment from repo
   pacman: name={{ item }}
   with_items:
@@ -11,27 +23,4 @@
     - xmonad
     - xmonad-contrib
 
-- name: install packages for desktop environment from AUR
-  pacman: name={{ item }}
-  with_items:
-    - albert
-
-- include: media.yml
-
-- name: install extra packages from repo
-  pacman: name={{ item }}
-  with_items: "{{ extra_packages }}"
-
-- name: install extra packages from AUR
-  aur: name={{ item }} user={{ user.name }}
-  with_items: "{{ extra_aur_packages }}"
-
-- name: install host-specific packages from repo
-  pacman: name={{ item }}
-  with_items: "{{ host_extra_packages }}"
-  when: host_extra_packages is defined
-
-- name: install host-specific packages from AUR
-  aur: name={{ item }} user={{ user.name }}
-  with_items: "{{ host_extra_aur_packages }}"
-  when: host_extra_aur_packages is defined
+- import_tasks: extra_packages.yml
