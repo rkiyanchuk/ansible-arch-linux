@@ -31,13 +31,12 @@ extra_packages:
   - thunar
   - thunar-archive-plugin
   - keepassxc
+  - git
 
   # Media
   - vlc
   - goldendict
-
-  # Fonts
-  - ttf-hack
+  - chromium
 
   # Console
   - rxvt-unicode
@@ -59,6 +58,7 @@ extra_aur_packages:
   - dropbox
   - albert
   - thunar-dropbox
+  - ttf-material-design-icons-git
 
 dotfiles:
   repo: "https://github.com/zoresvit/dotfiles"

@@ -13,6 +13,7 @@
     - gstreamer-vaapi
     - gst-plugins-good
     - gst-plugins-ugly
+    - gst-plugins-bad
 
 - name: install pulseaudio
   pacman: name={{ item }} state=present
