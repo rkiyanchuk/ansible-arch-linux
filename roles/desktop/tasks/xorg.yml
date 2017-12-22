@@ -39,20 +39,34 @@
     - ttf-dejavu
 
 - name: configure GTK 2
-  copy: src=gtk-2.0/gtkrc dest=/etc/gtk-2.0/gtkrc
+  copy:
+    src: gtk-2.0/gtkrc
+    dest: /etc/gtk-2.0/gtkrc
 
 - name: configure GTK 3
   copy: src=gtk-3.0/settings.ini dest=/etc/gtk-3.0/settings.ini
 
 - name: set main window background color for GTK 3
-  copy: src=gtk-3.0/gtk.css dest=/etc/gtk-3.0/gtk.css
+  copy:
+    src: gtk-3.0/gtk.css
+    dest: /etc/gtk-3.0/gtk.css
 
 - name: configure Qt 4
-  copy: src=qt/Trolltech.conf dest=/etc/xdg/Trolltech.conf
+  copy:
+    src: qt/Trolltech.conf
+    dest: /etc/xdg/Trolltech.conf
 
 - name: configure Qt 5
-  copy: src=qt/qt5ct.conf dest=/home/{{ user.name }}/.config/qt5ct/qt5ct.conf
+  copy:
+    src: qt/qt5ct.conf
+    dest: /home/{{ user.name }}/.config/qt5ct/qt5ct.conf
+    owner: "{{ user.name }}"
 
+- name: configure cursor
+  lineinfile:
+    path: /usr/share/icons/default/index.theme
+    regexp: ^Inherits=
+    line: Inherits=Breeze_Snow
 
 # TODO: check if xbacklight works without out of the box.
 #- name: install acpilight from AUR
