@@ -4,8 +4,8 @@
   with_items:
     - xorg
     - xterm
-    - notification-daemon
     - xf86-input-libinput
+    - dunst
 
 - name: configure input devices
   copy: src=xorg/30-input.conf dest=/etc/X11/xorg.conf.d/30-input.conf
