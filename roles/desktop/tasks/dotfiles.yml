@@ -3,19 +3,18 @@
   stat:
     path: "${HOME}/dotfiles"
   become_user: "{{ user.name }}"
-  register: dotfiles
+  register: dotfiles_dir
 
 - name: clone dotfiles
   command: "git clone {{ dotfiles.repo }} ${HOME}/dotfiles"
   become_user: "{{ user.name }}"
-  when: not dotfiles.stat.exists
+  when: not dotfiles_dir.stat.exists
 
 - name: install dotfiles dependencies
   pacman:
     name: "{{ item }}"
     state: present
   with_items: "{{ dotfiles.deps }}"
-  become_user: "{{ user.name }}"
 
 - name: install dotfiles
   command: "{{ dotfiles.install_cmd }}"

@@ -32,21 +32,35 @@
 - name: configure GTK 3
   copy: src=gtk-3.0/settings.ini dest=/etc/gtk-3.0/settings.ini
 
-- name: set main window background color for GTK 3
+- name: create gtk-3.0 user config dir
+  file:
+    path: "/home/{{ user.name }}/.config/gtk-3.0"
+    owner: "{{ user.name }}"
+    state: directory
+
+- name: create user gtk.css file for GTK 3
   copy:
     src: gtk-3.0/gtk.css
-    dest: /etc/gtk-3.0/gtk.css
+    dest: "/home/{{ user.name }}/.config/gtk-3.0/gtk.css"
+    owner: "{{ user.name }}"
 
 - name: configure Qt 4
   copy:
     src: qt/Trolltech.conf
     dest: /etc/xdg/Trolltech.conf
 
+- name: create qt5ct config dir
+  file:
+    path: /home/{{ user.name }}/.config/qt5ct/
+    owner: "{{ user.name }}"
+    state: directory
+
 - name: configure Qt 5
   copy:
     src: qt/qt5ct.conf
     dest: /home/{{ user.name }}/.config/qt5ct/qt5ct.conf
     owner: "{{ user.name }}"
+
 
 - name: configure cursor
   lineinfile:
