@@ -59,6 +59,7 @@ extra_aur_packages:
   - albert
   - thunar-dropbox
   - ttf-material-design-icons-git
+  - kalu
 
 dotfiles:
   repo: "https://github.com/zoresvit/dotfiles"

@@ -2,6 +2,7 @@
 
 - import_tasks: xorg.yml
 - import_tasks: lxdm.yml
+- import_tasks: themes.yml
 - import_tasks: media.yml
 - import_tasks: networkmanager.yml
 - import_tasks: bluetooth.yml
@@ -23,19 +24,15 @@
     - xmonad
     - xmonad-contrib
 
+- name: enable redshift service
+  service: 
+    name: redshift.service
+    enabled: yes
+    state: started
+  become_user: "{{ user.name }}"
+
+
+
 - import_tasks: extra_packages.yml
+- import_tasks: dotfiles.yml
 
-- name: clone dotfiles
-  command: "git clone {{ dotfiles.repo }} ${HOME}/dotfiles"
-  become_user: "{{ user.name }}"
-
-- name: install dotfiles dependencies
-  pacman:
-    name: "{{ item }}"
-    state: present
-  with_items: "{{ dotfiles.deps }}"
-  become_user: "{{ user.name }}"
-
-- name: install dotfiles
-  command: "{{ dotfiles.install_cmd }}"
-  become_user: "{{ user.name }}"
