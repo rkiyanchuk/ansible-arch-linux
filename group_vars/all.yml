@@ -65,7 +65,7 @@ extra_aur_packages:
 
 dotfiles:
   repo: "https://github.com/zoresvit/dotfiles"
-  install_cmd: "stow -d ${HOME}/dotfiles -S $(find /home/{{ user.name }}/dotfiles/ -maxdepth 1 -type d -not -name ".*" | cut -d '/' -f 5)"
+  install_cmd: "stow -d ${HOME}/dotfiles -S $(find /home/{{ user.name }}/dotfiles/ -maxdepth 1 -type d -not -name '.*' | cut -d '/' -f 5)"
   deps:
     - conky
     - stow
