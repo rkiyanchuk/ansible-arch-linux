@@ -32,6 +32,7 @@ extra_packages:
   - thunar-archive-plugin
   - keepassxc
   - git
+  - tldr
 
   # Media
   - vlc
@@ -60,6 +61,7 @@ extra_aur_packages:
   - thunar-dropbox
   - ttf-material-design-icons-git
   - kalu
+  - pasystray-gtk3-standalone
 
 dotfiles:
   repo: "https://github.com/zoresvit/dotfiles"
