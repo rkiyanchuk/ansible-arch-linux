@@ -23,7 +23,7 @@
 
 - name: mount partitions
   mount:
-    name: "{{ arch_root }}{{ item.mountpoint }}"
+    path: "{{ arch_root }}{{ item.mountpoint }}"
     src: "{{ item.encrypt | ternary('/dev/mapper/arch-' + item.name, 'PARTLABEL=' + item.name) }}"
     fstype: "{{ item.filesystem }}"
     state: mounted

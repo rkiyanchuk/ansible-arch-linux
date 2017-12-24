@@ -35,13 +35,17 @@
     # Prepare for chroot to new install location.
     - name: mount proc
       mount:
-        name: "{{ arch_root }}/proc"
         src: proc
+        path: "{{ arch_root }}/proc"
         fstype: proc
         state: mounted
 
     - name: mount temporary api systems
-      command: "mount -o bind /{{ item }} {{ arch_root }}/{{ item }}"
+      mount:
+        src: /{{ item }}
+        path: "{{ arch_root }}/{{ item }}"
+        opts: bind
+        state: mounted
       with_items:
         - sys
         - dev
