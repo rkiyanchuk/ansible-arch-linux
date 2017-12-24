@@ -17,3 +17,8 @@
     - import_role: {name: pacman}
     - import_role: {name: desktop}
     - import_role: {name: laptop}
+
+    - name: start LXDM
+      service:
+        name: lxdm
+        state: started
