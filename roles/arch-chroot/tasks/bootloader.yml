@@ -33,7 +33,7 @@
   lineinfile:
     path: /etc/mkinitcpio.conf
     regexp: ^HOOKS=
-    line: HOOKS="{{ initramfs_hooks | join(" ") }}"
+    line: HOOKS="{{ initramfs_hooks | join(' ') }}"
 
 - name: rebuild initramfs
   command: mkinitcpio -p linux
