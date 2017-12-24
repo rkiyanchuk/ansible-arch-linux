@@ -4,7 +4,7 @@ host_extra_packages: []
 host_extra_aur_packages: []
 
 drive:
-  device: /dev/disk/by-uuid/ata-INTEL_SSDSC2BW120A4_CVDA336001ZK1207GN
+  device: /dev/disk/by-id/ata-INTEL_SSDSC2BW120A4_CVDA336001ZK1207GN
   table: gpt
   partitions:
 
@@ -16,21 +16,14 @@ drive:
 
     - name: root
       start: 512MiB
-      end: 30GiB
+      end: 50GiB
       filesystem: ext4
       mountpoint: /
       encrypt: true
 
     - name: var
-      start: 30GiB
-      end: 40GiB
-      filesystem: ext4
-      mountpoint: /var
-      encrypt: true
-
-    - name: home
-      start: 40GiB
+      start: 50GiB
       end: 100%
       filesystem: ext4
-      mountpoint: /home
+      mountpoint: /var
       encrypt: true
