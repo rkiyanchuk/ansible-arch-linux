@@ -33,6 +33,7 @@ extra_packages:
   - keepassxc
   - git
   - tldr
+  - calibre
 
   # Media
   - vlc
