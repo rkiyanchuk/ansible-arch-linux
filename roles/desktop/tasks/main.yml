@@ -23,6 +23,10 @@
     - xmobar
     - xmonad
     - xmonad-contrib
+    - dunst
+    - dmenu
+    - deepin-screenshot
+    - geeqie
 
 - name: enable redshift service
   command: systemctl --user enable redshift.service

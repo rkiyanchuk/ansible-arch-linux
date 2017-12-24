@@ -5,8 +5,6 @@
     - xorg
     - xterm
     - xf86-input-libinput
-    - dunst
-    - dmenu
 
 - name: configure input devices
   copy: src=xorg/30-input.conf dest=/etc/X11/xorg.conf.d/30-input.conf
