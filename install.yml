@@ -41,11 +41,7 @@
         state: mounted
 
     - name: mount temporary api systems
-      mount:
-        src: /{{ item }}
-        path: "{{ arch_root }}/{{ item }}"
-        opts: bind
-        state: mounted
+      command: "mount -o bind /{{ item }} {{ arch_root }}/{{ item }}"
       with_items:
         - sys
         - dev
