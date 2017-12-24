@@ -6,9 +6,20 @@
     - xterm
     - xf86-input-libinput
     - dunst
+    - dmenu
 
 - name: configure input devices
   copy: src=xorg/30-input.conf dest=/etc/X11/xorg.conf.d/30-input.conf
 
 - name: add user to video group
   user: name={{ user.name }} groups=video append=yes
+
+- name: create dunst config dir
+  file:
+    path: "/etc/xdg/dunst"
+    state: directory
+
+- name: configure dunst notifications
+  copy:
+    src: dunstrc
+    dest: "/etc/xdg/dunst/dunstrc"
