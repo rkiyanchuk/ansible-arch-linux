@@ -11,6 +11,14 @@
     - "{{ drive.partitions }}"
   when: item.encrypt and item.name == 'root'
 
+- name: add LUKS key file to root device
+  shell: >
+    echo -n "{{ hostvars.localhost.luks_passphrase }}" |
+    cryptsetup -qv luksAddKey /dev/disk/by-partlabel/{{ item.name }} /{{ luks_key_name }}
+  with_items:
+    - "{{ drive.partitions }}"
+  when: item.encrypt and item.name == 'root'
+
 - name: encrypt non-root devices using key file
   command: "cryptsetup -q --key-file /{{ luks_key_name }} luksFormat /dev/disk/by-partlabel/{{ item.name }}"
   with_items:
