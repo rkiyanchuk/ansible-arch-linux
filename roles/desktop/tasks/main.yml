@@ -28,6 +28,9 @@
     - deepin-screenshot
     - geeqie
 
+- name: configure compton compositor
+  copy: compton.conf /etc/xdg/compton.conf
+
 - name: enable redshift service
   command: systemctl --user enable redshift.service
   become_user: "{{ user.name }}"
