@@ -29,7 +29,10 @@
     - geeqie
 
 - name: configure compton compositor
-  copy: compton.conf /etc/xdg/compton.conf
+  copy:
+    src: compton.conf
+    dest: /etc/xdg/compton.conf
+    backup: yes
 
 - name: enable redshift service
   command: systemctl --user enable redshift.service

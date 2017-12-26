@@ -17,7 +17,7 @@
 
 - name: configure video driver
   copy: src=xorg/30-video.conf dest=/etc/X11/xorg.conf.d/30-video.conf
-  when: "Intel" in graphics.stdout
+  when: "'Intel' in graphics.stdout"
 
 - name: add user to video group
   user: name={{ user.name }} groups=video append=yes
