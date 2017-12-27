@@ -23,6 +23,10 @@
   with_items:
     - ttf-hack
     - ttf-dejavu
+    # Fonts to use asian characters
+    - ttf-freefont
+    - ttf-arphic-uming
+    - ttf-baekmuk
 
 - name: configure GTK 2
   copy:
