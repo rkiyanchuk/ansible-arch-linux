@@ -1,22 +1,29 @@
 ---
 - name: install sudo
-  pacman: name=sudo state=present
+  pacman:
+    name: sudo
+    state: present
 
 - name: configure sudoers
-  template: src=sudoers.j2 dest=/etc/sudoers mode=440
+  template:
+    src: sudoers.j2
+    dest: /etc/sudoers
+    mode: 440
 
 - name: create user group
-  group: name={{ user.group }} state=present
+  group:
+    name: "{{ user.group }}"
+    state: present
 
 - name: create user
-  user: >
-    name={{ user.name }}
-    group={{ user.group }}
-    append=yes
-    groups={{ user.groups | join(',') }}
-    comment={{ user.comment }}
-    password={{ hostvars.localhost.user_password }}
-    update_password=on_create
+  user:
+    name: "{{ user.name }}"
+    group: "{{ user.group }}"
+    append: yes
+    groups: "{{ user.groups | join(',') }}"
+    comment: "{{ user.comment }}"
+    password: "{{ hostvars.localhost.user_password }}"
+    update_password: on_create
 
 - name: lock root account
   command: passwd -l root

@@ -1,7 +1,10 @@
 ---
 - name: configure locales
-  replace: dest=/etc/locale.gen regexp='#.*({{ item }}.UTF-8 UTF-8)' replace='\1'
-  with_items: '{{ locales }}'
+  replace:
+    dest: /etc/locale.gen
+    regexp: "#.*({{ item }}.UTF-8 UTF-8)"
+    replace: '\1'
+  with_items: "{{ locales }}"
 
 - name: set active locale to English US
   shell: 'echo "LANG=en_US.UTF-8" > /etc/locale.conf'
@@ -10,7 +13,10 @@
   command: locale-gen
 
 - name: set timezone
-  file: "src=/usr/share/zoneinfo/{{ timezone }} dest=/etc/localtime state=link"
+  file:
+    src: "/usr/share/zoneinfo/{{ timezone }}"
+    dest: /etc/localtime
+    state: link
 
 - name: set hardware clock from system and configure for UTC timescale
   command: hwclock --systohc --utc

@@ -1,13 +1,15 @@
 ---
 - name: install bluetooth packages
-  pacman: name={{ item }} state=present
+  pacman:
+    name: "{{ item }}"
+    state: present
   with_items:
     - blueman
     - bluez
     - bluez-firmware
     - bluez-libs
     - bluez-utils
-    - pulseaudio-bluetooth 
+    - pulseaudio-bluetooth
   notify:
     - enable bluetooth
     - restart pulseaudio as user

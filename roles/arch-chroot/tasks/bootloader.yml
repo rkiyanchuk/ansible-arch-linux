@@ -17,7 +17,7 @@
 
 - name: restrict access permissions to initramfs
   file:
-    path: /boot/{{ item }}
+    path: "/boot/{{ item }}"
     mode: 0600
   with_items:
     - initramfs-linux.img
@@ -28,11 +28,15 @@
   register: firmware
 
 - name: create /boot/efi directory
-  file: path=/boot/efi state=directory
+  file:
+    path: /boot/efi
+    state: directory
   when: firmware.stdout == 'UEFI'
 
 - name: install bootloader packages
-  pacman: name={{ item }} state=present
+  pacman:
+    name: "{{ item }}"
+    state: present
   with_items:
     - grub
     - efibootmgr
@@ -67,14 +71,14 @@
   when: firmware.stdout == 'UEFI'
 
 - name: install GRUB bootloader for BIOS
-  command: grub-install --recheck {{ drive.device }}
+  command: "grub-install --recheck {{ drive.device }}"
   when: firmware.stdout == 'BIOS'
 
 - name: configure GRUB
   command: grub-mkconfig -o /boot/grub/grub.cfg
 
 - name: create UEFI boot entry
-  command: efibootmgr --create --disk {{ drive.device }} --part {{ item.0 }} --loader /EFI/arch/grubx64.efi --label "Arch Linux"
+  command: "efibootmgr --create --disk {{ drive.device }} --part {{ item.0 }} --loader /EFI/arch/grubx64.efi --label 'Arch Linux'"
   when: firmware.stdout == 'UEFI' and item.1.name == 'efi'
   with_indexed_items: "{{ drive.partitions }}"
   ignore_errors: yes
@@ -82,6 +86,6 @@
 - name: write EFI entry for VirtualBox
   lineinfile:
     path: /boot/efi/startup.nsh
-    line: "EFI\\arch\\grubx64.efi"
+    line: 'EFI\arch\grubx64.efi'
     create: yes
   when: ansible_product_name == "VirtualBox"

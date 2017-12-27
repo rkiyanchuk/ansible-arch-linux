@@ -1,34 +1,42 @@
 ---
 
 - name: configure repository mirrors
-  command: reflector --sort score -p https --country '{{ country }}' --save /etc/pacman.d/mirrorlist
+  command: "reflector --sort score -p https --country '{{ country }}' --save /etc/pacman.d/mirrorlist"
 
 - name: upgrade system to latest state
-  pacman: update_cache=yes upgrade=yes
+  pacman:
+    update_cache: yes
+    upgrade: yes
 
 - import_tasks: locales.yml
 
 - name: set console font
-  lineinfile: 
-    path: /etc/vconsole.conf 
+  lineinfile:
+    path: /etc/vconsole.conf
     line: "FONT=Lat2-Terminus16"
     create: yes
 
 - name: configure hostname
-  lineinfile: 
+  lineinfile:
     path: /etc/hostname
-    line: '{{ hostname }}'
+    line: "{{ hostname }}"
     create: yes
 
 - name: set hostname in /etc/hosts file
-  template: src=hosts.j2 dest=/etc/hosts mode=644
+  template:
+    src: hosts.j2
+    dest: /etc/hosts mode=644
 
 - name: install base packages
-  pacman: name={{ item }} state=present
+  pacman:
+    name: "{{ item }}"
+    state: present
   with_items: "{{ packages }}"
 
 - name: install intel microcode
-  pacman: name=intel-ucode state=present
+  pacman:
+    name: intel-ucode
+    state: present
   when: "'GenuineIntel' in ansible_processor"
 
 - import_tasks: user.yml
