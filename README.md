@@ -25,15 +25,14 @@ Usage
 4. Download and decompress playbook from GitHub:
 
   ```
-  curl -L https://github.com/zoresvit/ansible-arch-linux/archive/master.tar.gz | tar -x
+  curl -L https://github.com/zoresvit/ansible-arch-linux/archive/master.tar.gz | tar -xz
   cd zoresvit-ansible-arch-linux
   ```
 
-5. Install Ansible, `passlib` (for creating password) and `pexpect` (for 
-   automating interactive commands):
+5. Install Ansible and `passlib` (for hashing password):
 
   ```
-  pacman -Sy ansible python2-passlib python2-pexpect
+  pacman -Sy ansible python2-passlib
   ```
 
 6. Run Ansible to provision base system:
@@ -43,42 +42,8 @@ Usage
   ```
 
 7. After the reboot login into the new system and run Ansible to install and
-  configure full-featured ArchLinux:
+  configure full-featured Arch Linux:
 
   ```
   ansible-playbook --ask-become-pass -i localhost config.yml
   ```
-
-
-TODO
-====
-
-Fonts to show asian characters:
-```
- ttf-freefont, ttf-arphic-uming, ttf-baekmuk
-```
-
-Packages
-```
-pacman:
-  - vim
-
-# Filesystem
-  - dosfstools
-  - hfsprogs
-  - ntfs-3g
-  - exfat-utils
-
-# Archive
-  - zip
-  - unzip
-  - p7zip
-  - unrar
-  - atool
-  -
-    - breeze-default-cursor-theme
-    - breeze-hacked-cursor-theme
-
-```
-
-- Add NetworkManager hook for updating mirrors via reflector
