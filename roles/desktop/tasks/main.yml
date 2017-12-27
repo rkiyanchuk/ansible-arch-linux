@@ -7,6 +7,7 @@
 - import_tasks: networkmanager.yml
 - import_tasks: bluetooth.yml
 - import_tasks: ssh.yml
+- import_tasks: printing.yml
 
 - name: install cron
   pacman: name=cronie state=present
