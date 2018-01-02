@@ -2,9 +2,6 @@
 
 source /etc/X11/xinit/xinitrc.d/50-systemd-user.sh
 
-gnome-screensaver &
-unclutter -b --timeout 3 --jitter 5 --ignore-scrolling
-
 # Set screen wallpaper (see man for choosing image).
 feh --bg-fill ${HOME}/.xmonad/images/zoresvit_wallpaper.png
 
@@ -16,10 +13,12 @@ gnome-keyring-daemon --daemonize --start \
     --components=gpg,pkcs11,secrets,ssh > /dev/null
 
 setsid "${HOME}/.xmonad/lock.sh" &
-udiskie &
-eval $(ssh-agent -s)
+udiskie > /dev/null 2>&1 &
 
 stalonetray &  # Start system tray.
 
 # Try to start Compton compositor on up to 4 displays.
-seq 0 3 | xargs -l1 -I@ compton -b -d :0.@
+seq 0 3 | xargs -l1 -I@ compton -b -d :0.@ > /dev/null 2>&1 &
+
+gnome-screensaver > /dev/null 2>&1 &
+unclutter -grab -jitter 5 &
