@@ -8,3 +8,17 @@
 
 - name: install dotfiles
   command: chdir=~/dotfiles {{ dotfiles_install_cmd }}
+
+# Keepassxc config is installed here once instead of symlinked from dotfiles
+# repo as keepassxc constantly rewrites its config cause changed to be added
+# into Git repository.
+- name: create Keepassxc config dir
+  file:
+    path: "${HOME}/.config/keepassxc"
+    state: directory
+  become_user: "{{ user.name }}"
+
+- name: install Keepassxc config
+  copy:
+    src: keepassxc.ini
+    dest: "${HOME}/.config/keepassxc/"
