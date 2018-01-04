@@ -63,6 +63,7 @@ extra_aur_packages:
   - ttf-material-design-icons-git
   - kalu
   - pasystray-gtk3-standalone
+  - flameshot
 
 dotfiles:
   repo: "https://github.com/zoresvit/dotfiles"
