@@ -4,6 +4,8 @@ host_extra_packages: []
 
 host_extra_aur_packages:
   - bcm4350-firmware
+  - aic94xx-firmware  # RAID controller driver
+  - wd719x-firmware  # Western Digital SCSI driver
 
 drive:
   device: /dev/sda
