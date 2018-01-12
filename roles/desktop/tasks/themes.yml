@@ -23,13 +23,18 @@
   with_items:
     - ttf-hack
     - ttf-dejavu
+    - ttf-ubraille
     # Fonts to use asian characters
     - ttf-freefont
     - ttf-arphic-uming
     - ttf-baekmuk
+    - ttf-indic-otf
     # Emoji
     - noto-fonts
     - noto-fonts-emoji
+    - ttf-hannom  # Vietnamese
+    # Math
+    - font-mathematica
 
 - name: configure GTK 2
   copy:
