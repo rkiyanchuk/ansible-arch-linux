@@ -27,6 +27,9 @@
     - ttf-freefont
     - ttf-arphic-uming
     - ttf-baekmuk
+    # Emoji
+    - noto-fonts
+    - noto-fonts-emoji
 
 - name: configure GTK 2
   copy:
