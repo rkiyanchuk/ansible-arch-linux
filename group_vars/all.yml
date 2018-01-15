@@ -62,7 +62,7 @@ extra_aur_packages:
   - thunar-dropbox
   - ttf-material-design-icons-git
   - kalu
-  - pasystray-gtk3-standalone
+  - pasystray
   - flameshot
   - ttf-emojione-color
 
