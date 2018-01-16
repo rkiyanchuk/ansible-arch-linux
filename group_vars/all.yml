@@ -67,6 +67,7 @@ extra_aur_packages:
   - pasystray-gtk3-git
   - flameshot
   - ttf-emojione-color
+  - urxvt-clipboard
 
 dotfiles:
   repo: "https://github.com/zoresvit/dotfiles"
