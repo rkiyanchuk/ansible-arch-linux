@@ -56,13 +56,15 @@ extra_packages:
   - p7zip
   - unrar
 
+  - muparser  # optional for Albert calculator extension
+
 extra_aur_packages:
   - dropbox
   - albert
   - thunar-dropbox
   - ttf-material-design-icons-git
   - kalu
-  - pasystray
+  - pasystray-gtk3-git
   - flameshot
   - ttf-emojione-color
 
