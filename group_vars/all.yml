@@ -68,6 +68,7 @@ extra_aur_packages:
   - flameshot
   - ttf-emojione-color
   - urxvt-clipboard
+  - xkb-switch
 
 dotfiles:
   repo: "https://github.com/zoresvit/dotfiles"
