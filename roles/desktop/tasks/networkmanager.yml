@@ -14,3 +14,4 @@
   copy:
     src: nm-mirrors-hook.sh
     dest: /etc/NetworkManager/dispatcher.d/99update-mirrors.sh
+    mode: 0744
