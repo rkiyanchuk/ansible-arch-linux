@@ -181,13 +181,10 @@ history = ctrl+grave
 context = ctrl+shift+period
 
 [urgency_low]
-# IMPORTANT: colors have to be defined in quotation marks.
-# Otherwise the "#" and following would be interpreted as a comment.
-frame_color = "#31363b"
-foreground = "#ffffff"
-background = "#ff0000"
-#background = "#2B313C"
-timeout = 4
+frame_color = "#3b4045"
+foreground = "#fcfcfc"
+background = "#232629"
+timeout = 6
 
 [urgency_normal]
 frame_color = "#3b4045"
@@ -196,10 +193,9 @@ background = "#232629"
 timeout = 6
 
 [urgency_critical]
-frame_color = "#31363b"
-foreground = "#ffff00"
-background = "#191311"
-#background = "#2B313C"
+frame_color = "#3b4045"
+foreground = "#fcfcfc"
+background = "#31363b"
 timeout = 8
 
 
