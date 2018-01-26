@@ -31,7 +31,6 @@
     - ttf-indic-otf
     # Emoji
     - noto-fonts
-    - noto-fonts-emoji
     - ttf-hannom  # Vietnamese
     # Math
     - font-mathematica
