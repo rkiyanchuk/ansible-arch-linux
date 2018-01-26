@@ -49,6 +49,7 @@
       GRUB_CMDLINE_LINUX="rd.luks.uuid={{ item.stdout }}
       rd.luks.name={{ item.stdout }}=arch-root
       rd.luks.key={{ item.stdout }}=/{{ luks_key_name }}"
+      acpi_sleep=nonvs
   with_items: "{{ hostvars.localhost.device_uuids.results }}"
   when: item.stdout is defined and item.item.name == 'root'
 
