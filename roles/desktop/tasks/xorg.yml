@@ -22,6 +22,9 @@
 - name: add user to video group
   user: name={{ user.name }} groups=video append=yes
 
+- name: add user to audio group
+  user: name={{ user.name }} groups=audio append=yes
+
 - name: create dunst config dir
   file:
     path: "/etc/xdg/dunst"
