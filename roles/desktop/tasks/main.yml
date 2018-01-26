@@ -40,4 +40,3 @@
   become_user: "{{ user.name }}"
 
 - import_tasks: extra_packages.yml
-- import_tasks: dotfiles.yml
