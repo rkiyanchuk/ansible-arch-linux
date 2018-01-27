@@ -20,6 +20,6 @@ seq 0 3 | xargs -l1 -I@ compton -b -d :0.@ > /dev/null 2>&1 &
 
 gnome-screensaver > /dev/null 2>&1 &
 
-unclutter -jitter 5 -idle 3 -root &
+unclutter --jitter 5 --timeout 3 --ignore-scrolling &
 
 stalonetray &  # Start system tray.

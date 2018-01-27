@@ -69,6 +69,7 @@ extra_aur_packages:
   - ttf-emojione-color
   - urxvt-clipboard
   - xkb-switch
+  - unclutter-xfixes-git
 
 dotfiles:
   repo: "https://github.com/zoresvit/dotfiles"
