@@ -47,3 +47,12 @@ Usage
   ```
   ansible-playbook --ask-become-pass -i localhost config.yml
   ```
+
+Notes
+=====
+
+Generating SSH key:
+
+```
+   ssh-keygen -t ed25519 -C "${USER}@${HOSTNAME}-$(date -I)"
+```
