@@ -6,5 +6,5 @@ IFACE=$1
 STATUS=$2
 
 if [[ ${STATUS} == "up" ]]; then
-    reflector --sort score -p https --country {{ country }} --save /etc/pacman.d/mirrorlist
+    reflector --sort score -p https --country "{{ country }}" --save /etc/pacman.d/mirrorlist
 fi
