@@ -41,7 +41,7 @@ extra_packages:
   - chromium
 
   # Console
-  - rxvt-unicode
+  - termite
   - bash-completion
   - mlocate
 
@@ -67,13 +67,12 @@ extra_aur_packages:
   - pasystray-gtk3-git
   - flameshot
   - ttf-emojione-color
-  - urxvt-clipboard
   - xkb-switch
   - unclutter-xfixes-git
 
 dotfiles:
   repo: "https://github.com/zoresvit/dotfiles"
-  install_cmd: "stow -d ${HOME}/dotfiles -S albert bash chrome conky git goldendict mime python tmux urxvt vim xmonad xorg"
+  install_cmd: "stow -d ${HOME}/dotfiles -S albert bash chrome conky git goldendict mime python tmux vim xmonad xorg"
   deps:
     - conky
     - stow
