@@ -69,6 +69,7 @@ extra_aur_packages:
   - ttf-emojione-color
   - xkb-switch
   - unclutter-xfixes-git
+  - chromium-widevine  # Google's Content Decryption Module plugin.
 
 dotfiles:
   repo: "https://github.com/zoresvit/dotfiles"
