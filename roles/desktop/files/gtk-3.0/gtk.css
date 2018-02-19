@@ -1,3 +1,7 @@
 #vim-main-window {
     background-color: #002b36;
 }
+
+.termite {
+    padding: 5px;
+}
