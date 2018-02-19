@@ -77,3 +77,7 @@ dotfiles:
     - conky
     - stow
     - xclip
+    - python-jedi
+    - source-highlight
+    - hasktags
+    - ctags
