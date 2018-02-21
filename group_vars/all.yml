@@ -34,6 +34,7 @@ extra_packages:
   - git
   - tldr
   - calibre
+  - ripgrep
 
   # Media
   - smplayer
