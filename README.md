@@ -61,3 +61,4 @@ TODO
 ====
 
 - Fix configuration for printer discovery (Avahi, etc).
+- Configure swap file.
