@@ -30,6 +30,7 @@ extra_packages:
   - gvim
   - thunar
   - thunar-archive-plugin
+  - gvfs  # For mounting and Trash support in Thunar
   - keepassxc
   - git
   - tldr
