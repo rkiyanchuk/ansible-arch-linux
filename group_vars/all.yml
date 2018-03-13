@@ -58,6 +58,15 @@ extra_packages:
   - p7zip
   - unrar
 
+  # Spell check.
+  - aspell
+  - aspell-en
+  - aspell-ru
+  - aspell-uk
+  - hunspell
+  - hunspell-en
+  - hunspell-he
+
   - muparser  # optional for Albert calculator extension
 
 extra_aur_packages:
