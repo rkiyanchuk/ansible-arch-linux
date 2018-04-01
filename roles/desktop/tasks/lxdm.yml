@@ -6,6 +6,7 @@
   pacman: name={{ item }} state=present
   with_items:
     - gnome-screensaver
+    - xss-lock
     #- unclutter
 
 - name: configure LXDM display manager
