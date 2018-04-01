@@ -10,30 +10,31 @@
 - import_tasks: printing.yml
 
 - name: install cron
-  pacman: name=cronie state=present
+  pacman:
+    name: cronie
   notify:
     - enable cron
 
 - name: install packages for desktop environment from repo
-  pacman: name={{ item }}
-  with_items:
-    - compton
-    - feh
-    - redshift
-    - stalonetray
-    - xmobar
-    - xmonad
-    - xmonad-contrib
-    - dunst
-    - dmenu
-    - deepin-screenshot
-    - geeqie
+  pacman:
+    name:
+      - compton
+      - feh
+      - redshift
+      - stalonetray
+      - xmobar
+      - xmonad
+      - xmonad-contrib
+      - dunst
+      - dmenu
+      - deepin-screenshot
+      - geeqie
 
 - name: configure compton compositor
   copy:
     src: compton.conf
     dest: /etc/xdg/compton.conf
-    backup: yes
+    backup: 'yes'
 
 - name: enable redshift service
   command: systemctl --user enable redshift.service

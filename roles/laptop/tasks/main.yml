@@ -1,7 +1,7 @@
 ---
 - name: install TLP power management
-  pacman: name={{ item }} state=present
-  with_items:
+  pacman: 
+    name:
       - tlp
       - tlp-rdw
       - acpid

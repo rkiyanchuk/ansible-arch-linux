@@ -1,12 +1,12 @@
 ---
 - name: install extra packages from repo
-  pacman: name={{ item }}
-  with_items: "{{ extra_packages }}"
+  pacman:
+    name: "{{ extra_packages }}"
 
 - name: install host-specific packages from repo
-  pacman: name={{ item }}
-  with_items: "{{ host_extra_packages }}"
-  when: host_extra_packages is defined
+  pacman:
+    name: "{{ host_extra_packages }}"
+  when: host_extra_packages | length > 0
 
 - name: Install packages from AUR
   block:

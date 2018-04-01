@@ -35,11 +35,9 @@
 
 - name: install bootloader packages
   pacman:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - grub
-    - efibootmgr
+    name:
+      - grub
+      - efibootmgr
 
 - name: configure encrypted device for GRUB
   lineinfile:
