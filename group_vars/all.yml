@@ -76,18 +76,19 @@ extra_packages:
   - muparser  # optional for Albert calculator extension
 
 extra_aur_packages:
-  - dropbox
   - albert
-  - thunar-dropbox
-  - ttf-material-design-icons-git
+  - autorandr
+  - chromium-widevine  # Google's Content Decryption Module plugin.
+  - dropbox
+  - flameshot
+  - gocode-git
   - kalu
   - pasystray-gtk3-git
-  - flameshot
+  - thunar-dropbox
   - ttf-emojione-color
+  - ttf-material-design-icons-git
   - xkb-switch
-  - unclutter-xfixes-git
-  - chromium-widevine  # Google's Content Decryption Module plugin.
-  - gocode-git
+# - unclutter-xfixes-git
 
 dotfiles:
   repo: "https://github.com/zoresvit/dotfiles"
