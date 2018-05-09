@@ -4,7 +4,7 @@ host_extra_packages: []
 host_extra_aur_packages: []
 
 drive:
-  device: /dev/disk/by-id/ata-INTEL_SSDSC2BW120A4_CVDA336001ZK1207GN
+  device: /dev/disk/by-id/ata-Samsung_SSD_850_EVO_250GB_S21NNSAG845105P
   table: gpt
   partitions:
 
@@ -16,14 +16,21 @@ drive:
 
     - name: root
       start: 512MiB
-      end: 50GiB
+      end: 30GiB
       filesystem: ext4
       mountpoint: /
       encrypt: true
 
     - name: var
-      start: 50GiB
-      end: 100%
+      start: 30GiB
+      end: 40GiB
       filesystem: ext4
       mountpoint: /var
+      encrypt: true
+
+    - name: home
+      start: 40GiB
+      end: 100%
+      filesystem: ext4
+      mountpoint: /home
       encrypt: true
