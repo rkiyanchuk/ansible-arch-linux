@@ -35,7 +35,11 @@ extra_packages:
   - git
   - tldr
   - calibre
-  - ripgrep
+  - the_silver_searcher
+  - clang
+  - hasktags
+  - tmux
+  - tmuxp
 
   # Media
   - smplayer
@@ -46,6 +50,8 @@ extra_packages:
   - termite
   - bash-completion
   - mlocate
+  - htop
+  - hub
 
   # Filesystems
   - dosfstools
@@ -81,6 +87,7 @@ extra_aur_packages:
   - xkb-switch
   - unclutter-xfixes-git
   - chromium-widevine  # Google's Content Decryption Module plugin.
+  - gocode-git
 
 dotfiles:
   repo: "https://github.com/zoresvit/dotfiles"
