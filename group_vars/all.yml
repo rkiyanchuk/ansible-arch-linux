@@ -40,6 +40,7 @@ extra_packages:
   - hasktags
   - tmux
   - tmuxp
+  - gimp
 
   # Media
   - smplayer
@@ -64,6 +65,11 @@ extra_packages:
   - p7zip
   - unrar
 
+  # Fonts
+  - ttf-freefont
+  - ttf-arphic-uming
+  - ttf-indic-otf
+
   # Spell check.
   - aspell
   - aspell-en
@@ -85,9 +91,10 @@ extra_aur_packages:
   - kalu
   - pasystray-gtk3-git
   - thunar-dropbox
-  - ttf-emojione-color
+  - ttf-emojione
   - ttf-material-design-icons-git
   - xkb-switch
+  - tectonic
 # - unclutter-xfixes-git
 
 dotfiles:
