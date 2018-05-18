@@ -25,7 +25,8 @@
 - name: set hostname in /etc/hosts file
   template:
     src: hosts.j2
-    dest: /etc/hosts mode=644
+    dest: /etc/hosts
+    mode: 644
 
 - name: install base packages
   pacman:
