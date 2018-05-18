@@ -28,6 +28,7 @@ user:
 
 extra_packages:
   - gvim
+  - python-neovim
   - thunar
   - thunar-archive-plugin
   - gvfs  # For mounting and Trash support in Thunar
@@ -37,6 +38,7 @@ extra_packages:
   - calibre
   - the_silver_searcher
   - clang
+  - file-roller
   - hasktags
   - tmux
   - tmuxp
@@ -53,6 +55,7 @@ extra_packages:
   - mlocate
   - htop
   - hub
+  - httpie
 
   # Filesystems
   - dosfstools
