@@ -1,6 +1,7 @@
 hostname: gzp
 
-host_extra_packages: []
+host_extra_packages:
+  - r8168
 host_extra_aur_packages: []
 
 drive:
