@@ -94,7 +94,7 @@ extra_aur_packages:
   - gocode-git
   - kalu
   - pasystray-gtk3-git
-  - thunar-dropbox
+  - thunar-dropbox-git
   - ttf-emojione
   - ttf-material-design-icons-git
   - xkb-switch
