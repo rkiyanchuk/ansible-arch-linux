@@ -36,7 +36,7 @@ extra_packages:
   - git
   - tldr
   - calibre
-  - the_silver_searcher
+  - ripgrep
   - clang
   - file-roller
   - hasktags
