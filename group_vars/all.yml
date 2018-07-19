@@ -1,3 +1,4 @@
+---
 arch_root: /mnt
 
 # These are aliases that define file names with group vars for a host.
@@ -27,23 +28,24 @@ user:
   email: ruslan.kiyanchuk@gmail.com
 
 extra_packages:
-  - gvim
-  - python-neovim
-  - thunar
-  - thunar-archive-plugin
-  - gvfs  # For mounting and Trash support in Thunar
-  - keepassxc
-  - git
-  - tldr
   - calibre
-  - ripgrep
   - clang
   - file-roller
+  - gimp
+  - git
+  - gvfs  # For mounting and Trash support in Thunar
+  - gvim
+  - hardinfo
   - hasktags
+  - keepassxc
+  - neovim
+  - python-neovim
+  - ripgrep
+  - thunar
+  - thunar-archive-plugin
+  - tldr
   - tmux
   - tmuxp
-  - gimp
-  - hardinfo
 
   # Media
   - smplayer
@@ -52,6 +54,7 @@ extra_packages:
 
   # Console
   - termite
+  - konsole
   - bash-completion
   - mlocate
   - htop
@@ -93,12 +96,13 @@ extra_aur_packages:
   - flameshot
   - gocode-git
   - kalu
+  - neovim-gtk-git
   - pasystray-gtk3-git
+  - tectonic
   - thunar-dropbox-git
   - ttf-emojione
   - ttf-material-design-icons-git
   - xkb-switch
-  - tectonic
 # - unclutter-xfixes-git
 
 dotfiles:
