@@ -54,7 +54,6 @@ extra_packages:
 
   # Console
   - termite
-  - konsole
   - bash-completion
   - mlocate
   - htop
