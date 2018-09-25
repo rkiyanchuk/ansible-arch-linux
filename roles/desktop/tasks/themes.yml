@@ -5,10 +5,10 @@
       - breeze
       - breeze-gtk
       - breeze-icons
+      - breeze-grub
       - qt4
       - qt5-base
       - qt5ct
-      - breeze-kde4
       - gnome-themes-extra
 
 - name: install events sound interface
