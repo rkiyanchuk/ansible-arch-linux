@@ -110,7 +110,7 @@ dotfiles:
   deps:
     - conky
     - stow
-    - xclip
+    - xsel
     - python-jedi
     - hasktags
     - ctags
