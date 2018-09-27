@@ -82,9 +82,8 @@ extra_packages:
   - aspell-ru
   - aspell-uk
   - hunspell
-  - hunspell-en
+  - hunspell-en_US
   - hunspell-he
-
   - muparser  # optional for Albert calculator extension
 
 extra_aur_packages:
@@ -102,7 +101,7 @@ extra_aur_packages:
   - ttf-emojione
   - ttf-material-design-icons-git
   - xkb-switch
-# - unclutter-xfixes-git
+  - unclutter-xfixes-git
 
 dotfiles:
   repo: "https://github.com/zoresvit/dotfiles"
