@@ -94,6 +94,7 @@ extra_aur_packages:
   - flameshot
   - gocode-git
   - kalu
+  - mimeo
   - neovim-gtk-git
   - pasystray-gtk3-git
   - tectonic
@@ -105,7 +106,7 @@ extra_aur_packages:
 
 dotfiles:
   repo: "https://github.com/zoresvit/dotfiles"
-  install_cmd: "stow -d ${HOME}/dotfiles -S albert bash chromium conky flameshot git goldendict mime termite tmux vim xmonad xorg"
+  install_cmd: "stow -d ${HOME}/dotfiles -S albert bash chromium conky flameshot git goldendict termite tmux vim xmonad xorg"
   deps:
     - conky
     - stow

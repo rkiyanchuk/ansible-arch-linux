@@ -40,4 +40,10 @@
   command: systemctl --user enable redshift.service
   become_user: "{{ user.name }}"
 
+- name: install MIME application associations
+  copy:
+    src: mimeapps.list
+    dest: "/home/{{ user.name }}/.config"
+    owner: "{{ user.name }}"
+
 - import_tasks: extra_packages.yml
