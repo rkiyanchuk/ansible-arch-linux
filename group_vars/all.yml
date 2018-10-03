@@ -30,6 +30,7 @@ user:
 extra_packages:
   - calibre
   - clang
+  - evince
   - file-roller
   - gimp
   - git
