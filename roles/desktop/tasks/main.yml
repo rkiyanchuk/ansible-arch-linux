@@ -29,6 +29,7 @@
       - dmenu
       - deepin-screenshot
       - geeqie
+      - polkit-gnome
 
 - name: configure compton compositor
   copy:

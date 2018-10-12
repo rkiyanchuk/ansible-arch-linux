@@ -12,6 +12,9 @@ xsetroot -cursor_name left_ptr  # Allow custom pointers.
 gnome-keyring-daemon --daemonize --start \
     --components=gpg,pkcs11,secrets,ssh > /dev/null
 
+# Start polkit.
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+
 setsid "${HOME}/.xmonad/lock.sh" &
 udiskie > /dev/null 2>&1 &
 
