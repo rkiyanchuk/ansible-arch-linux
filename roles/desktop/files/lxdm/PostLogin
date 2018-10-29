@@ -15,7 +15,6 @@ gnome-keyring-daemon --daemonize --start \
 # Start polkit.
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
-setsid "${HOME}/.xmonad/lock.sh" &
 udiskie > /dev/null 2>&1 &
 
 # Try to start Compton compositor on up to 4 displays.
