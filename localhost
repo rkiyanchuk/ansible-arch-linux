@@ -1,5 +1,5 @@
 [host]
-localhost ansible_python_interpreter=/usr/bin/python2
+localhost ansible_python_interpreter=/usr/bin/python
 
 [chroot]
-/mnt ansible_python_interpreter=/usr/bin/python2
+/mnt ansible_python_interpreter=/usr/bin/python

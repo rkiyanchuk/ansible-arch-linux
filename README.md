@@ -22,26 +22,33 @@ Usage
 
 3. Boot into ArchLinux Live CD.
 
-4. Download and decompress playbook from GitHub:
+4. Remount root partition to increase disk space for the installation.
+
+   ```
+   mount -o remount,size=1G /run/archiso/cowspace
+   ```
+
+5. Install dependencies: Ansible and `passlib` (for hashing password):
 
   ```
-  curl -L https://github.com/zoresvit/ansible-arch-linux/archive/master.tar.gz | tar -xz
-  cd zoresvit-ansible-arch-linux
+  pacman -Sy git ansible python2-passlib
   ```
 
-5. Install Ansible and `passlib` (for hashing password):
+6. Download and decompress playbook from GitHub:
 
   ```
-  pacman -Sy ansible python2-passlib
+  git clone https://github.com/zoresvit/ansible-arch-linux
+  cd ansible-arch-linux
   ```
 
-6. Run Ansible to provision base system:
+
+7. Run Ansible to provision base system:
 
   ```
   ansible-playbook -i localhost install.yml
   ```
 
-7. After the reboot login into the new system and run Ansible to install and
+8. After the reboot login into the new system and run Ansible to install and
   configure full-featured Arch Linux:
 
   ```
