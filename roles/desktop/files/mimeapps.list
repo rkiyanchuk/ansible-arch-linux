@@ -2,7 +2,7 @@
 application/epub+zip=calibre-ebook-viewer.desktop;
 application/msword=libreoffice-writer.desktop;
 application/pdf=org.gnome.Evince.desktop;
-application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop;calibre-ebook-edit.desktop;
+application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop;
 application/x-compressed-tar=org.gnome.FileRoller.desktop;
 font/otf=org.gnome.font-viewer.desktop;
 image/jpeg=geeqie.desktop;
@@ -22,6 +22,8 @@ video/h264=smplayer.desktop;
 video/mp2t=smplayer.desktop;
 video/mp4=smplayer.desktop;
 video/x-msvideo=smplayer.desktop;
+x-scheme-handler/http=chromium.desktop;
+x-scheme-handler/https=chromium.desktop;
 
 [Default Applications]
 application/ogg=smplayer.desktop;
