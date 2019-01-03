@@ -5,5 +5,5 @@ Description=Clean-up Old Pacman Files
 Type=oneshot
 IOSchedulingClass=idle
 CPUSchedulingPolicy=idle
-ExecStart=/usr/bin/paccache -r
+ExecStart=/usr/bin/paccache -rk1
 ExecStart=/usr/bin/paccache -ruk0
