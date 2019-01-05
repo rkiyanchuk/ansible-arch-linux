@@ -21,7 +21,7 @@
       - compton
       - feh
       - redshift
-      - stalonetray
+      - trayer
       - xmobar
       - xmonad
       - xmonad-contrib
