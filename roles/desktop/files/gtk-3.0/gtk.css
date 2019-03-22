@@ -1,7 +1,6 @@
-#vim-main-window {
-    background-color: #002b36;
-}
-
-.termite {
-    padding: 5px;
+VteTerminal,
+TerminalScreen,
+vte-terminal {
+    padding: 5px 5px 5px 5px;
+    -VteTerminal-inner-border: 5px 5px 5px 5px;
 }
