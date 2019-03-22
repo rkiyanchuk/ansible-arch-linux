@@ -36,7 +36,6 @@ extra_packages:
   - gimp
   - git
   - gvfs  # For mounting and Trash support in Thunar
-  - gvim
   - hardinfo
   - hasktags
   - keepassxc
