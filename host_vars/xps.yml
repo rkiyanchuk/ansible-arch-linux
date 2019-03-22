@@ -28,7 +28,7 @@ drive:
 
     - name: var
       start: 30GiB
-      end: 40GiB
+      end: 60GiB
       filesystem: ext4
       mountpoint: /var
       encrypt: true
