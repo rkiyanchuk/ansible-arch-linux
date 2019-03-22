@@ -41,6 +41,7 @@ extra_packages:
   - hasktags
   - keepassxc
   - neovim
+  - neovim-qt
   - python-neovim
   - ripgrep
   - thunar
@@ -97,8 +98,7 @@ extra_aur_packages:
   - gocode-git
   - kalu
   - mimeo
-  - neovim-gtk-git
-  - pasystray-gtk3-git
+  - pasystray
   - tectonic
   - thunar-dropbox-git
   - ttf-emojione
