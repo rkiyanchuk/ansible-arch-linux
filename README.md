@@ -45,14 +45,14 @@ Usage
 7. Run Ansible to provision base system:
 
   ```
-  ansible-playbook -i localhost install.yml
+  ansible-playbook install.yml
   ```
 
 8. After the reboot login into the new system and run Ansible to install and
   configure full-featured Arch Linux:
 
   ```
-  ansible-playbook --ask-become-pass -i localhost config.yml
+  ansible-playbook --ask-become-pass config.yml
   ```
 
 Notes
