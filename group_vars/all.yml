@@ -35,6 +35,7 @@ extra_packages:
   - file-roller
   - gimp
   - git
+  - gpick
   - gvfs  # For mounting and Trash support in Thunar
   - hardinfo
   - hasktags
