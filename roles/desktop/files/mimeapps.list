@@ -67,6 +67,7 @@ image/vnd.rn-realpix=smplayer.desktop;
 image/webp=google-chrome.desktop;
 misc/ultravox=smplayer.desktop;
 text/html=chromium.desktop;
+application/xhtml+xml=chromium.desktop; 
 text/xml=google-chrome.desktop;
 video/dv=smplayer.desktop;
 video/mp2t=smplayer.desktop;
