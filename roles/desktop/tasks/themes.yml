@@ -23,7 +23,6 @@
     name:
       - ttf-hack
       - ttf-dejavu
-      - ttf-ubraille
       # Fonts to use asian characters
       - ttf-freefont
       - ttf-arphic-uming

@@ -95,7 +95,6 @@ extra_aur_packages:
   - chromium-widevine  # Google's Content Decryption Module plugin.
   - dropbox
   - flameshot
-  - gocode-git
   - kalu
   - lxdm-themes
   - mimeo
