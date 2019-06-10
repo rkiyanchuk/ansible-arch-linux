@@ -25,6 +25,7 @@ user:
     - wheel
     - systemd-journal
     - realtime
+    - docker
   shell: /bin/bash
   email: ruslan.kiyanchuk@gmail.com
 

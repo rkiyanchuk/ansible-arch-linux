@@ -6,7 +6,7 @@
       - breeze-gtk
       - breeze-icons
       - breeze-grub
-      - qt4
+      - qt5
       - qt5-base
       - qt5ct
       - gnome-themes-extra
