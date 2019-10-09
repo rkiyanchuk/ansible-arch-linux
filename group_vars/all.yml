@@ -76,7 +76,6 @@ extra_packages:
   - unrar
 
   # Fonts
-  - ttf-freefont
   - ttf-arphic-uming
   - ttf-indic-otf
 

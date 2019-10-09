@@ -24,7 +24,6 @@
       - ttf-hack
       - ttf-dejavu
       # Fonts to use asian characters
-      - ttf-freefont
       - ttf-arphic-uming
       - ttf-baekmuk
       - ttf-indic-otf
