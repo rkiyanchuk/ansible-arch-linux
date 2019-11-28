@@ -43,7 +43,7 @@ extra_packages:
   - keepassxc
   - neovim
   - neovim-qt
-  - python-neovim
+  - python-pynvim
   - ripgrep
   - thunar
   - thunar-archive-plugin
@@ -95,7 +95,7 @@ extra_aur_packages:
   - chromium-widevine  # Google's Content Decryption Module plugin.
   - dropbox
   - flameshot
-  - kalu
+  #  - kalu  # incompatible with latest pacman for now
   - lxdm-themes
   - mimeo
   - pasystray
