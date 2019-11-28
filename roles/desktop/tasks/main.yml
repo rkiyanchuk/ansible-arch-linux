@@ -18,7 +18,7 @@
 - name: install packages for desktop environment from repo
   pacman:
     name:
-      - compton
+      - picom
       - feh
       - redshift
       - trayer
@@ -31,10 +31,10 @@
       - geeqie
       - polkit-gnome
 
-- name: configure compton compositor
+- name: configure picom compositor
   copy:
-    src: compton.conf
-    dest: /etc/xdg/compton.conf
+    src: picom.conf
+    dest: /etc/xdg/picom.conf
     backup: 'yes'
 
 - name: enable redshift service

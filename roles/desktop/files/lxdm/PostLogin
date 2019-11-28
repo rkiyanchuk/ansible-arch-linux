@@ -17,9 +17,9 @@ gnome-keyring-daemon --daemonize --start \
 
 udiskie > /dev/null 2>&1 &
 
-# Try to start Compton compositor on up to 4 displays.
-#seq 0 3 | xargs -l1 -I@ compton -b -d :0.@ > /dev/null 2>&1 &
-compton -b
+# Try to start picom compositor on up to 4 displays.
+#seq 0 3 | xargs -l1 -I@ picom -b -d :0.@ > /dev/null 2>&1 &
+picom -b
 
 gnome-screensaver > /dev/null 2>&1 &
 xss-lock -- gnome-screensaver-command -l 2>&1 &
