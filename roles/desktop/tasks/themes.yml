@@ -33,16 +33,6 @@
       # Math
       - font-mathematica
 
-- name: configure GTK 2
-  copy:
-    src: gtk-2.0/gtkrc
-    dest: /etc/gtk-2.0/gtkrc
-
-- name: configure GTK 3
-  copy:
-    src: gtk-3.0/settings.ini
-    dest: /etc/gtk-3.0/settings.ini
-
 - name: create gtk-3.0 user config dir
   file:
     path: "/home/{{ user.name }}/.config/gtk-3.0"
