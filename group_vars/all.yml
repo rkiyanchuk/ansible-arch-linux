@@ -6,17 +6,17 @@ arch_root: /mnt
 # corresponding file in `host_vars`.
 machine_aliases:
   VirtualBox: vbox.yml
-  Gazelle Professional: gzp.yml
-  XPS 13 9350: xps.yml
+  XPS 13 9300: xps.yml
 
 country: United States
+timezone: America/Los_Angeles
 locales:
   - en_US
   - uk_UA
 
 user:
-  name: zoresvit
-  group: zoresvit
+  name: ruslan
+  group: ruslan
   uid: 1000
   comment: Ruslan Kiyanchuk
   groups:
@@ -24,8 +24,8 @@ user:
     - video
     - wheel
     - systemd-journal
-    - realtime
-    - docker
+#    - realtime
+#    - docker
   shell: /bin/zsh
   email: ruslan.kiyanchuk@gmail.com
 
@@ -39,7 +39,6 @@ extra_packages:
   - gpick
   - gvfs  # For mounting and Trash support in Thunar
   - hardinfo
-  - hasktags
   - keepassxc
   - neovim
   - neovim-qt
@@ -52,18 +51,16 @@ extra_packages:
   - tmuxp
 
   # Media
-  - smplayer
+  - vlc
   - goldendict
   - chromium
 
   # Console
-  - termite
-  - bash-completion
+  - tilix
   - zsh
   - zsh-completions
   - mlocate
   - htop
-  - hub
   - httpie
 
   # Filesystems
@@ -89,25 +86,16 @@ extra_packages:
   - hunspell
   - hunspell-en_US
   - hunspell-he
-  - muparser  # optional for Albert calculator extension
 
 extra_aur_packages:
-  - albert
-  - autorandr
+  - github-cli
   - chromium-widevine  # Google's Content Decryption Module plugin.
   - dropbox
-  - flameshot
   #  - kalu  # incompatible with latest pacman for now
-  - lxdm-themes
   - mimeo
-  - pasystray
   - tectonic
   - thunar-dropbox-git
   - ttf-joypixels
-  - ttf-material-design-icons-git
-  - xkb-switch
-  - unclutter-xfixes-git
-  - multiload-ng-systray-gtk3
 
 dotfiles:
   repo: "https://github.com/zoresvit/dotfiles"
