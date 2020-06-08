@@ -32,10 +32,5 @@
   pacman:
     name: "{{ packages }}"
 
-- name: install intel microcode
-  pacman:
-    name: intel-ucode
-  when: "'GenuineIntel' in ansible_processor"
-
 - import_tasks: user.yml
 - import_tasks: bootloader.yml

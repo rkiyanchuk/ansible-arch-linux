@@ -17,65 +17,31 @@
     - initramfs-linux.img
     - initramfs-linux-fallback.img
 
-- name: 'detect boot firmware (UEFI or BIOS)'
-  shell: '[ -d /sys/firmware/efi ] && echo UEFI || echo BIOS'
-  register: firmware
-
-- name: create /boot/efi directory
-  file:
-    path: /boot/efi
-    state: directory
-  when: firmware.stdout == 'UEFI'
-
-- name: install bootloader packages
+- name: install intel microcode
   pacman:
-    name:
-      - grub
-      - efibootmgr
+    name: intel-ucode
+    extra_args: "--overwrite /boot/intel-ucode.img"
+    state: present
+  when: "'GenuineIntel' in ansible_processor"
 
-- name: configure encrypted device for GRUB
-  lineinfile:
-    path: /etc/default/grub
-    regexp: '^(.*)GRUB_CMDLINE_LINUX='
-    line: >
-      GRUB_CMDLINE_LINUX="rd.luks.uuid={{ item.stdout }}
-      rd.luks.name={{ item.stdout }}=arch-root
-      rd.luks.key={{ item.stdout }}=/{{ luks_key_name }}"
-      acpi_sleep=nonvs
-  with_items: "{{ hostvars.localhost.device_uuids.results }}"
-  when: item.stdout is defined and item.item.name == 'root'
+- name: install bootloader
+  command: "bootctl install"
 
-- name: enable GRUB to unlock encrypted /boot
-  lineinfile:
-    path: /etc/default/grub
-    regexp: '^(.*)GRUB_ENABLE_CRYPTODISK='
-    line: "GRUB_ENABLE_CRYPTODISK=y"
-  with_items: "{{ hostvars.localhost.device_uuids.results }}"
-  when: item.stdout is defined and item.item.name == 'root'
+- name: retrieve UUIDs of encrypted partitions
+  command: blkid -s UUID -o value /dev/disk/by-partlabel/{{ drive.partitions.0.name }}
+  register: root_uuid
 
-- name: set grub menu timeout
-  lineinfile:
-    path: /etc/default/grub
-    regexp: '^GRUB_TIMEOUT='
-    line: "GRUB_TIMEOUT=1"
+- name: create boot entry
+  template:
+    src: boot-entry.j2
+    dest: /boot/loader/entries/arch.conf
 
-- name: install GRUB bootloader for UEFI
-  command: grub-install --recheck
-  when: firmware.stdout == 'UEFI'
+- name: configure systemd-boot
+  copy:
+    src: loader.conf
+    dest: /boot/loader/loader.conf
 
-- name: install GRUB bootloader for BIOS
-  command: "grub-install --recheck {{ drive.device }}"
-  when: firmware.stdout == 'BIOS'
-
-- name: configure GRUB
-  command: grub-mkconfig -o /boot/grub/grub.cfg
-
-- name: create UEFI boot entry
-  command: "efibootmgr --create --disk {{ drive.device }} --part {{ item.0 }} --loader /EFI/arch/grubx64.efi --label 'Arch Linux'"
-  when: firmware.stdout == 'UEFI' and item.1.name == 'efi'
-  with_indexed_items: "{{ drive.partitions }}"
-  ignore_errors: yes
-
+# TODO: not sure if still needed
 - name: write EFI entry for VirtualBox
   lineinfile:
     path: /boot/efi/startup.nsh

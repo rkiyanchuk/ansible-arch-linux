@@ -19,9 +19,11 @@ initramfs_hooks:
 packages:
   - arch-wiki-lite
   - dialog
+  - efibootmgr
   - glances
   - lsof
   - moreutils
+  - networkmanager
   - rsync
   - sysstat
   - wpa_supplicant

@@ -30,7 +30,7 @@
     state: present
   with_indexed_items:
     - "{{ drive.partitions }}"
- 
+
 - name: encrypt partitions
   import_tasks: encrypt.yml
 
