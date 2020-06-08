@@ -6,7 +6,6 @@
   with_items:
     - blueman
     - bluez
-    - bluez-firmware
     - bluez-libs
     - bluez-utils
     - pulseaudio-bluetooth
