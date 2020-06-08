@@ -25,5 +25,8 @@
     password: "{{ hostvars.localhost.user_password }}"
     update_password: on_create
 
+- name: set user shell
+  command: chsh -s {{ user.shell }}  {{ user.name }}
+
 - name: lock root account
   command: passwd -l root

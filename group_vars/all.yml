@@ -1,12 +1,12 @@
 ---
-arch_root: /mnt
-
 # These are aliases that define file names with group vars for a host.
 # The name is obtained from `ansible_product_name` fact and matched to
 # corresponding file in `host_vars`.
 machine_aliases:
   VirtualBox: vbox.yml
   XPS 13 9300: xps.yml
+
+arch_root: /mnt
 
 country: United States
 timezone: America/Los_Angeles
@@ -24,8 +24,6 @@ user:
     - video
     - wheel
     - systemd-journal
-#    - realtime
-#    - docker
   shell: /bin/zsh
   email: ruslan.kiyanchuk@gmail.com
 
@@ -57,8 +55,6 @@ extra_packages:
 
   # Console
   - tilix
-  - zsh
-  - zsh-completions
   - mlocate
   - htop
   - httpie

@@ -1,5 +1,4 @@
 ---
-
 - name: configure initramfs build hooks
   lineinfile:
     path: /etc/mkinitcpio.conf
@@ -21,7 +20,6 @@
   pacman:
     name: intel-ucode
     extra_args: "--overwrite /boot/intel-ucode.img"
-    state: present
   when: "'GenuineIntel' in ansible_processor"
 
 - name: install bootloader
@@ -31,7 +29,7 @@
   command: blkid -s UUID -o value /dev/disk/by-partlabel/{{ drive.partitions.0.name }}
   register: root_uuid
 
-- name: create boot entry
+- name: create systemd-boot entry
   template:
     src: boot-entry.j2
     dest: /boot/loader/entries/arch.conf

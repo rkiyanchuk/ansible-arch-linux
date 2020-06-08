@@ -1,5 +1,4 @@
 ---
-
 - name: sync system clock
   command: timedatectl set-ntp true
 
@@ -43,15 +42,15 @@
   with_items: "{{ drive.partitions }}"
   when: item.mountpoint is defined
 
-- name: install reflector
+- name: install reflector to retrieve latest Pacman mirrorlist
   pacman:
     name: reflector
 
-- name: update repository mirrors for better performance
+- name: update Pacman repository mirrors
   command: "reflector --sort score -p https --country '{{ country }}' --save /etc/pacman.d/mirrorlist"
 
 - name: Bootstrap base Arch Linux.
-  command: "pacstrap {{ arch_root }} base base-devel linux linux-firmware vim reflector ansible"
+  command: "pacstrap {{ arch_root }} base base-devel linux linux-firmware reflector ansible vim"
 
 - name: generate fstab file
   shell: genfstab -U {{ arch_root }} > {{ arch_root }}/etc/fstab

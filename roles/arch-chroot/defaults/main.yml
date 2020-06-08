@@ -4,6 +4,19 @@ country: United States
 locales:
   - en_US
 
+user:
+  name: user
+  group: user
+  uid: 1000
+  comment: First Last
+  groups:
+    - sys
+    - video
+    - wheel
+    - systemd-journal
+  shell: /bin/zsh
+  email: user@example.com
+
 initramfs_hooks:
   - base
   - systemd
@@ -16,14 +29,18 @@ initramfs_hooks:
   - filesystems
   - fsck
 
-packages:
+base_packages:
   - arch-wiki-lite
   - dialog
   - efibootmgr
+  - git
   - glances
   - lsof
   - moreutils
   - networkmanager
   - rsync
   - sysstat
+  - terminus-font
   - wpa_supplicant
+  - zsh
+  - zsh-completions

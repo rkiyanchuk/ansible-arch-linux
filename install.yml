@@ -1,6 +1,6 @@
 ---
 - hosts: localhost
-  name: bootstrap Arch Linux system
+  name: bootstrap Arch Linux file system
   connection: local
 
   vars_prompt:
@@ -15,11 +15,10 @@
       private: yes
       confirm: yes
 
-
   pre_tasks:
     - include_vars: "host_vars/{{ machine_aliases[ansible_product_name] }}"
 
-      # Make prompted vars available for all plays.
+    # Make prompted vars available for all plays.
     - set_fact:
         luks_passphrase: "{{ luks_passphrase }}"
 
@@ -57,5 +56,5 @@
       with_items: "{{ drive.partitions }}"
       when: item.encrypt
 
-    - name: reboot
-      command: reboot
+   - name: reboot
+     command: reboot
