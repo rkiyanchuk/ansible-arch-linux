@@ -3,6 +3,19 @@
 - name: sync system clock
   command: timedatectl set-ntp true
 
+- name: read disk information
+  parted:
+    device: "{{ drive.device }}"
+    unit: MiB
+  register: disk_info
+
+- name: delete existing partitions on the drive
+  parted:
+    device: "{{ drive.device }}"
+    number: "{{ item.num }}"
+    state: absent
+  loop: '{{ disk_info.partitions }}'
+
 - name: partition drive
   parted:
     label: "{{ drive.table }}"
@@ -30,33 +43,15 @@
   with_items: "{{ drive.partitions }}"
   when: item.mountpoint is defined
 
-- name: retrieve UUIDs of encrypted partitions
-  command: blkid -s UUID -o value /dev/disk/by-partlabel/{{ item.name }}
-  register: device_uuids
-  with_items: "{{ drive.partitions }}"
-  when: item.encrypt
+- name: install reflector
+  pacman:
+    name: reflector
 
-- name: copy key file to root partition
-  copy:
-    src: "/{{ luks_key_name }}"
-    dest: "{{ arch_root }}/{{ luks_key_name }}"
-    mode: 0000
-
-- name: shred precreated LUKS key file
-  command: "shred -u /{{ luks_key_name }}"
+- name: update repository mirrors for better performance
+  command: "reflector --sort score -p https --country '{{ country }}' --save /etc/pacman.d/mirrorlist"
 
 - name: Bootstrap base Arch Linux.
-  command: "pacstrap {{ arch_root }} base base-devel reflector ansible"
-
-- name: generate crypttab file to unlock encrypted non-root partitions
-  lineinfile:
-    path: "{{ arch_root }}/etc/crypttab"
-    line: "arch-{{ item.item.name }} UUID={{ item.stdout }} /{{ luks_key_name }} luks"
-    state: present
-    create: true
-  with_items: "{{ device_uuids.results }}"
-  when: item.stdout is defined and item.item.name != 'root'
+  command: "pacstrap {{ arch_root }} base base-devel linux linux-firmware vim reflector ansible"
 
 - name: generate fstab file
   shell: genfstab -U {{ arch_root }} > {{ arch_root }}/etc/fstab
-

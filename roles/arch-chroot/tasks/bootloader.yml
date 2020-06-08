@@ -6,12 +6,6 @@
     regexp: '^HOOKS='
     line: HOOKS="{{ initramfs_hooks | join(' ') }}"
 
-- name: embed LUKS key into initramfs
-  lineinfile:
-    path: /etc/mkinitcpio.conf
-    regexp: '^FILES='
-    line: 'FILES=(/{{ luks_key_name }})'
-
 - name: rebuild initramfs
   command: mkinitcpio -p linux
 
