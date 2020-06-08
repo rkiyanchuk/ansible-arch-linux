@@ -20,21 +20,14 @@
         state: present
       tags: aur
 
-    - name: install extra packages from AUR
+    - name: install AUR packages
       aur:
-        name: "{{ item }}"
-        user: "{{ user.name }}"
-        dir: /tmp
-      tags: aur
-      with_items: "{{ extra_aur_packages }}"
+        name: "{{ extra_aur_packages }}"
+      become_user: "{{ user.name }}"
 
     - name: install host-specific packages from AUR
       aur:
-        name: "{{ item }}"
-        user: "{{ user.name }}"
-        dir: /tmp
-      tags: aur
-      with_items: "{{ host_extra_aur_packages }}"
+        name: "{{ host_extra_aur_packages }}"
       when: host_extra_aur_packages is defined
 
   always:

@@ -1,198 +1,313 @@
 #!/usr/bin/python
 
-# Ansible module for maintaining AUR packages.
-# Source: https://github.com/pigmonkey/ansible-aur/
+# GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-
-# The MIT License (MIT)
-#
-# Copyright (c) 2014 Austin Hyde
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-# THE SOFTWARE.
-
+from ansible.module_utils.basic import *
+from ansible.module_utils.urls import open_url
+import json
+import shlex
+import tarfile
 import os
-import pwd
-import platform
+import os.path
+import tempfile
+import urllib.parse
 
 
-def cower_in_path(module):
+DOCUMENTATION = '''
+---
+module: aur
+short_description: Manage packages from the AUR
+description:
+    - Manage packages from the Arch User Repository (AUR)
+author:
+    - Kewl <xrjy@nygb.rh.bet(rot13)>
+options:
+    name:
+        description:
+            - Name or list of names of the package(s) to install or upgrade.
+
+    state:
+        description:
+            - Desired state of the package.
+        default: present
+        choices: [ present, latest ]
+
+    upgrade:
+        description:
+            - Whether or not to upgrade whole system.
+        default: no
+        type: bool
+
+    use:
+        description:
+            - The tool to use, 'auto' uses the first known helper found and makepkg as a fallback.
+        default: auto
+        choices: [ auto, yay, pacaur, trizen, pikaur, aurman, makepkg ]
+
+    extra_args:
+        description:
+            - Arguments to pass to the tool.
+              Requires that the 'use' option be set to something other than 'auto'.
+        type: str
+
+    skip_pgp_check:
+        description:
+            - Only valid with makepkg.
+              Skip PGP signatures verification of source file.
+              This is useful when installing packages without GnuPG (properly) configured.
+              Cannot be used unless use is set to 'makepkg'.
+        type: bool
+        default: no
+
+    ignore_arch:
+        description:
+            - Only valid with makepkg.
+              Ignore a missing or incomplete arch field, useful when the PKGBUILD does not have the arch=('yourarch') field.
+              Cannot be used unless use is set to 'makepkg'.
+        type: bool
+        default: no
+
+    aur_only:
+        description:
+            - Limit helper operation to the AUR.
+        type: bool
+        default: no
+notes:
+  - When used with a `loop:` each package will be processed individually,
+    it is much more efficient to pass the list directly to the `name` option.
+'''
+
+RETURN = '''
+msg:
+    description: action that has been taken
+helper:
+    the helper that was actually used
+'''
+
+EXAMPLES = '''
+- name: Install trizen using makepkg, skip if trizen is already installed
+  aur: name=trizen use=makepkg state=present
+  become: yes
+  become_user: aur_builder
+'''
+
+def_lang = ['env', 'LC_ALL=C']
+
+use_cmd = {
+    'yay': ['yay', '-S', '--noconfirm', '--needed', '--cleanafter'],
+    'pacaur': ['pacaur', '-S', '--noconfirm', '--noedit', '--needed'],
+    'trizen': ['trizen', '-S', '--noconfirm', '--noedit', '--needed'],
+    'pikaur': ['pikaur', '-S', '--noconfirm', '--noedit', '--needed'],
+    'aurman': ['aurman', '-S', '--noconfirm', '--noedit', '--needed', '--skip_news', '--pgp_fetch', '--skip_new_locations'],
+    'makepkg': ['makepkg', '--syncdeps', '--install', '--noconfirm', '--needed']
+}
+
+has_aur_option = ['yay', 'pacaur', 'trizen', 'pikaur', 'aurman']
+
+
+def package_installed(module, package):
     """
-    Determine if cower is available.
+    Determine if the package is already installed
     """
-    rc, stdout, stderr = module.run_command('which cower', check_rc=False)
+    rc, _, _ = module.run_command(['pacman', '-Q', package], check_rc=False)
     return rc == 0
 
 
-def pacman_in_path(module):
+def check_packages(module, packages):
     """
-    Determine if pacman is available.
-    """
-    rc, stdout, stderr = module.run_command('which pacman', check_rc=False)
-    return rc == 0
-
-
-def package_installed(module, pkg):
-    """
-    Determine if a package is already installed.
-    """
-    rc, stdout, stderr = module.run_command('pacman -Q %s' % pkg, check_rc=False)
-    return rc == 0
-
-
-def check_packages(module, pkgs):
-    """
-    Inform the user what would change if the module were run.
+    Inform the user what would change if the module were run
     """
     would_be_changed = []
+    diff = {
+        'before': '',
+        'after': '',
+    }
 
-    for pkg in pkgs:
-        installed = package_installed(module, pkg)
+    for package in packages:
+        installed = package_installed(module, package)
         if not installed:
-            would_be_changed.append(pkg)
+            would_be_changed.append(package)
+            if module._diff:
+                diff['after'] += package + "\n"
 
     if would_be_changed:
-        module.exit_json(changed=True, msg='%s package(s) would be installed' % (len(would_be_changed)))
-    else:
-        module.exit_json(changed=False, msg='all packages are already installed')
-
-
-def download_packages(module, pkgs, dir, user):
-    """
-    Download the specified packages.
-    """
-    # Use cower, if available.
-    if cower_in_path(module):
-        cmds = ['sudo -u %s cower -dqf %s', ]
-    # Otherwise, fall back to cURL
-    else:
-        cmds = ['sudo -u %s curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/%s.tar.gz',
-                'sudo -u %s tar xzf %s.tar.gz']
-    for pkg in pkgs:
-        # If the package is already installed, skip the download.
-        if package_installed(module, pkg):
-            continue
-        # Change into the specified directory for download.
-        os.chdir(dir)
-        # Attempt to install the package.
-        for cmd in cmds:
-            rc, stdout, stderr = module.run_command(cmd % (user, pkg), check_rc=False)
-            if rc != 0:
-                module.fail_json(msg='failed to download package %s, because: %s' % (pkg,stderr))
-
-
-def install_packages(module, pkgs, dir, user, virtual):
-    """
-    Install the specified packages via makepkg.
-    """
-    num_installed = 0
-
-    if platform.machine().startswith('arm'):
-        makepkg_args = '-Acsri'
-    else:
-        makepkg_args = '-csri'
-    cmd = 'sudo -u %s PKGEXT=".pkg.tar" makepkg %s --noconfirm --needed --noprogressbar' % (user, makepkg_args)
-    if module.params['skip_pgp']:
-        cmd += ' --skippgpcheck'
-    for pkg in pkgs:
-        # If the package is already installed, skip the install.
-        if package_installed(module, pkg):
-            continue
-        
-        # Change into the package directory.
-        # Check if the package is a virtual package
-        if virtual:
-            os.chdir(os.path.join(dir, virtual))
+        status = True
+        if len(packages) > 1:
+            message = '{} package(s) would be installed'.format(len(would_be_changed))
         else:
-            os.chdir(os.path.join(dir, pkg))
-        
-        # Attempt to install the directory
-        rc, stdout, stderr = module.run_command(cmd, check_rc=False)
-        if rc != 0:
-            module.fail_json(msg='failed to install package %s, because: %s' % (pkg,stderr))
-        num_installed += 1
-    # Exit with the number of packages succesfully installed.
-    if num_installed > 0:
-        module.exit_json(changed=True, msg='installed %s package(s)' % num_installed)
+            message = 'package would be installed'
     else:
-        module.exit_json(changed=False, msg='all packages were already installed')
+        status = False
+        if len(packages) > 1:
+            message = 'all packages are already installed'
+        else:
+            message = 'package is already installed'
+    module.exit_json(changed=status, msg=message, diff=diff)
+
+
+def build_command_prefix(use, extra_args, skip_pgp_check=False, ignore_arch=False, aur_only=False):
+    """
+    Create the prefix of a command that can be used by the install and upgrade functions.
+    """
+    command = def_lang + use_cmd[use]
+    if skip_pgp_check:
+        command.append('--skippgpcheck')
+    if ignore_arch:
+        command.append('--ignorearch')
+    if aur_only and use in has_aur_option:
+        command.append('--aur')
+    if extra_args:
+        command += shlex.split(extra_args)
+    return command
+
+
+def install_with_makepkg(module, package, extra_args, skip_pgp_check, ignore_arch):
+    """
+    Install the specified package with makepkg
+    """
+    module.get_bin_path('fakeroot', required=True)
+    f = open_url('https://aur.archlinux.org/rpc/?v=5&type=info&arg={}'.format(urllib.parse.quote(package)))
+    result = json.loads(f.read().decode('utf8'))
+    if result['resultcount'] != 1:
+        return (1, '', 'package {} not found'.format(package))
+    result = result['results'][0]
+    f = open_url('https://aur.archlinux.org/{}'.format(result['URLPath']))
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tar = tarfile.open(mode='r|*', fileobj=f)
+        tar.extractall(tmpdir)
+        tar.close()
+        command = build_command_prefix('makepkg', extra_args, skip_pgp_check=skip_pgp_check, ignore_arch=ignore_arch)
+        rc, out, err = module.run_command(command, cwd=os.path.join(tmpdir, result['Name']), check_rc=True)
+    return (rc, out, err)
+
+
+def upgrade(module, use, extra_args, aur_only):
+    """
+    Upgrade the whole system
+    """
+    assert use in use_cmd
+
+    command = build_command_prefix(use, extra_args, aur_only=aur_only)
+    command.append('-u')
+
+    rc, out, err = module.run_command(command, check_rc=True)
+
+    module.exit_json(
+        changed=not (out == '' or 'nothing to do' in out or 'No AUR updates found' in out),
+        msg='upgraded system',
+        helper=use,
+    )
+
+
+def install_packages(module, packages, use, extra_args, state, skip_pgp_check, ignore_arch, aur_only):
+    """
+    Install the specified packages
+    """
+    assert use in use_cmd
+
+    changed_iter = False
+
+    for package in packages:
+        if state == 'present':
+            if package_installed(module, package):
+                rc = 0
+                continue
+        if use == 'makepkg':
+            rc, out, err = install_with_makepkg(module, package, extra_args, skip_pgp_check, ignore_arch)
+        else:
+            command = build_command_prefix(use, extra_args, aur_only=aur_only)
+            command.append(package)
+            rc, out, err = module.run_command(command, check_rc=True)
+
+        changed_iter = changed_iter or not (out == '' or '-- skipping' in out or 'nothing to do' in out)
+
+    message = 'installed package(s)' if changed_iter else 'package(s) already installed'
+
+    module.exit_json(
+        changed=changed_iter,
+        msg=message if not rc else err,
+        helper=use,
+        rc=rc,
+    )
+
+
+def make_module():
+    module = AnsibleModule(
+        argument_spec={
+            'name': {
+                'type': 'list',
+            },
+            'state': {
+                'default': 'present',
+                'choices': ['present', 'latest'],
+            },
+            'upgrade': {
+                'type': 'bool',
+            },
+            'use': {
+                'default': 'auto',
+                'choices': ['auto'] + list(use_cmd.keys()),
+            },
+            'extra_args': {
+                'default': None,
+                'type': 'str',
+            },
+            'skip_pgp_check': {
+                'default': False,
+                'type': 'bool',
+            },
+            'ignore_arch': {
+                'default': False,
+                'type': 'bool',
+            },
+            'aur_only': {
+                'default': False,
+                'type': 'bool',
+            },
+        },
+        mutually_exclusive=[['name', 'upgrade']],
+        required_one_of=[['name', 'upgrade']],
+        supports_check_mode=True
+    )
+
+    params = module.params
+
+    use = params['use']
+
+    if use == 'auto':
+        if params['extra_args'] is not None:
+            module.fail_json(msg="'extra_args' cannot be used with 'auto', a tool must be specified.")
+        use = 'makepkg'
+        # auto: select the first helper for which the bin is found
+        for k in use_cmd:
+            if module.get_bin_path(k):
+                use = k
+                break
+
+    if use != 'makepkg' and (params['skip_pgp_check'] or params['ignore_arch']):
+        module.fail_json(msg="This option is only available with 'makepkg'.")
+
+    if params.get('upgrade', False) and use == 'makepkg':
+        module.fail_json(msg="The 'upgrade' action cannot be used with 'makepkg'.")
+
+    return module, use
+
+
+def apply_module(module, use):
+    params = module.params
+
+    if module.check_mode:
+        check_packages(module, params['name'])
+    elif params.get('upgrade', False):
+        upgrade(module, use, params['extra_args'], params['aur_only'])
+    else:
+        install_packages(module, params['name'], use, params['extra_args'], params['state'], params['skip_pgp_check'], params['ignore_arch'], params['aur_only'])
 
 
 def main():
-    module = AnsibleModule(
-        argument_spec = dict(
-            name = dict(required=True),
-            user = dict(required=True),
-            dir  = dict(),
-            skip_pgp = dict(default=False, type='bool'),
-            virtual = dict(),
-        ),
-        supports_check_mode = True
-    )
-
-    # Fail of pacman is not available.
-    if not pacman_in_path(module):
-        module.fail_json(msg="could not locate pacman executable")
-
-    p = module.params
-
-    # Get all the requested package names.
-    pkgs = p['name'].split(',')
-
-    # Fail if the specified user does not exist.
-    try:
-        pwd.getpwnam(p['user'])
-    except KeyError:
-        module.fail_json(msg="user %s does not exist" % p['user'])
-    else:
-        user = p['user']
-
-    # If no directory was given, assume the packages should be downloaded to
-    # ~user/aur.
-    if not p['dir']:
-        home = os.path.expanduser('~%s' % user)
-        if not os.path.exists(home):
-            module.fail_json(msg="%s's home directory %s does not exist" % (user, home))
-
-        dir = os.path.join(home, 'aur')
-        if not os.path.exists(dir):
-            os.makedirs(dir)
-            uid = pwd.getpwnam(user).pw_uid
-            os.chown(dir, uid, -1)
-    else:
-        dir = os.path.expanduser(p['dir'])
-
-    # Fail if the specified directory does not exist.
-    if not os.path.exists(dir):
-        module.fail_json(msg="directory %s does not exist" % dir)
-
-    if module.check_mode:
-        check_packages(module, pkgs)
-
-    download_packages(module, pkgs, dir, user)
-    # Check if the package is virtual
-    if p['virtual']:
-        virtual = p['virtual']
-    else:
-        virtual = False
-
-    install_packages(module, pkgs, dir, user, virtual)
+    module, use = make_module()
+    apply_module(module, use)
 
 
-from ansible.module_utils.basic import *
-main()
+if __name__ == '__main__':
+    main()
