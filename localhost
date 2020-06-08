@@ -1,5 +1,5 @@
 [host]
-localhost ansible_python_interpreter=/usr/bin/python
+localhost
 
 [chroot]
-/mnt ansible_python_interpreter=/usr/bin/python
+/mnt ansible_chroot_exe=arch-chroot
