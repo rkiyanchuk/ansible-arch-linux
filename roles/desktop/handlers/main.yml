@@ -1,19 +1,38 @@
 ---
 - name: restart pulseaudio as user
-  systemd: name=pulseaudio.service user=yes state=restarted
+  systemd:
+    name: pulseaudio.service
+    user: yes
+    state: restarted
   become: yes
   become_user: "{{ user.name }}"
   environment:
     XDG_RUNTIME_DIR: "/run/user/{{ user.uid }}"
 
 - name: enable bluetooth
-  systemd: name=bluetooth.service enabled=yes state=started
+  systemd:
+    name: bluetooth.service
+    enabled: yes
+    state: started
 
 - name: enable cron
-  service: name=cronie.service enabled=yes state=started
+  service:
+    name: cronie.service
+    enabled: yes
+    state: started
 
 - name: enable sshd
-  service: name=sshd.socket enabled=yes state=restarted
+  service:
+    name: sshd.socket
+    enabled: yes
+    state: restarted
 
 - name: enable cups
-  service: name=org.cups.cupsd.service state=started
+  service:
+    name: org.cups.cupsd.service
+    state: started
+
+- name: enable gdm
+  service:
+    name: gdm
+    enabled: yes

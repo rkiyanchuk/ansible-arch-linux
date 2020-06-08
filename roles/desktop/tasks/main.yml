@@ -1,7 +1,5 @@
 ---
 
-- import_tasks: xorg.yml
-- import_tasks: lxdm.yml
 - import_tasks: themes.yml
 - import_tasks: media.yml
 - import_tasks: networkmanager.yml
@@ -18,28 +16,19 @@
 - name: install packages for desktop environment from repo
   pacman:
     name:
-      - picom
-      - feh
-      - redshift
-      - trayer
-      - xmobar
-      - xmonad
-      - xmonad-contrib
-      - dunst
       - dmenu
-      - deepin-screenshot
       - geeqie
       - polkit-gnome
+      - gdm
+      - sway
+      - xorg-server-xwayland
+      - dmenu
+      - alacritty
+      - swaylock
+      - swayidle
+  notify:
+    - enable gdm
 
-- name: configure picom compositor
-  copy:
-    src: picom.conf
-    dest: /etc/xdg/picom.conf
-    backup: 'yes'
-
-- name: enable redshift service
-  command: systemctl --user enable redshift.service
-  become_user: "{{ user.name }}"
 
 - name: install MIME application associations
   copy:

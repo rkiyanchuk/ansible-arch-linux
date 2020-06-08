@@ -1,5 +1,5 @@
 ---
-- name: install AUR package helper yay
+- name: install yay AUR package helper
   aur:
     name: yay
     user: "{{ user.name }}"

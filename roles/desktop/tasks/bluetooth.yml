@@ -20,4 +20,7 @@
     dest: /etc/polkit-1/rules.d/90-blueman.rules
 
 - name: add user to lp group
-  user: name={{ user.name }} groups=lp append=yes
+  user:
+    name: "{{ user.name }}"
+    groups: lp
+    append: yes

@@ -1,6 +1,6 @@
 ---
 - name: install udiskie for automount
-  pacman: 
+  pacman:
     name: udiskie
 
 - name: install media codecs

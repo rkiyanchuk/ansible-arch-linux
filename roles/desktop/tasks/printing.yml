@@ -1,6 +1,6 @@
 ---
 - name: install CUPS printing system
-  pacman: 
+  pacman:
     name: "{{ item }}"
     state: present
   with_items:
@@ -12,10 +12,13 @@
     - hplip
 
 - name: add user to lp group
-  user: 
+  user:
     name: "{{ user.name }}"
     groups: lp
     append: yes
 
 - name: enable CUPS
-  service: name=org.cups.cupsd.service enabled=yes state=started
+  service:
+    name: org.cups.cupsd.service
+    enabled: yes
+    state: started

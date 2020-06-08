@@ -11,16 +11,22 @@
     regexp: '^#?VerbosePkgLists$'
     line: VerbosePkgLists
 
-- name: refresh pacman cache and upgrade the system
-  pacman: update_cache=yes upgrade=yes
+- name: refresh Pacman cache and upgrade the system
+  pacman:
+    update_cache: yes
+    upgrade: yes
 
 - name: install pacman cache cleanup service
-  copy: src=paccache.service dest=/etc/systemd/system/paccache.service
+  copy:
+    src: paccache.service
+    dest: /etc/systemd/system/paccache.service
   notify:
     - reload systemd config
 
 - name: install pacman cache cleanup timer
-  copy: src=paccache.timer dest=/etc/systemd/system/paccache.timer
+  copy:
+    src: paccache.timer
+    dest: /etc/systemd/system/paccache.timer
   notify:
     - reload systemd config
     - enable paccache timer

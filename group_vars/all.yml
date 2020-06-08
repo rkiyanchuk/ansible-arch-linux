@@ -95,11 +95,9 @@ extra_aur_packages:
 
 dotfiles:
   repo: "https://github.com/zoresvit/dotfiles"
-  install_cmd: "stow -d ${HOME}/dotfiles -S albert bash zsh chromium conky flameshot git goldendict termite tmux vim xmonad xorg"
+  install_cmd: "stow -d ${HOME}/dotfiles -S albert chromium conky git gnupg goldendict neovim sage tilix tmux yay zsh"
   deps:
     - conky
     - stow
-    - xsel
     - python-jedi
-    - hasktags
     - ctags
