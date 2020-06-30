@@ -1,6 +1,6 @@
 ---
 - hosts: localhost
-  name: bootstrap Arch Linux file system
+  name: bootstrap Arch Linux system
   connection: local
 
   vars_prompt:
@@ -56,5 +56,5 @@
       with_items: "{{ drive.partitions }}"
       when: item.encrypt
 
-   - name: reboot
-     command: reboot
+    - name: reboot
+      command: reboot

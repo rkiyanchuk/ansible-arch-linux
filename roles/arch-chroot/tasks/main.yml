@@ -25,10 +25,7 @@
   pacman:
     name: "{{ base_packages }}"
 
-- name: set console font
-  command: setfont ter-122n
-
-- name: persist console font
+- name: configure console font
   lineinfile:
     path: /etc/vconsole.conf
     line: "FONT=ter-122n"

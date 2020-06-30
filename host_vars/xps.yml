@@ -1,11 +1,8 @@
 hostname: xps
 
 host_extra_packages: []
-
 host_extra_aur_packages: []
-#  - aic94xx-firmware  # RAID controller driver
-#  - wd719x-firmware  # Western Digital SCSI driver
-#
+
 drive:
   device: /dev/nvme0n1
   table: gpt

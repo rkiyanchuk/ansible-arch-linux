@@ -8,14 +8,14 @@
     unit: MiB
   register: disk_info
 
-- name: delete existing partitions on the drive
+- name: delete existing drive partitions
   parted:
     device: "{{ drive.device }}"
     number: "{{ item.num }}"
     state: absent
   loop: '{{ disk_info.partitions }}'
 
-- name: partition drive
+- name: create drive partitions for Arch Linux
   parted:
     label: "{{ drive.table }}"
     device: "{{ drive.device }}"

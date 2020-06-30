@@ -35,29 +35,26 @@ extra_packages:
   - gimp
   - git
   - gpick
-  - gvfs  # For mounting and Trash support in Thunar
   - hardinfo
   - keepassxc
   - neovim
   - neovim-qt
   - python-pynvim
   - ripgrep
-  - thunar
-  - thunar-archive-plugin
   - tldr
   - tmux
   - tmuxp
+  - mlocate
+  - htop
+  - httpie
+  #- gvfs  # For mounting and Trash support in Thunar
+  #- thunar
+  #- thunar-archive-plugin
 
   # Media
   - vlc
   - goldendict
   - chromium
-
-  # Console
-  - tilix
-  - mlocate
-  - htop
-  - httpie
 
   # Filesystems
   - dosfstools
@@ -90,7 +87,7 @@ extra_aur_packages:
   #  - kalu  # incompatible with latest pacman for now
   - mimeo
   - tectonic
-  - thunar-dropbox-git
+  #- thunar-dropbox-git
   - ttf-joypixels
 
 dotfiles:
