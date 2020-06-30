@@ -21,7 +21,6 @@
       - gdm
       - sway
       - xorg-server-xwayland
-      - dmenu
       - alacritty
       - swaylock
       - swayidle
