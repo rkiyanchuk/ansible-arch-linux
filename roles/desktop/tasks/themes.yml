@@ -30,8 +30,6 @@
       # Emoji
       - noto-fonts
       - ttf-hannom  # Vietnamese
-      # Math
-      - font-mathematica
 
 - name: create gtk-3.0 user config dir
   file:
