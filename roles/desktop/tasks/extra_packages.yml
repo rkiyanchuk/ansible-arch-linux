@@ -17,4 +17,4 @@
   aur:
     name: "{{ host_extra_aur_packages }}"
   become_user: "{{ user.name }}"
-  when: host_extra_aur_packages is defined
+  when: host_extra_aur_packages is defined and host_extra_aur_packages|length > 0

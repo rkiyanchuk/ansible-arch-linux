@@ -9,4 +9,5 @@ galaxy_info:
 
   galaxy_tags: ['arch', 'linux', 'install']
 
-dependencies: []
+dependencies:
+  - kewlfft.aur

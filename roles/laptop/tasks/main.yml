@@ -1,6 +1,6 @@
 ---
 - name: install TLP power management
-  pacman: 
+  pacman:
     name:
       - tlp
       - tlp-rdw

@@ -58,6 +58,7 @@ Install OS
   configure full-featured Arch Linux:
 
     ```
+    ansible-galaxy install kewlfft.aur
     ansible-playbook --ask-become-pass config.yml
     ```
 

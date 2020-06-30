@@ -1,15 +1,13 @@
 ---
 - name: install CUPS printing system
   pacman:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - cups
-    - cups-pdf
-    - ghostscript
-    - gutenprint
-    - gsfonts
-    - hplip
+    name:
+      - cups
+      - cups-pdf
+      - ghostscript
+      - gutenprint
+      - gsfonts
+      - hplip
 
 - name: add user to lp group
   user:
