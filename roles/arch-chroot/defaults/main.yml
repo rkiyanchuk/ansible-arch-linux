@@ -4,6 +4,9 @@ country: United States
 locales:
   - en_US
 
+interfaces:
+  wireless: "wlan0"
+
 user:
   name: user
   group: user

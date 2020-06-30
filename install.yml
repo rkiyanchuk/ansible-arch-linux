@@ -15,6 +15,16 @@
       private: yes
       confirm: yes
 
+    - name: wifi_ssid
+      prompt: "WiFi password:"
+      private: yes
+      confirm: yes
+
+    - name: wifi_password
+      prompt: "WiFi password:"
+      private: yes
+      confirm: yes
+
   pre_tasks:
     - include_vars: "host_vars/{{ machine_aliases[ansible_product_name] }}"
 
@@ -24,6 +34,9 @@
 
     - set_fact:
         user_password: "{{ user_password }}"
+
+    - set_fact:
+        user_password: "{{ wifi_password }}"
 
   tasks:
     - import_role:

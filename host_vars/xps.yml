@@ -3,6 +3,9 @@ hostname: xps
 host_extra_packages: []
 host_extra_aur_packages: []
 
+interfaces:
+  wireless: "wlp0s20f3"
+
 drive:
   device: /dev/nvme0n1
   table: gpt
