@@ -18,9 +18,15 @@
   pacman:
     name: "{{ dotfiles.deps }}"
 
+- name: cleanup OhMyZsh from previous installation
+  file:
+    path: "${HOME}/.oh-my-zsh"
+    state: absent
+
 - name: install dotfiles
-  command: "{{ dotfiles.install_cmd }}"
+  shell: "{{ item }}"
   become_user: "{{ user.name }}"
+  with_items: "{{ dotfiles.install_cmds }}"
 
 # Keepassxc config is installed here once instead of symlinked from dotfiles
 # repo as keepassxc constantly rewrites its config cause changed to be added
