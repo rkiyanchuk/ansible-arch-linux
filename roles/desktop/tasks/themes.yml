@@ -9,6 +9,7 @@
       - qt5
       - qt5-base
       - qt5ct
+      - qt5-wayland
       - gnome-themes-extra
 
 - name: install events sound interface
