@@ -3,23 +3,20 @@
   pacman:
     name: stow
 
-- name: check if dotfiles exist
-  stat:
-    path: "${HOME}/dotfiles"
-  become_user: "{{ user.name }}"
-  register: dotfiles_dir
-
 - name: clone dotfiles
-  command: "git clone {{ dotfiles.repo }} ${HOME}/dotfiles"
+  git:
+    repo: "{{ dotfiles.repo }}"
+    dest: "${HOME}/dotfiles"
   become_user: "{{ user.name }}"
-  when: not dotfiles_dir.stat.exists
 
 - name: install dotfiles dependencies
   pacman:
     name: "{{ dotfiles.deps }}"
 
 - name: install tmux plugin manager
-  command: "git clone https://github.com/tmux-plugins/tpm ${HOME}/.tmux/plugins/tpm"
+  git:
+    repo: "https://github.com/tmux-plugins/tpm"
+    dest: "${HOME}/.tmux/plugins/tpm"
   become_user: "{{ user.name }}"
 
 - name: cleanup OhMyZsh from previous installation
