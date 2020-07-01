@@ -15,15 +15,17 @@
 - name: install packages for desktop environment from repo
   pacman:
     name:
+      - alacritty
+      - brightnessctl
       - dmenu
+      - gdm
       - geeqie
       - polkit-gnome
-      - gdm
       - sway
-      - xorg-server-xwayland
-      - alacritty
-      - swaylock
       - swayidle
+      - swaylock
+      - wofi
+      - xorg-server-xwayland
   notify:
     - enable gdm
 
