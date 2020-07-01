@@ -15,7 +15,7 @@
 - name: install packages for desktop environment from repo
   pacman:
     name:
-      - alacritty
+      - tilix
       - brightnessctl
       - dmenu
       - gdm
@@ -26,6 +26,7 @@
       - swaylock
       - wofi
       - xorg-server-xwayland
+      - jq
   notify:
     - enable gdm
 

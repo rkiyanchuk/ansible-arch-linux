@@ -95,7 +95,7 @@ extra_aur_packages:
 dotfiles:
   repo: "https://github.com/zoresvit/dotfiles"
   install_cmds:
-    - "stow -d ${HOME}/dotfiles -S chromium conky git gnupg goldendict neovim sage alacritty tmux yay zsh sway"
+    - "stow -d ${HOME}/dotfiles -S chromium git gnupg goldendict neovim sage alacritty tilix tmux yay zsh sway waybar"
   deps:
     - conky
     - stow
