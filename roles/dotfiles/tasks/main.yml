@@ -20,11 +20,30 @@
 
 - name: cleanup OhMyZsh from previous installation
   file:
-    path: "${HOME}/.oh-my-zsh"
+    path: "${HOME}/.oh-my-zsh/"
     state: absent
+  become_user: "{{ user.name }}"
+
+- name: install OhMyZsh
+  shell: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  become_user: "{{ user.name }}"
+
+- name: install Zsh theme powerlevel10k
+  command: "git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${HOME}/.oh-my-zsh/custom/themes/powerlevel10k"
+  become_user: "{{ user.name }}"
+
+- name: install Zsh plugin zsh-lazyload
+  command: "git clone https://github.com/qoomon/zsh-lazyload ${HOME}/.oh-my-zsh/custom/plugins/zsh-lazyload"
+  become_user: "{{ user.name }}"
+
+- name: cleanup default Zsh config
+  file:
+    path: "${HOME}/.zshrc"
+    state: absent
+  become_user: "{{ user.name }}"
 
 - name: install dotfiles
-  shell: "{{ item }}"
+  command: "{{ item }}"
   become_user: "{{ user.name }}"
   with_items: "{{ dotfiles.install_cmds }}"
 

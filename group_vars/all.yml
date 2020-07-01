@@ -95,9 +95,6 @@ extra_aur_packages:
 dotfiles:
   repo: "https://github.com/zoresvit/dotfiles"
   install_cmds:
-    - sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-    - "git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k"
-    - "git clone https://github.com/qoomon/zsh-lazyload $ZSH_CUSTOM/plugins/zsh-lazyload"
     - "stow -d ${HOME}/dotfiles -S chromium conky git gnupg goldendict neovim sage alacritty tmux yay zsh sway"
   deps:
     - conky
