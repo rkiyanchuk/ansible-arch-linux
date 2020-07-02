@@ -2,7 +2,7 @@
 - name: restart pulseaudio as user
   systemd:
     name: pulseaudio.service
-    user: yes
+    scope: user
     state: restarted
   become: yes
   become_user: "{{ user.name }}"
@@ -36,3 +36,12 @@
   service:
     name: gdm
     enabled: yes
+
+- name: enable waybar
+  systemd:
+    name: waybar
+    scope: user
+    enabled: yes
+    state: started
+  become: yes
+  become_user: "{{ user.name }}"

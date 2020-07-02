@@ -1,0 +1,35 @@
+
+- name: install packages for desktop environment
+  pacman:
+    name:
+      - brightnessctl
+      - dmenu
+      - gdm
+      - jq
+      - polkit-gnome
+      - sway
+      - swayidle
+      - swaylock
+      - tilix
+      - waybar
+      - wofi
+      - xorg-server-xwayland
+  notify:
+    - enable gdm
+
+- name: install sway-session.target
+  copy:
+    src: sway/sway-session.target
+    dest: /etc/systemd/user/sway-session.target
+
+- name: install script to import sway invironment into systemd
+  copy:
+    src: sway/sway-systemd
+    dest: /etc/sway/config.d/10-systemd
+
+- name: install waybar.service
+  copy:
+    src: sway/waybar.service
+    dest: /etc/systemd/user/waybar.service
+  notify:
+    - enable waybar

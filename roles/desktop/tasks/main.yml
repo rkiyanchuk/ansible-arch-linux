@@ -1,5 +1,6 @@
 ---
 
+- import_tasks: sway.yml
 - import_tasks: themes.yml
 - import_tasks: media.yml
 - import_tasks: bluetooth.yml
@@ -11,26 +12,6 @@
     name: cronie
   notify:
     - enable cron
-
-- name: install packages for desktop environment from repo
-  pacman:
-    name:
-      - tilix
-      - brightnessctl
-      - dmenu
-      - gdm
-      - geeqie
-      - polkit-gnome
-      - sway
-      - swayidle
-      - swaylock
-      - wofi
-      - xorg-server-xwayland
-      - jq
-      - waybar
-  notify:
-    - enable gdm
-
 
 - name: install MIME application associations
   copy:
