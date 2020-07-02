@@ -19,6 +19,15 @@
     dest: "${HOME}/.tmux/plugins/tpm"
   become_user: "{{ user.name }}"
 
+- name: copy tilix config to temp
+  copy:
+    src: com.gexperts.Tilix.conf
+    dest: "/var/tmp/com.gexperts.Tilix.conf"
+
+- name: install tilix settings
+  shell: "dconf load /com/gexperts/Tilix/ < /var/tmp/com.gexperts.Tilix.conf"
+  become_user: "{{ user.name }}"
+
 - name: cleanup OhMyZsh from previous installation
   file:
     path: "${HOME}/.oh-my-zsh/"
