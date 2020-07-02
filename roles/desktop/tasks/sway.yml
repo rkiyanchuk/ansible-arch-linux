@@ -33,3 +33,10 @@
     dest: /etc/systemd/user/waybar.service
   notify:
     - enable waybar
+
+- name: install swayidle.service
+  copy:
+    src: sway/swayidle.service
+    dest: /etc/systemd/user/swayidle.service
+  notify:
+    - enable swayidle

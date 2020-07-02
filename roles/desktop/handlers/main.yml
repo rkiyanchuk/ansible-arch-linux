@@ -45,3 +45,12 @@
     state: started
   become: yes
   become_user: "{{ user.name }}"
+
+- name: enable swayidle
+  systemd:
+    name: swayidle
+    scope: user
+    enabled: yes
+    state: started
+  become: yes
+  become_user: "{{ user.name }}"
