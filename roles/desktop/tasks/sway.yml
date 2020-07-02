@@ -14,6 +14,7 @@
       - waybar
       - wofi
       - xorg-server-xwayland
+      - wl-clipboard
   notify:
     - enable gdm
 
