@@ -27,6 +27,7 @@
       - wofi
       - xorg-server-xwayland
       - jq
+      - waybar
   notify:
     - enable gdm
 

@@ -42,6 +42,8 @@ extra_packages:
   - python-pynvim
   - ripgrep
   - tldr
+  - libreoffice-still
+  - digikam
   - tmux
   - tmuxp
   - mlocate
@@ -50,6 +52,7 @@ extra_packages:
   #- gvfs  # For mounting and Trash support in Thunar
   #- thunar
   #- thunar-archive-plugin
+  - man
 
   # Media
   - vlc
@@ -71,7 +74,7 @@ extra_packages:
   - ttf-arphic-uming
   - ttf-indic-otf
 # - nerd-fonts-iosevka  # package broken at the moment
-  - ttf-iosevka
+  - nerd-fonts-complete
 
   # Spell check.
   - aspell
@@ -84,6 +87,7 @@ extra_packages:
 
 extra_aur_packages:
   - github-cli
+  - grimshot
   - chromium-widevine  # Google's Content Decryption Module plugin.
   - dropbox
   #  - kalu  # incompatible with latest pacman for now
