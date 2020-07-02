@@ -13,6 +13,11 @@
   notify:
     - enable cron
 
+- name: configure systemd logind.conf
+  copy:
+    src: logind.conf
+    dest: /etc/systemd/logind.conf
+
 - name: install MIME application associations
   copy:
     src: mimeapps.list
