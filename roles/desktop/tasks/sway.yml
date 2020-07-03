@@ -49,3 +49,10 @@
     dest: /etc/systemd/user/mako.service
   notify:
     - enable mako
+
+- name: install albert.service
+  copy:
+    src: sway/albert.service
+    dest: /etc/systemd/user/albert.service
+  notify:
+    - enable albert

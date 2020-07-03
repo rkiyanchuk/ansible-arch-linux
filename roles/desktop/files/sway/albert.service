@@ -1,0 +1,13 @@
+[Unit]
+Description=Albert application launcher
+Documentation=https://albertlauncher.github.io/docs/installing
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/albert
+Restart=on-failure
+Environment=QT_QPA_PLATFORM=xcb
+
+[Install]
+WantedBy=sway-session.target

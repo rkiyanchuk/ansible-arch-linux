@@ -63,3 +63,12 @@
     state: started
   become: yes
   become_user: "{{ user.name }}"
+
+- name: enable albert
+  systemd:
+    name: albert
+    scope: user
+    enabled: yes
+    state: started
+  become: yes
+  become_user: "{{ user.name }}"
