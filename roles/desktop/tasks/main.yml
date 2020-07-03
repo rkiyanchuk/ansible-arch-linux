@@ -6,6 +6,7 @@
 - import_tasks: bluetooth.yml
 - import_tasks: ssh.yml
 - import_tasks: printing.yml
+- import_tasks: yubikey.yml
 
 - name: install cron
   pacman:

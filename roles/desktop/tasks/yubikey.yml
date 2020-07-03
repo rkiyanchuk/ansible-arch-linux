@@ -1,0 +1,8 @@
+---
+- name: install yubikey manager
+  pacman:
+    name:
+      - yubikey-manager-qt
+  notify:
+    - enable pcscd
+

@@ -63,3 +63,9 @@
     state: started
   become: yes
   become_user: "{{ user.name }}"
+
+- name: enable pcscd smart card daemon
+  systemd:
+    name: pcscd.service
+    enabled: yes
+    state: started
