@@ -9,7 +9,8 @@ ExecStart=/usr/bin/swayidle -w \
             timeout 300 'swaylock -c 440000' \
             timeout 600 'swaymsg "output * dpms off"' \
                 resume 'swaymsg "output * dpms on"' \
-            before-sleep 'swaylock -c 440000'
+            before-sleep 'swaylock -c 440000' \
+            lock 'swaylock -c 440000'
 
 [Install]
 WantedBy=sway-session.target
