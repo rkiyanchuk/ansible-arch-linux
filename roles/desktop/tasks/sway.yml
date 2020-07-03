@@ -15,6 +15,7 @@
       - albert
       - xorg-server-xwayland
       - wl-clipboard
+      - mako
   notify:
     - enable gdm
 
@@ -41,3 +42,10 @@
     dest: /etc/systemd/user/swayidle.service
   notify:
     - enable swayidle
+
+- name: install mako.service
+  copy:
+    src: sway/mako.service
+    dest: /etc/systemd/user/mako.service
+  notify:
+    - enable mako
