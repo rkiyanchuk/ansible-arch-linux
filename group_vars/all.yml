@@ -49,6 +49,7 @@ extra_packages:
   - mlocate
   - htop
   - httpie
+  - inkscape
   #- gvfs  # For mounting and Trash support in Thunar
   #- thunar
   #- thunar-archive-plugin
