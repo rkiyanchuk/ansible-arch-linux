@@ -12,7 +12,6 @@
       - swaylock
       - tilix
       - waybar
-      - albert
       - xorg-server-xwayland
       - wl-clipboard
       - mako
@@ -43,9 +42,9 @@
   notify:
     - enable swayidle
 
-- name: install albert.service
+- name: install ulauncher.service
   copy:
-    src: sway/albert.service
-    dest: /etc/systemd/user/albert.service
+    src: sway/ulauncher.service
+    dest: /etc/systemd/user/ulauncher.service
   notify:
-    - enable albert
+    - enable ulauncher

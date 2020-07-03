@@ -55,9 +55,9 @@
   become: yes
   become_user: "{{ user.name }}"
 
-- name: enable albert
+- name: enable ulauncher
   systemd:
-    name: albert
+    name: ulauncher
     scope: user
     enabled: yes
     state: started
