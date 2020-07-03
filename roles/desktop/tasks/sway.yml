@@ -12,7 +12,7 @@
       - swaylock
       - tilix
       - waybar
-      - wofi
+      - albert
       - xorg-server-xwayland
       - wl-clipboard
   notify:
