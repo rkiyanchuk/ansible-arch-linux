@@ -55,6 +55,8 @@ extra_packages:
   #- thunar-archive-plugin
   - man
   - bat
+  - fzf
+  - fd
 
   # Media
   - vlc
