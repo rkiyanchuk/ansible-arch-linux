@@ -99,6 +99,8 @@ extra_aur_packages:
   - tectonic
   #- thunar-dropbox-git
   - ttf-joypixels
+  - wev
+  - wshowkeys
 
 dotfiles:
   repo: "https://github.com/zoresvit/dotfiles"
