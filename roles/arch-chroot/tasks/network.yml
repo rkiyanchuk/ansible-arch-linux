@@ -7,17 +7,17 @@
       - network-manager-applet
       - gnome-keyring
 
-- name: enable NetworkManager
-  service:
-    name: NetworkManager.service
-    enabled: yes
-    state: started
-
 - name: configure mirrors update hook
   template:
     src: nm-mirrors-hook.sh
     dest: /etc/NetworkManager/dispatcher.d/99update-mirrors.sh
     mode: 0755
+
+- name: enable NetworkManager
+  systemd:
+    name: NetworkManager.service
+    enabled: yes
+    state: started
 
 - name: add wireless connection to NetworkManager
   command: "nmcli con add con-name {{ hostvars.localhost.wifi_ssid }} ifname {{ interfaces.wireless }} type wifi ssid {{ hostvars.localhost.wifi_ssid }} wifi-sec.key-mgmt wpa-psk wifi-sec.psk {{ hostvars.localhost.wifi_password }}"
