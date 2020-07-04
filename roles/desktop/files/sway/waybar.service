@@ -8,4 +8,4 @@ Type=simple
 ExecStart=/usr/bin/waybar
 
 [Install]
-WantedBy=sway-session.target
+WantedBy=graphical-session.target

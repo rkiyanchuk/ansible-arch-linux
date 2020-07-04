@@ -43,7 +43,6 @@
     scope: user
     enabled: yes
     state: started
-  become: yes
   become_user: "{{ user.name }}"
 
 - name: enable swayidle
@@ -52,7 +51,6 @@
     scope: user
     enabled: yes
     state: started
-  become: yes
   become_user: "{{ user.name }}"
 
 - name: enable ssh-agent

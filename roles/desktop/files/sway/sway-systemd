@@ -1,2 +1,0 @@
-exec "systemctl --user import-environment; systemctl --user start sway-session.target"
-exec systemd-cat --identifier=sway sway

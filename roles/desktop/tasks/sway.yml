@@ -23,11 +23,6 @@
     src: sway/sway-session.target
     dest: /etc/systemd/user/sway-session.target
 
-- name: install script to import sway invironment into systemd
-  copy:
-    src: sway/sway-systemd
-    dest: /etc/sway/config.d/10-systemd
-
 - name: install waybar.service
   copy:
     src: sway/waybar.service
