@@ -50,6 +50,7 @@ extra_packages:
   - htop
   - httpie
   - inkscape
+  - powertop
   #- gvfs  # For mounting and Trash support in Thunar
   #- thunar
   #- thunar-archive-plugin
