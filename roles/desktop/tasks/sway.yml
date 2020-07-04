@@ -18,6 +18,15 @@
   notify:
     - enable gdm
 
+- name: install redshift for Wayland
+  aur:
+    name: redshift-wayland-git
+  become_user: "{{ user.name }}"
+
+- name: enable redshift service
+  command: systemctl --user enable redshift.service
+  become_user: "{{ user.name }}"
+
 - name: install sway-session.target
   copy:
     src: sway/sway-session.target
