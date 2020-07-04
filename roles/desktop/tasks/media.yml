@@ -26,6 +26,7 @@
       - pavucontrol
       - pamixer
       - paprefs
+      - playerctl
 
 - name: configure to switch audio output to newly connected devices
   lineinfile:
