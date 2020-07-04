@@ -17,15 +17,18 @@
 - name: install AUR packages
   aur:
     name: "{{ extra_aur_packages }}"
+  become: yes
   become_user: "{{ user.name }}"
 
 - name: install ulauncher
   aur:
     name: ulauncher
+  become: yes
   become_user: "{{ user.name }}"
 
 - name: install host-specific packages from AUR
   aur:
     name: "{{ host_extra_aur_packages }}"
+  become: yes
   become_user: "{{ user.name }}"
   when: host_extra_aur_packages is defined and host_extra_aur_packages|length > 0

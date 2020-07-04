@@ -1,7 +1,7 @@
 ---
-
-- import_tasks: sway.yml
 - import_tasks: themes.yml
+- import_tasks: sway.yml
+
 - import_tasks: media.yml
 - import_tasks: bluetooth.yml
 - import_tasks: ssh.yml
@@ -14,7 +14,7 @@
   notify:
     - enable cron
 
-- name: configure systemd logind.conf
+- name: configure systemd logind
   copy:
     src: logind.conf
     dest: /etc/systemd/logind.conf

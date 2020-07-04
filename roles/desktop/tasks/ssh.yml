@@ -39,6 +39,6 @@
 - name: install ssh-agent.service
   copy:
     src: ssh-agent.service
-    dest: /etc/systemd/system/ssh-agent.service
+    dest: /etc/systemd/user/ssh-agent.service
   notify:
     - enable ssh-agent

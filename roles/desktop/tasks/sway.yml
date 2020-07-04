@@ -1,31 +1,25 @@
 
-- name: install packages for desktop environment
+- name: install packages for Sway
   pacman:
     name:
       - brightnessctl
-      - dmenu
       - gdm
       - jq
-      - polkit-gnome
+      - mako
       - sway
       - swayidle
       - swaylock
-      - tilix
+      - tilix  # Consider removing in favor of alacritty
       - waybar
-      - xorg-server-xwayland
       - wl-clipboard
-      - mako
+      - xorg-server-xwayland
   notify:
     - enable gdm
 
-- name: install redshift for Wayland
-  aur:
-    name: redshift-wayland-git
-  become_user: "{{ user.name }}"
-
-- name: enable redshift service
-  command: systemctl --user enable redshift.service
-  become_user: "{{ user.name }}"
+- name: install packages for desktop environment
+  pacman:
+    name:
+      - polkit-gnome
 
 - name: install sway-session.target
   copy:
@@ -45,3 +39,18 @@
     dest: /etc/systemd/user/swayidle.service
   notify:
     - enable swayidle
+
+- name: install packages for Wayland from AUR
+  aur:
+    name:
+      - grimshot
+      - redshift-wayland-git
+      - wev
+      - wshowkeys
+  become: yes
+  become_user: "{{ user.name }}"
+
+- name: enable redshift service
+  command: systemctl --user enable redshift.service
+  become: yes
+  become_user: "{{ user.name }}"
