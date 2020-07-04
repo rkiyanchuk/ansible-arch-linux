@@ -36,10 +36,3 @@
     dest: /etc/systemd/user/swayidle.service
   notify:
     - enable swayidle
-
-- name: install ulauncher.service
-  copy:
-    src: sway/ulauncher.service
-    dest: /etc/systemd/user/ulauncher.service
-  notify:
-    - enable ulauncher

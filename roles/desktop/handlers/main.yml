@@ -62,15 +62,6 @@
   become: yes
   become_user: "{{ user.name }}"
 
-- name: enable ulauncher
-  systemd:
-    name: ulauncher
-    scope: user
-    enabled: yes
-    state: started
-  become: yes
-  become_user: "{{ user.name }}"
-
 - name: enable pcscd smart card daemon
   systemd:
     name: pcscd.service
