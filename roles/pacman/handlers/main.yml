@@ -3,4 +3,7 @@
   command: systemctl daemon-reload
 
 - name: enable paccache timer
-  service: name=paccache.timer enabled=yes state=started
+  service:
+    name: paccache.timer
+    enabled: yes
+    state: started

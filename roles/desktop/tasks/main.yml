@@ -1,13 +1,12 @@
 ---
-
-- import_tasks: xorg.yml
-- import_tasks: lxdm.yml
 - import_tasks: themes.yml
+- import_tasks: sway.yml
+
 - import_tasks: media.yml
-- import_tasks: networkmanager.yml
 - import_tasks: bluetooth.yml
 - import_tasks: ssh.yml
 - import_tasks: printing.yml
+- import_tasks: yubikey.yml
 
 - name: install cron
   pacman:
@@ -15,31 +14,10 @@
   notify:
     - enable cron
 
-- name: install packages for desktop environment from repo
-  pacman:
-    name:
-      - picom
-      - feh
-      - redshift
-      - trayer
-      - xmobar
-      - xmonad
-      - xmonad-contrib
-      - dunst
-      - dmenu
-      - deepin-screenshot
-      - geeqie
-      - polkit-gnome
-
-- name: configure picom compositor
+- name: configure systemd logind
   copy:
-    src: picom.conf
-    dest: /etc/xdg/picom.conf
-    backup: 'yes'
-
-- name: enable redshift service
-  command: systemctl --user enable redshift.service
-  become_user: "{{ user.name }}"
+    src: logind.conf
+    dest: /etc/systemd/logind.conf
 
 - name: install MIME application associations
   copy:

@@ -4,6 +4,22 @@ country: United States
 locales:
   - en_US
 
+interfaces:
+  wireless: "wlan0"
+
+user:
+  name: user
+  group: user
+  uid: 1000
+  comment: First Last
+  groups:
+    - sys
+    - video
+    - wheel
+    - systemd-journal
+  shell: /bin/zsh
+  email: user@example.com
+
 initramfs_hooks:
   - base
   - systemd
@@ -16,19 +32,18 @@ initramfs_hooks:
   - filesystems
   - fsck
 
-packages:
+base_packages:
   - arch-wiki-lite
-  - coreutils
   - dialog
+  - efibootmgr
+  - git
   - glances
-  - linux-firmware
   - lsof
   - moreutils
+  - networkmanager
   - rsync
   - sysstat
+  - terminus-font
   - wpa_supplicant
-
-# File name for encryption key used by dmcrypt to encrypt non-root
-# partitions. The key is stored on encrypted root partition which is unlocked
-# with a password.
-luks_key_name: luks.key
+  - zsh
+  - zsh-completions

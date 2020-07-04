@@ -16,10 +16,9 @@
   tasks:
     - import_role: {name: pacman}
     - import_role: {name: desktop}
-    - import_role: {name: laptop}
     - import_role: {name: dotfiles}
 
-    - name: start LXDM
+    - name: start GDM
       service:
-        name: lxdm
+        name: gdm
         state: started

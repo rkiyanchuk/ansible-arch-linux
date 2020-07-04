@@ -1,9 +1,21 @@
 ---
-
 - name: sync system clock
   command: timedatectl set-ntp true
 
-- name: partition drive
+- name: read disk information
+  parted:
+    device: "{{ drive.device }}"
+    unit: MiB
+  register: disk_info
+
+- name: delete existing drive partitions
+  parted:
+    device: "{{ drive.device }}"
+    number: "{{ item.num }}"
+    state: absent
+  loop: '{{ disk_info.partitions }}'
+
+- name: create drive partitions for Arch Linux
   parted:
     label: "{{ drive.table }}"
     device: "{{ drive.device }}"
@@ -17,7 +29,7 @@
     state: present
   with_indexed_items:
     - "{{ drive.partitions }}"
- 
+
 - name: encrypt partitions
   import_tasks: encrypt.yml
 
@@ -30,33 +42,15 @@
   with_items: "{{ drive.partitions }}"
   when: item.mountpoint is defined
 
-- name: retrieve UUIDs of encrypted partitions
-  command: blkid -s UUID -o value /dev/disk/by-partlabel/{{ item.name }}
-  register: device_uuids
-  with_items: "{{ drive.partitions }}"
-  when: item.encrypt
+- name: install reflector to retrieve latest Pacman mirrorlist
+  pacman:
+    name: reflector
 
-- name: copy key file to root partition
-  copy:
-    src: "/{{ luks_key_name }}"
-    dest: "{{ arch_root }}/{{ luks_key_name }}"
-    mode: 0000
-
-- name: shred precreated LUKS key file
-  command: "shred -u /{{ luks_key_name }}"
+- name: update Pacman repository mirrors
+  command: "reflector --sort score -p https --country '{{ country }}' --save /etc/pacman.d/mirrorlist"
 
 - name: Bootstrap base Arch Linux.
-  command: "pacstrap {{ arch_root }} base base-devel reflector ansible"
-
-- name: generate crypttab file to unlock encrypted non-root partitions
-  lineinfile:
-    path: "{{ arch_root }}/etc/crypttab"
-    line: "arch-{{ item.item.name }} UUID={{ item.stdout }} /{{ luks_key_name }} luks"
-    state: present
-    create: true
-  with_items: "{{ device_uuids.results }}"
-  when: item.stdout is defined and item.item.name != 'root'
+  command: "pacstrap {{ arch_root }} base base-devel linux linux-firmware reflector ansible vim"
 
 - name: generate fstab file
   shell: genfstab -U {{ arch_root }} > {{ arch_root }}/etc/fstab
-

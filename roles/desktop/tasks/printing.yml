@@ -1,21 +1,22 @@
 ---
 - name: install CUPS printing system
-  pacman: 
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - cups
-    - cups-pdf
-    - ghostscript
-    - gutenprint
-    - gsfonts
-    - hplip
+  pacman:
+    name:
+      - cups
+      - cups-pdf
+      - ghostscript
+      - gutenprint
+      - gsfonts
+      - hplip
 
 - name: add user to lp group
-  user: 
+  user:
     name: "{{ user.name }}"
     groups: lp
     append: yes
 
 - name: enable CUPS
-  service: name=org.cups.cupsd.service enabled=yes state=started
+  service:
+    name: org.cups.cupsd.service
+    enabled: yes
+    state: started

@@ -3,46 +3,32 @@
   pacman:
     name: "{{ extra_packages }}"
 
+- name: modify GoldenDict desktop file to work under Wayland
+  lineinfile:
+    path: /usr/share/applications/goldendict.desktop
+    regexp: "^Exec=goldendict"
+    line: "Exec=env QT_QPA_PLATFORM=xcb goldendict"
+
 - name: install host-specific packages from repo
   pacman:
     name: "{{ host_extra_packages }}"
   when: host_extra_packages | length > 0
 
-- name: Install packages from AUR
-  block:
+- name: install AUR packages
+  aur:
+    name: "{{ extra_aur_packages }}"
+  become: yes
+  become_user: "{{ user.name }}"
 
-    # Avoid interactive password prompts while installing AUR packages.
-    - name: set NOPASSWD for makepkg
-      lineinfile:
-        path: /etc/sudoers
-        line: '{{ user.name }} ALL=(root) NOPASSWD: /usr/bin/pacman'
-        validate: 'visudo -cf %s'
-        state: present
-      tags: aur
+- name: install ulauncher
+  aur:
+    name: ulauncher
+  become: yes
+  become_user: "{{ user.name }}"
 
-    - name: install extra packages from AUR
-      aur:
-        name: "{{ item }}"
-        user: "{{ user.name }}"
-        dir: /tmp
-      tags: aur
-      with_items: "{{ extra_aur_packages }}"
-
-    - name: install host-specific packages from AUR
-      aur:
-        name: "{{ item }}"
-        user: "{{ user.name }}"
-        dir: /tmp
-      tags: aur
-      with_items: "{{ host_extra_aur_packages }}"
-      when: host_extra_aur_packages is defined
-
-  always:
-
-    # Make sure NOPASSWD is always removed even if above tasks failed.
-    - name: remove NOPASSWD for makepkg
-      lineinfile:
-        path: /etc/sudoers
-        line: '{{ user.name }} ALL=(root) NOPASSWD: /usr/bin/pacman'
-        validate: 'visudo -cf %s'
-        state: absent
+- name: install host-specific packages from AUR
+  aur:
+    name: "{{ host_extra_aur_packages }}"
+  become: yes
+  become_user: "{{ user.name }}"
+  when: host_extra_aur_packages is defined and host_extra_aur_packages|length > 0

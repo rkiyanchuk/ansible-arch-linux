@@ -1,10 +1,5 @@
 arch_root: /mnt
 
-# File name for encryption key used by dmcrypt to encrypt non-root
-# partitions. The key is stored on encrypted root partition which is unlocked
-# with a password.
-luks_key_name: luks.key
-
 # Define storage partitioning layout.
 # Required fields for partition:
 #   - name
@@ -23,17 +18,16 @@ drive:
   partitions:
     # NOTE: Partitions must be defined in order of mounting.
     - name: root
+      filesystem: ext4
       start: 512MiB
       end: 100%
       encrypt: true
-      filesystem: ext4
       mountpoint: /
 
     - name: efi
+      filesystem: vfat
       start: 0%
       end: 512MiB
       encrypt: false
-      flags:
-        - boot
-      filesystem: vfat
-      mountpoint: /boot/efi
+      flags: [boot]
+      mountpoint: /boot

@@ -5,13 +5,13 @@
       - breeze
       - breeze-gtk
       - breeze-icons
-      - breeze-grub
+      - gnome-themes-extra
       - qt5
       - qt5-base
+      - qt5-wayland
       - qt5ct
-      - gnome-themes-extra
 
-- name: install events sound interface
+- name: install sounds for desktop events
   pacman:
     name:
       - libcanberra
@@ -29,17 +29,7 @@
       - ttf-indic-otf
       # Emoji
       - noto-fonts
-      - ttf-hannom  # Vietnamese
-      # Math
-      - font-mathematica
-
-- name: configure GTK 2
-  copy:
-    src: gtk-2.0/gtkrc
-    dest: /etc/gtk-2.0/gtkrc
-
-- name: configure GTK 3
-  copy: src=gtk-3.0/settings.ini dest=/etc/gtk-3.0/settings.ini
+      - ttf-hannom  # vietnamese
 
 - name: create gtk-3.0 user config dir
   file:
@@ -47,13 +37,25 @@
     owner: "{{ user.name }}"
     state: directory
 
-- name: create user gtk.css file for GTK 3
-  copy:
-    src: gtk-3.0/gtk.css
-    dest: "/home/{{ user.name }}/.config/gtk-3.0/gtk.css"
-    owner: "{{ user.name }}"
+# TODO: Trying to remove it as not sure if still needed.
+# This originally fixed margins color in Gvim.
+#- name: create user gtk.css file for GTK 3
+#  copy:
+#    src: gtk-3.0/gtk.css
+#    dest: "/home/{{ user.name }}/.config/gtk-3.0/gtk.css"
+#    owner: "{{ user.name }}"
 
-- name: configure Qt 4
+- name: configure GTK 2
+  copy:
+    src: gtk-2.0/gtkrc
+    dest: /etc/gtk-2.0/gtkrc
+
+- name: configure GTK 3
+  copy:
+    src: gtk-3.0/settings.ini
+    dest: /etc/gtk-3.0/settings.ini
+
+- name: configure Qt
   copy:
     src: qt/Trolltech.conf
     dest: /etc/xdg/Trolltech.conf
@@ -61,15 +63,16 @@
 - name: create qt5ct config dir
   file:
     path: /home/{{ user.name }}/.config/qt5ct/
-    owner: "{{ user.name }}"
     state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
 
-- name: configure Qt 5
+- name: install Qt 5 config
   copy:
     src: qt/qt5ct.conf
     dest: /home/{{ user.name }}/.config/qt5ct/qt5ct.conf
     owner: "{{ user.name }}"
-
+    group: "{{ user.name }}"
 
 - name: configure cursor
   lineinfile:

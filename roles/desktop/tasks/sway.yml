@@ -1,0 +1,56 @@
+
+- name: install packages for Sway
+  pacman:
+    name:
+      - brightnessctl
+      - gdm
+      - jq
+      - mako
+      - sway
+      - swayidle
+      - swaylock
+      - tilix  # Consider removing in favor of alacritty
+      - waybar
+      - wl-clipboard
+      - xorg-server-xwayland
+  notify:
+    - enable gdm
+
+- name: install packages for desktop environment
+  pacman:
+    name:
+      - polkit-gnome
+
+- name: install sway-session.target
+  copy:
+    src: sway/sway-session.target
+    dest: /etc/systemd/user/sway-session.target
+
+- name: install waybar.service
+  copy:
+    src: sway/waybar.service
+    dest: /etc/systemd/user/waybar.service
+  notify:
+    - enable waybar
+
+- name: install swayidle.service
+  copy:
+    src: sway/swayidle.service
+    dest: /etc/systemd/user/swayidle.service
+  notify:
+    - enable swayidle
+
+- name: install packages for Wayland from AUR
+  aur:
+    name:
+      - grimshot
+      - redshift-wayland-git
+      - wev
+      - wshowkeys
+  become: yes
+  become_user: "{{ user.name }}"
+
+- name: enable redshift service
+  command: systemctl --user enable redshift.service
+  become: yes
+  become_user: "{{ user.name }}"

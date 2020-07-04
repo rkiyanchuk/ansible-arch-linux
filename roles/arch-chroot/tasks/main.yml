@@ -1,5 +1,4 @@
 ---
-
 - name: configure repository mirrors
   command: "reflector --sort score -p https --country '{{ country }}' --save /etc/pacman.d/mirrorlist"
 
@@ -9,12 +8,6 @@
     upgrade: yes
 
 - import_tasks: locales.yml
-
-- name: set console font
-  lineinfile:
-    path: /etc/vconsole.conf
-    line: "FONT=Lat2-Terminus16"
-    create: yes
 
 - name: configure hostname
   lineinfile:
@@ -30,12 +23,14 @@
 
 - name: install base packages
   pacman:
-    name: "{{ packages }}"
+    name: "{{ base_packages }}"
 
-- name: install intel microcode
-  pacman:
-    name: intel-ucode
-  when: "'GenuineIntel' in ansible_processor"
+- name: configure console font
+  lineinfile:
+    path: /etc/vconsole.conf
+    line: "FONT=ter-122n"
+    create: yes
 
 - import_tasks: user.yml
+- import_tasks: network.yml
 - import_tasks: bootloader.yml

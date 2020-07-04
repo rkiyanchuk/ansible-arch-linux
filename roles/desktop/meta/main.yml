@@ -10,3 +10,4 @@ galaxy_info:
 
 dependencies:
   - role: pacman
+  - kewlfft.aur

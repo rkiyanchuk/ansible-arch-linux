@@ -1,3 +1,0 @@
----
-- name: restart tlp
-  service: name=tlp.service state=restarted

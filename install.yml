@@ -1,65 +1,51 @@
 ---
 - hosts: localhost
-  name: bootstrap Arch Linux system
+  name: bootstrap ArchLinux system
   connection: local
 
   vars_prompt:
     - name: luks_passphrase
-      prompt: "encryption passphrase:"
+      prompt: "Encryption passphrase:"
       private: yes
       confirm: yes
 
     - name: user_password
-      prompt: "user password:"
+      prompt: "User password:"
       encrypt: "sha512_crypt"
       private: yes
       confirm: yes
 
+    - name: wifi_ssid
+      prompt: "WiFi SSID:"
+
+    - name: wifi_password
+      prompt: "WiFi password:"
+      private: yes
+      confirm: yes
 
   pre_tasks:
     - include_vars: "host_vars/{{ machine_aliases[ansible_product_name] }}"
 
-      # Make prompted vars available for all plays.
+    # Make prompted vars available for all plays.
     - set_fact:
         luks_passphrase: "{{ luks_passphrase }}"
 
     - set_fact:
         user_password: "{{ user_password }}"
 
+    - set_fact:
+        wifi_ssid: "{{ wifi_ssid }}"
+
+    - set_fact:
+        wifi_password: "{{ wifi_password }}"
+
   tasks:
     - import_role:
         name: arch-bootstrap
 
-  post_tasks:
-
-    # Prepare for chroot to new install location.
-    - name: mount proc
-      mount:
-        src: proc
-        path: "{{ arch_root }}/proc"
-        fstype: proc
-        state: mounted
-
-    - name: mount temporary api systems
-      mount:
-        src: "/{{ item }}"
-        path: "{{ arch_root }}/{{ item }}"
-        opts: bind
-        fstype: none
-        state: mounted
-      with_items:
-        - sys
-        - dev
-        - run
-
-    - name: copy resolv.conf into chroot
-      copy:
-        src: /etc/resolv.conf
-        dest: "{{ arch_root }}/etc/resolv.conf"
-
 
 - hosts: chroot
-  name: install minimal Arch Linux system
+  name: install minimal ArchLinux system
   connection: chroot
 
   pre_tasks:
@@ -73,11 +59,15 @@
   connection: local
   name: finish up installation
   tasks:
-    - name: copy playbook to newly installed system
-      command: "cp -ar {{ playbook_dir }} {{ arch_root }}/home/{{ user.name }}"
+    - name: copy Ansible playbook to newly installed system
+      copy:
+        src: "{{ playbook_dir }}"
+        dest: "{{ arch_root }}/home/{{ user.name }}/"
+        owner: "{{ user.name }}"
+        group: "{{ user.group }}"
 
     - name: unmount partitions with the new system
-      command: umount -Rf {{ arch_root }}
+      command: "umount -Rf {{ arch_root }}"
 
     - name: close LUKS encrypted devices
       command: "cryptsetup luksClose /dev/mapper/arch-{{ item.name }}"

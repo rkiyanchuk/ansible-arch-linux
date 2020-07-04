@@ -1,15 +1,12 @@
 ---
 - name: install bluetooth packages
   pacman:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - blueman
-    - bluez
-    - bluez-firmware
-    - bluez-libs
-    - bluez-utils
-    - pulseaudio-bluetooth
+    name:
+      - blueman
+      - bluez
+      - bluez-libs
+      - bluez-utils
+      - pulseaudio-bluetooth
   notify:
     - enable bluetooth
     - restart pulseaudio as user
@@ -18,6 +15,3 @@
   copy:
     src: polkit/90-blueman.rules
     dest: /etc/polkit-1/rules.d/90-blueman.rules
-
-- name: add user to lp group
-  user: name={{ user.name }} groups=lp append=yes

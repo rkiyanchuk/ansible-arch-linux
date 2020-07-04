@@ -1,22 +1,22 @@
 ---
-arch_root: /mnt
-
 # These are aliases that define file names with group vars for a host.
 # The name is obtained from `ansible_product_name` fact and matched to
 # corresponding file in `host_vars`.
 machine_aliases:
   VirtualBox: vbox.yml
-  Gazelle Professional: gzp.yml
-  XPS 13 9350: xps.yml
+  XPS 13 9300: xps.yml
+
+arch_root: /mnt
 
 country: United States
+timezone: America/Los_Angeles
 locales:
   - en_US
   - uk_UA
 
 user:
-  name: zoresvit
-  group: zoresvit
+  name: ruslan
+  group: ruslan
   uid: 1000
   comment: Ruslan Kiyanchuk
   groups:
@@ -24,64 +24,69 @@ user:
     - video
     - wheel
     - systemd-journal
-    - realtime
-    - docker
   shell: /bin/zsh
   email: ruslan.kiyanchuk@gmail.com
 
 extra_packages:
-  - calibre
-  - clang
-  - evince
-  - file-roller
-  - gimp
-  - git
-  - gpick
-  - gvfs  # For mounting and Trash support in Thunar
+  # system
+  - bat
+  - fd
+  - fzf
   - hardinfo
-  - hasktags
-  - keepassxc
-  - neovim
-  - neovim-qt
-  - python-pynvim
+  - htop
+  - man
+  - mlocate
+  - powertop
   - ripgrep
-  - thunar
-  - thunar-archive-plugin
   - tldr
   - tmux
   - tmuxp
 
-  # Media
-  - smplayer
-  - goldendict
-  - chromium
-
-  # Console
-  - termite
-  - bash-completion
-  - zsh
-  - zsh-completions
-  - mlocate
-  - htop
-  - hub
-  - httpie
-
-  # Filesystems
+  # filesystems
   - dosfstools
   - ntfs-3g
   - exfat-utils
 
-  # Archives
-  - zip
-  - unzip
+  # archives
+  - file-roller
   - p7zip
   - unrar
+  - unzip
+  - zip
 
-  # Fonts
+  # developemnt
+  - clang
+  - git
+  - httpie
+  - neovim
+  - neovim-qt
+  - python-pynvim
+
+  # media
+  - calibre
+  - chromium
+  - digikam
+  - evince
+  - gimp
+  - goldendict
+  - gpick
+  - inkscape
+  - vlc
+
+  # fonts
   - ttf-arphic-uming
   - ttf-indic-otf
+  - nerd-fonts-complete
+  #- nerd-fonts-iosevka  # package broken at the moment
 
-  # Spell check.
+  # misc
+  - keepassxc
+  - libreoffice-still
+  #- gvfs  # For mounting and Trash support in Thunar
+  #- thunar
+  #- thunar-archive-plugin
+
+  # spellcheck
   - aspell
   - aspell-en
   - aspell-ru
@@ -89,33 +94,26 @@ extra_packages:
   - hunspell
   - hunspell-en_US
   - hunspell-he
-  - muparser  # optional for Albert calculator extension
 
 extra_aur_packages:
-  - albert
-  - autorandr
   - chromium-widevine  # Google's Content Decryption Module plugin.
   - dropbox
-  - flameshot
-  #  - kalu  # incompatible with latest pacman for now
-  - lxdm-themes
+  - github-cli
   - mimeo
-  - pasystray
   - tectonic
-  - thunar-dropbox-git
   - ttf-joypixels
-  - ttf-material-design-icons-git
-  - xkb-switch
-  - unclutter-xfixes-git
-  - multiload-ng-systray-gtk3
+
+  #- thunar-dropbox-git
+  #- kalu  # incompatible with latest pacman for now
 
 dotfiles:
   repo: "https://github.com/zoresvit/dotfiles"
-  install_cmd: "stow -d ${HOME}/dotfiles -S albert bash zsh chromium conky flameshot git goldendict termite tmux vim xmonad xorg"
+  install_cmds:
+    - "stow -d ${HOME}/dotfiles -S sway swaylock swaynag waybar mako redshift systemd"
+    - "stow -d ${HOME}/dotfiles -S yay alacritty tilix zsh tmux git gnupg neovim"
+    - "stow -d ${HOME}/dotfiles -S chromium goldendict sage"
   deps:
     - conky
     - stow
-    - xsel
     - python-jedi
-    - hasktags
     - ctags

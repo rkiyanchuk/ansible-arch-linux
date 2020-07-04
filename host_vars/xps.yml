@@ -1,41 +1,27 @@
 hostname: xps
 
 host_extra_packages: []
+host_extra_aur_packages: []
 
-host_extra_aur_packages:
-  - aic94xx-firmware  # RAID controller driver
-  - wd719x-firmware  # Western Digital SCSI driver
+interfaces:
+  wireless: "wlp0s20f3"
 
 drive:
-  device: /dev/sda
+  device: /dev/nvme0n1
   table: gpt
   partitions:
-
+    # NOTE: Partitions must be defined in order of mounting.
     - name: root
-      start: 512MiB
-      end: 30GiB
       filesystem: ext4
-      mountpoint: /
+      start: 512MiB
+      end: 100%
       encrypt: true
+      mountpoint: /
 
-    - name: efi
+    - name: boot
+      filesystem: vfat
       start: 0%
       end: 512MiB
-      flags: [boot]
-      filesystem: vfat
-      mountpoint: /boot/efi
       encrypt: false
-
-    - name: var
-      start: 30GiB
-      end: 60GiB
-      filesystem: ext4
-      mountpoint: /var
-      encrypt: true
-
-    - name: home
-      start: 40GiB
-      end: 100%
-      filesystem: ext4
-      mountpoint: /home
-      encrypt: true
+      flags: [boot]
+      mountpoint: /boot
