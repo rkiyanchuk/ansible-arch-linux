@@ -28,60 +28,65 @@ user:
   email: ruslan.kiyanchuk@gmail.com
 
 extra_packages:
-  - calibre
-  - clang
-  - evince
-  - file-roller
-  - gimp
-  - git
-  - gpick
+  # system
+  - bat
+  - fd
+  - fzf
   - hardinfo
-  - keepassxc
-  - neovim
-  - neovim-qt
-  - python-pynvim
+  - htop
+  - man
+  - mlocate
+  - powertop
   - ripgrep
   - tldr
-  - libreoffice-still
-  - digikam
   - tmux
   - tmuxp
-  - mlocate
-  - htop
-  - httpie
-  - inkscape
-  - powertop
-  #- gvfs  # For mounting and Trash support in Thunar
-  #- thunar
-  #- thunar-archive-plugin
-  - man
-  - bat
-  - fzf
-  - fd
 
-  # Media
-  - vlc
-  - goldendict
-  - chromium
-
-  # Filesystems
+  # filesystems
   - dosfstools
   - ntfs-3g
   - exfat-utils
 
-  # Archives
-  - zip
-  - unzip
+  # archives
+  - file-roller
   - p7zip
   - unrar
+  - unzip
+  - zip
 
-  # Fonts
+  # developemnt
+  - clang
+  - git
+  - httpie
+  - neovim
+  - neovim-qt
+  - python-pynvim
+
+  # media
+  - calibre
+  - chromium
+  - digikam
+  - evince
+  - gimp
+  - goldendict
+  - gpick
+  - inkscape
+  - vlc
+
+  # fonts
   - ttf-arphic-uming
   - ttf-indic-otf
-# - nerd-fonts-iosevka  # package broken at the moment
   - nerd-fonts-complete
+  #- nerd-fonts-iosevka  # package broken at the moment
 
-  # Spell check.
+  # misc
+  - keepassxc
+  - libreoffice-still
+  #- gvfs  # For mounting and Trash support in Thunar
+  #- thunar
+  #- thunar-archive-plugin
+
+  # spellcheck
   - aspell
   - aspell-en
   - aspell-ru
@@ -91,22 +96,22 @@ extra_packages:
   - hunspell-he
 
 extra_aur_packages:
-  - github-cli
-  - grimshot
   - chromium-widevine  # Google's Content Decryption Module plugin.
   - dropbox
-  #  - kalu  # incompatible with latest pacman for now
+  - github-cli
   - mimeo
   - tectonic
-  #- thunar-dropbox-git
   - ttf-joypixels
-  - wev
-  - wshowkeys
+
+  #- thunar-dropbox-git
+  #- kalu  # incompatible with latest pacman for now
 
 dotfiles:
   repo: "https://github.com/zoresvit/dotfiles"
   install_cmds:
-    - "stow -d ${HOME}/dotfiles -S chromium git gnupg goldendict neovim sage alacritty tilix tmux yay zsh sway waybar"
+    - "stow -d ${HOME}/dotfiles -S sway swaylock swaynag waybar mako redshift systemd"
+    - "stow -d ${HOME}/dotfiles -S yay alacritty tilix zsh tmux git gnupg neovim"
+    - "stow -d ${HOME}/dotfiles -S chromium goldendict sage"
   deps:
     - conky
     - stow

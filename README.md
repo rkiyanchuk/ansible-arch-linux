@@ -70,11 +70,3 @@ Generating SSH key:
 ```
 ssh-keygen -t ed25519 -C "${USER}@${HOSTNAME}-$(date -I)"
 ```
-
-TODO
-====
-
-- Fix configuration for printer discovery (Avahi, etc).
-- Configure swap file.
-- bootctl hooks https://wiki.archlinux.org/index.php/Systemd-boot#Configuration
-- add groups to the user: realtime, docker

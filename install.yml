@@ -1,24 +1,22 @@
 ---
 - hosts: localhost
-  name: bootstrap Arch Linux system
+  name: bootstrap ArchLinux system
   connection: local
 
   vars_prompt:
     - name: luks_passphrase
-      prompt: "encryption passphrase:"
+      prompt: "Encryption passphrase:"
       private: yes
       confirm: yes
 
     - name: user_password
-      prompt: "user password:"
+      prompt: "User password:"
       encrypt: "sha512_crypt"
       private: yes
       confirm: yes
 
     - name: wifi_ssid
-      prompt: "WiFi password:"
-      private: yes
-      confirm: yes
+      prompt: "WiFi SSID:"
 
     - name: wifi_password
       prompt: "WiFi password:"
@@ -36,7 +34,10 @@
         user_password: "{{ user_password }}"
 
     - set_fact:
-        user_password: "{{ wifi_password }}"
+        wifi_ssid: "{{ wifi_ssid }}"
+
+    - set_fact:
+        wifi_password: "{{ wifi_password }}"
 
   tasks:
     - import_role:
@@ -44,7 +45,7 @@
 
 
 - hosts: chroot
-  name: install minimal Arch Linux system
+  name: install minimal ArchLinux system
   connection: chroot
 
   pre_tasks:
@@ -58,7 +59,7 @@
   connection: local
   name: finish up installation
   tasks:
-    - name: copy playbook to newly installed system
+    - name: copy Ansible playbook to newly installed system
       copy:
         src: "{{ playbook_dir }}"
         dest: "{{ arch_root }}/home/{{ user.name }}/"
@@ -66,7 +67,7 @@
         group: "{{ user.group }}"
 
     - name: unmount partitions with the new system
-      command: umount -Rf {{ arch_root }}
+      command: "umount -Rf {{ arch_root }}"
 
     - name: close LUKS encrypted devices
       command: "cryptsetup luksClose /dev/mapper/arch-{{ item.name }}"
