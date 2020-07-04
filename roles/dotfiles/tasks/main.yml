@@ -1,23 +1,4 @@
 ---
-- name: install stow to manage symlinks
-  pacman:
-    name: stow
-
-- name: clone dotfiles
-  git:
-    repo: "{{ dotfiles.repo }}"
-    dest: "${HOME}/dotfiles"
-  become_user: "{{ user.name }}"
-
-- name: install dotfiles dependencies
-  pacman:
-    name: "{{ dotfiles.deps }}"
-
-- name: install tmux plugin manager
-  git:
-    repo: "https://github.com/tmux-plugins/tpm"
-    dest: "${HOME}/.tmux/plugins/tpm"
-  become_user: "{{ user.name }}"
 
 - name: copy tilix config to temp
   copy:
@@ -26,31 +7,65 @@
 
 - name: install tilix settings
   shell: "dconf load /com/gexperts/Tilix/ < /var/tmp/com.gexperts.Tilix.conf"
+  become: yes
   become_user: "{{ user.name }}"
 
-- name: cleanup OhMyZsh from previous installation
+- name: create tmux plugins directory
   file:
-    path: "${HOME}/.oh-my-zsh/"
-    state: absent
+    path: "${HOME}/.tmux/plugins"
+    state: directory
+  become: yes
   become_user: "{{ user.name }}"
 
-- name: install OhMyZsh
-  shell: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+- name: install tmux plugin manager
+  git:
+    repo: "https://github.com/tmux-plugins/tpm"
+    dest: "${HOME}/.tmux/plugins/tpm"
+  become: yes
   become_user: "{{ user.name }}"
+
+- name: install oh-my-zsh
+  shell: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  become: yes
+  become_user: "{{ user.name }}"
+  ignore_errors: yes
 
 - name: install Zsh theme powerlevel10k
-  command: "git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${HOME}/.oh-my-zsh/custom/themes/powerlevel10k"
+  git:
+    repo: "https://github.com/romkatv/powerlevel10k.git"
+    dest: "${HOME}/.oh-my-zsh/custom/themes/powerlevel10k"
+    depth: 1
+  become: yes
   become_user: "{{ user.name }}"
 
 - name: install Zsh plugin zsh-lazyload
-  command: "git clone https://github.com/qoomon/zsh-lazyload ${HOME}/.oh-my-zsh/custom/plugins/zsh-lazyload"
+  git:
+    repo: "https://github.com/qoomon/zsh-lazyload"
+    dest: "${HOME}/.oh-my-zsh/custom/plugins/zsh-lazyload"
+    depth: 1
+  become: yes
   become_user: "{{ user.name }}"
 
-- name: cleanup default Zsh config
+- name: cleanup default Zsh config installed by oh-my-zsh
   file:
     path: "${HOME}/.zshrc"
     state: absent
   become_user: "{{ user.name }}"
+
+- name: install stow to manage symlinks
+  pacman:
+    name: stow
+
+- name: clone dotfiles
+  git:
+    repo: "{{ dotfiles.repo }}"
+    dest: "${HOME}/dotfiles"
+  become: yes
+  become_user: "{{ user.name }}"
+
+- name: install dotfiles dependencies
+  pacman:
+    name: "{{ dotfiles.deps }}"
 
 - name: install dotfiles
   command: "{{ item }}"
@@ -64,6 +79,7 @@
   file:
     path: "${HOME}/.config/keepassxc"
     state: directory
+  become: yes
   become_user: "{{ user.name }}"
 
 - name: install Keepassxc config
