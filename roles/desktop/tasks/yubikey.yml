@@ -3,6 +3,9 @@
   pacman:
     name:
       - yubikey-manager-qt
+      - gnupg
+      - pcsclite
+      - ccid
   notify:
     - enable pcscd
 
