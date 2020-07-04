@@ -55,6 +55,15 @@
   become: yes
   become_user: "{{ user.name }}"
 
+- name: enable ssh-agent
+  systemd:
+    name: ssh-agent
+    scope: user
+    enabled: yes
+    state: started
+  become: yes
+  become_user: "{{ user.name }}"
+
 - name: enable ulauncher
   systemd:
     name: ulauncher

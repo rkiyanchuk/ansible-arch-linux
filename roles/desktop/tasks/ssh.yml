@@ -19,3 +19,26 @@
     backup: yes
   notify:
     - enable sshd
+
+- name: create SSH dir
+  file:
+    path: "/home/{{ user.name }}/.ssh"
+    state: directory
+    mode: 0700
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+
+- name: create SSH config
+  file:
+    path: "/home/{{ user.name }}/.ssh/config"
+    state: touch
+    mode: 0600
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+
+- name: install ssh-agent.service
+  copy:
+    src: ssh-agent.service
+    dest: /etc/systemd/system/ssh-agent.service
+  notify:
+    - enable ssh-agent
