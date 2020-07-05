@@ -63,7 +63,7 @@
   become: yes
   become_user: "{{ user.name }}"
 
-- name: enable pcscd smart card daemon
+- name: enable pcscd
   systemd:
     name: pcscd.service
     enabled: yes
