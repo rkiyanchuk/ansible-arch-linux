@@ -26,13 +26,6 @@
     src: sway/sway-session.target
     dest: /etc/systemd/user/sway-session.target
 
-- name: install waybar.service
-  copy:
-    src: sway/waybar.service
-    dest: /etc/systemd/user/waybar.service
-  notify:
-    - enable waybar
-
 - name: install swayidle.service
   copy:
     src: sway/swayidle.service
