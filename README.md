@@ -51,7 +51,6 @@ Install OS
 5. Install dependent roles and run Ansible to provision base system:
 
     ```
-    ansible-galaxy install kewlfft.aur
     ansible-playbook install.yml
     ```
 
@@ -59,6 +58,7 @@ Install OS
    and run Ansible to install and configure full-featured Arch Linux:
 
     ```
+    ansible-galaxy install kewlfft.aur
     ansible-playbook --ask-become-pass config.yml
     ```
 
