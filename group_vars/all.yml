@@ -112,7 +112,6 @@ dotfiles:
     - "stow -d ${HOME}/dotfiles -S yay alacritty tilix zsh tmux git gnupg neovim"
     - "stow -d ${HOME}/dotfiles -S chromium goldendict sage"
   deps:
-    - conky
     - stow
     - python-jedi
     - ctags
