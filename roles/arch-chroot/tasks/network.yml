@@ -17,7 +17,3 @@
   systemd:
     name: NetworkManager.service
     enabled: yes
-    state: started
-
-- name: add wireless connection to NetworkManager
-  command: "nmcli con add con-name {{ hostvars.localhost.wifi_ssid }} ifname {{ interfaces.wireless }} type wifi ssid {{ hostvars.localhost.wifi_ssid }} wifi-sec.key-mgmt wpa-psk wifi-sec.psk {{ hostvars.localhost.wifi_password }}"

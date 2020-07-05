@@ -48,17 +48,17 @@ Install OS
     ```
 
 
-5. Run Ansible to provision base system:
-
-    ```
-    ansible-playbook install.yml
-    ```
-
-6. After the reboot login into the new system and run Ansible to install and
-  configure full-featured Arch Linux:
+5. Install dependent roles and run Ansible to provision base system:
 
     ```
     ansible-galaxy install kewlfft.aur
+    ansible-playbook install.yml
+    ```
+
+6. After the reboot login into the new system, configure WiFi via `nmtui`,
+   and run Ansible to install and configure full-featured Arch Linux:
+
+    ```
     ansible-playbook --ask-become-pass config.yml
     ```
 
