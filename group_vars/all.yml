@@ -76,8 +76,6 @@ extra_packages:
   # fonts
   - ttf-arphic-uming
   - ttf-indic-otf
-  - nerd-fonts-complete
-  #- nerd-fonts-iosevka  # package broken at the moment
 
   # misc
   - keepassxc
@@ -102,6 +100,7 @@ extra_aur_packages:
   - mimeo
   - tectonic
   - ttf-joypixels
+  - nerd-fonts-iosevka
 
   #- thunar-dropbox-git
   #- kalu  # incompatible with latest pacman for now
