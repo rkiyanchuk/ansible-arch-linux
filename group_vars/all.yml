@@ -67,6 +67,7 @@ extra_packages:
   - chromium
   - digikam
   - evince
+  - geeqie
   - gimp
   - goldendict
   - gpick
@@ -80,9 +81,7 @@ extra_packages:
   # misc
   - keepassxc
   - libreoffice-still
-  #- gvfs  # For mounting and Trash support in Thunar
-  #- thunar
-  #- thunar-archive-plugin
+  - nautilus
 
   # spellcheck
   - aspell
@@ -101,9 +100,6 @@ extra_aur_packages:
   - tectonic
   - ttf-joypixels
   - nerd-fonts-iosevka
-
-  #- thunar-dropbox-git
-  #- kalu  # incompatible with latest pacman for now
 
 dotfiles:
   repo: "https://github.com/zoresvit/dotfiles"
