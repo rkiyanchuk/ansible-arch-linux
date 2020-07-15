@@ -38,16 +38,6 @@
     name: gdm
     enabled: yes
 
-- name: enable swayidle
-  systemd:
-    name: swayidle
-    scope: user
-    enabled: yes
-  become: yes
-  become_user: "{{ user.name }}"
-  environment:
-    XDG_RUNTIME_DIR: "/run/user/{{ user.uid }}"
-
 - name: enable ssh-agent
   systemd:
     name: ssh-agent

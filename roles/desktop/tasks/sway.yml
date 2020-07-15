@@ -21,18 +21,6 @@
     name:
       - polkit-gnome
 
-- name: install sway-session.target
-  copy:
-    src: sway/sway-session.target
-    dest: /etc/systemd/user/sway-session.target
-
-- name: install swayidle.service
-  copy:
-    src: sway/swayidle.service
-    dest: /etc/systemd/user/swayidle.service
-  notify:
-    - enable swayidle
-
 - name: install packages for Wayland from AUR
   aur:
     name:
