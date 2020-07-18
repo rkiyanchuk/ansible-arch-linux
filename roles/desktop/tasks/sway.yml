@@ -13,6 +13,7 @@
       - waybar
       - wl-clipboard
       - xorg-server-xwayland
+      - wmctrl
   notify:
     - enable gdm
 

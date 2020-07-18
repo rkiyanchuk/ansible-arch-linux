@@ -74,6 +74,8 @@ extra_packages:
   - goldendict
   - gpick
   - inkscape
+  - perl-file-mimeinfo
+  - pro-audio
 
   # fonts
   - ttf-arphic-uming
@@ -97,7 +99,6 @@ extra_aur_packages:
   - chromium-widevine  # Google's Content Decryption Module plugin.
   - dropbox
   - github-cli
-  - mimeo
   - tectonic
   - ttf-joypixels
   - nerd-fonts-iosevka
