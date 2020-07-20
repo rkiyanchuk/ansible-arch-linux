@@ -14,6 +14,7 @@
       - wl-clipboard
       - xorg-server-xwayland
       - wmctrl
+      - wf-recorder
   notify:
     - enable gdm
 
