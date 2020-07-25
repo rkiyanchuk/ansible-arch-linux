@@ -31,7 +31,6 @@
       - wev
       - wshowkeys
       - wdisplays
-      - swaymgr
   become: yes
   become_user: "{{ user.name }}"
 
