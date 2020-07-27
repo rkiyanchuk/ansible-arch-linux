@@ -57,10 +57,12 @@ extra_packages:
   # developemnt
   - clang
   - cloc
+  - gdb
   - git
   - httpie
   - neovim
   - neovim-qt
+  - python-pip
   - python-pynvim
 
   # media
@@ -99,6 +101,7 @@ extra_packages:
 extra_aur_packages:
   - chromium-widevine  # Google's Content Decryption Module plugin.
   - dropbox
+  - nautilus-dropbox
   - github-cli
   - tectonic
   - ttf-joypixels
