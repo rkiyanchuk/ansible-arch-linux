@@ -2,6 +2,7 @@
 - import_tasks: themes.yml
 - import_tasks: sway.yml
 
+- import_tasks: fingerprint.yml
 - import_tasks: media.yml
 - import_tasks: bluetooth.yml
 - import_tasks: ssh.yml

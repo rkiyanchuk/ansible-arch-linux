@@ -1,0 +1,16 @@
+- name: install fprintd
+  pacman:
+    name:
+      - fprintd
+
+- name: install fingerprint scanner lib
+  aur:
+    name:
+      - libfprint-2-tod1-xps9300-bin
+  become: yes
+  become_user: "{{ user.name }}"
+
+- name: install polkit policy for fprintd
+  copy:
+    src: polkit/50-net.reactivated.fprint-enroll.rules
+    dest: /usr/share/polkit-1/rules.d/50-net.reactivated.fprint-enroll.rules
