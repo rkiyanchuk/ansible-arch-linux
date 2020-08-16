@@ -14,3 +14,13 @@
   copy:
     src: polkit/50-net.reactivated.fprint-enroll.rules
     dest: /usr/share/polkit-1/rules.d/50-net.reactivated.fprint-enroll.rules
+
+- name: install PAM configs for sudo
+  copy:
+    src: pam/sudo
+    dest: /etc/pam.d/sudo
+
+- name: install PAM configs for swaylock
+  copy:
+    src: pam/swaylock
+    dest: /etc/pam.d/swaylock
