@@ -8,6 +8,7 @@
 - import_tasks: ssh.yml
 - import_tasks: printing.yml
 - import_tasks: yubikey.yml
+- import_tasks: tlp.yml
 
 - name: install cron
   pacman:

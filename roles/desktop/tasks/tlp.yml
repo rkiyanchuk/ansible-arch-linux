@@ -1,0 +1,27 @@
+---
+- name: install TLP power management
+  pacman:
+    name:
+      - tlp
+      - tlp-rdw
+      - acpid
+      - ethtool
+      - smartmontools
+
+- name: mask systemd radio service
+  command: systemctl mask systemd-rfkill.service
+
+- name: mask systemd radio socket
+  command: systemctl mask systemd-rfkill.socket
+
+- name: enable TLP service
+  systemd:
+    name: tlp.service
+    enabled: yes
+    state: restarted
+
+- name: enable NetworkManager-dispatcher service
+  systemd:
+    name: NetworkManager-dispatcher.service
+    enabled: yes
+    state: started
