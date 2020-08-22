@@ -60,6 +60,11 @@
     src: gtk-3.0/settings.ini
     dest: /etc/gtk-3.0/settings.ini
 
+- name: install GTK 3 style
+  copy:
+    src: gtk-3.0/gtk.css
+    dest: /etc/gtk-3.0/gtk.css
+
 - name: configure Qt
   copy:
     src: qt/Trolltech.conf
