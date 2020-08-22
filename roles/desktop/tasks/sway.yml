@@ -38,3 +38,15 @@
   command: systemctl --user enable redshift.service
   become: yes
   become_user: "{{ user.name }}"
+
+# Configure screen sharing with Wayland
+- name: install packages for screen sharing
+  pacman:
+    name:
+      - pipewire
+      - pipewire-pulse
+      - pipewire-jack
+      - pipewire-docs
+      - libpipewire02
+      - xdg-desktop-portal
+      - xdg-desktop-portal-gtk
