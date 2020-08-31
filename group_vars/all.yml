@@ -35,6 +35,8 @@ extra_packages:
   - hardinfo
   - htop
   - man
+  - man-db
+  - man-pages
   - mlocate
   - powertop
   - ripgrep
