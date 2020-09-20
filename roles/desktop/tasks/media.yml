@@ -3,6 +3,11 @@
   pacman:
     name: udiskie
 
+- name: install drivers
+  pacman:
+    name:
+      - intel-media-driver
+
 - name: install media codecs
   pacman:
     name:
