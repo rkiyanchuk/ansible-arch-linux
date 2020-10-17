@@ -23,6 +23,13 @@
     name:
       - polkit-gnome
 
+- name: install polkit.service
+  copy:
+    src: polkit.service
+    dest: /etc/systemd/user/polkit.service
+  notify:
+    - enable polkit
+
 - name: install packages for Wayland from AUR
   aur:
     name:

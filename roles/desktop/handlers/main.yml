@@ -49,6 +49,17 @@
   environment:
     XDG_RUNTIME_DIR: "/run/user/{{ user.uid }}"
 
+- name: enable polkit
+  systemd:
+    name: polkit
+    scope: user
+    enabled: yes
+    state: started
+  become: yes
+  become_user: "{{ user.name }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ user.uid }}"
+
 - name: enable pcscd
   systemd:
     name: pcscd.service
