@@ -26,7 +26,7 @@
 - name: install packages for Wayland from AUR
   aur:
     name:
-      - grimshot
+      - grimshot-git
       - redshift-wayland-git
       - wev
       - wshowkeys
