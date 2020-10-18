@@ -82,7 +82,13 @@ extra_packages:
   - gpick
   - inkscape
   - perl-file-mimeinfo
-  - pro-audio
+  ## audio
+  - ardour
+  - cadence
+  - lsp-plugins
+  - lv2-plugins
+  - noise-repellent
+  - vst-plugins
 
   # fonts
   - ttf-arphic-uming
