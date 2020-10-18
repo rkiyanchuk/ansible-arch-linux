@@ -62,6 +62,15 @@ Install OS
     ansible-playbook --ask-become-pass config.yml
     ```
 
+Post setup
+----------
+
+### Add fingerprint authentication
+
+```
+fprint-enroll
+```
+
 Notes
 =====
 
