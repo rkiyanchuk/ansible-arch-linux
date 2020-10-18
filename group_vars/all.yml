@@ -45,10 +45,10 @@ extra_packages:
   - tmuxp
   - usbutils
 
-  # filesystems
+  # filesystem
   - dosfstools
-  - ntfs-3g
   - exfat-utils
+  - ntfs-3g
   - tree
 
   # archives
@@ -105,11 +105,11 @@ extra_packages:
 extra_aur_packages:
   - chromium-widevine  # Google's Content Decryption Module plugin.
   - dropbox
-  - nautilus-dropbox
   - github-cli
+  - nautilus-dropbox
+  - nerd-fonts-iosevka
   - tectonic
   - ttf-joypixels
-  - nerd-fonts-iosevka
 
 dotfiles:
   repo: "https://github.com/zoresvit/dotfiles"
