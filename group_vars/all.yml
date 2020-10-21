@@ -72,16 +72,12 @@ extra_packages:
   # media
   - blender
   - calibre
-  - celluloid
   - chromium
   - digikam
-  - evince
-  - geeqie
   - gimp
   - goldendict
   - gpick
   - inkscape
-  - perl-file-mimeinfo
   ## audio
   - ardour
   - cadence
@@ -97,7 +93,6 @@ extra_packages:
   # misc
   - keepassxc
   - libreoffice-still
-  - nautilus
 
   # spellcheck
   - aspell
@@ -120,8 +115,7 @@ extra_aur_packages:
 dotfiles:
   repo: "https://github.com/zoresvit/dotfiles"
   install_cmds:
-    - "stow -d ${HOME}/dotfiles -S sway swaylock swaynag waybar mako redshift systemd"
-    - "stow -d ${HOME}/dotfiles -S yay alacritty tilix zsh tmux git gnupg neovim"
+    - "stow -d ${HOME}/dotfiles -S yay tilix zsh tmux git gnupg neovim"
     - "stow -d ${HOME}/dotfiles -S chromium goldendict sage"
   deps:
     - stow
