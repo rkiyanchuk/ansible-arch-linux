@@ -59,7 +59,7 @@ Install OS
 
     ```
     ansible-galaxy install kewlfft.aur
-    ansible-playbook --ask-become-pass config.yml
+    ansible-playbook --ask-become-pass configure.yml
     ```
 
 Post setup

@@ -25,6 +25,7 @@
 - name: install bootloader
   command: "bootctl install"
 
+# Used in boot-entry.j2 template.
 - name: retrieve UUIDs of encrypted partitions
   command: blkid -s UUID -o value /dev/disk/by-partlabel/{{ drive.partitions.0.name }}
   register: root_uuid
