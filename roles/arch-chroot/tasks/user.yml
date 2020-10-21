@@ -4,12 +4,6 @@
     name: sudo
     state: present
 
-- name: configure sudoers
-  template:
-    src: sudoers.j2
-    dest: /etc/sudoers
-    mode: 440
-
 - name: create user group
   group:
     name: "{{ user.group }}"
