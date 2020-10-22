@@ -21,12 +21,6 @@
     enabled: yes
     state: started
 
-- name: enable sshd
-  systemd:
-    name: sshd.service
-    enabled: yes
-    state: started
-
 - name: enable cups
   systemd:
     name: org.cups.cupsd.service
@@ -37,17 +31,6 @@
   systemd:
     name: gdm
     enabled: yes
-
-- name: enable ssh-agent
-  systemd:
-    name: ssh-agent
-    scope: user
-    enabled: yes
-    state: started
-  become: yes
-  become_user: "{{ user.name }}"
-  environment:
-    XDG_RUNTIME_DIR: "/run/user/{{ user.uid }}"
 
 - name: enable polkit
   systemd:

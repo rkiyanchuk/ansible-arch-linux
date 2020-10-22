@@ -4,3 +4,14 @@
     name: sshd.service
     enabled: yes
     state: started
+
+- name: enable ssh-agent
+  systemd:
+    name: ssh-agent
+    scope: user
+    enabled: yes
+    state: started
+  become: yes
+  become_user: "{{ user.name }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ user.uid }}"
