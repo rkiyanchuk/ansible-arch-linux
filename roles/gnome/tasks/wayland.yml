@@ -1,0 +1,34 @@
+---
+- name: install packages for Wayland
+  pacman:
+    name:
+      - wl-clipboard
+      - xorg-server-xwayland
+      - wmctrl
+      - wf-recorder
+  notify:
+    - enable gdm
+
+- name: install packages for Wayland from AUR
+  aur:
+    name:
+      - grimshot-git
+      - wev
+      - wshowkeys
+      - wdisplays
+  become: yes
+  become_user: "{{ user.name }}"
+
+# Configure screen sharing with Wayland
+- name: install packages for screen sharing
+  pacman:
+    name:
+      - pipewire
+      - pipewire-pulse
+      - pipewire-jack
+      - pipewire-docs
+      - libpipewire02
+      - xdg-desktop-portal
+      - xdg-desktop-portal-gtk
+      - xdg-desktop-portal-wlr
+

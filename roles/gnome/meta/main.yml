@@ -1,6 +1,6 @@
 galaxy_info:
   author: Ruslan Kiyanchuk
-  description: Configure Arch Linux for desktop usage
+  description: Install Gnome Desktop Environment on Arch Linux
 
   min_ansible_version: 2.4
   platforms:

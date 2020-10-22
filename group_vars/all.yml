@@ -44,6 +44,7 @@ extra_packages:
   - tmux
   - tmuxp
   - usbutils
+  - tilix
 
   # filesystem
   - dosfstools
