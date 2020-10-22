@@ -16,6 +16,8 @@
   tasks:
     - import_role: {name: pacman}
     - import_role: {name: ssh}
+    - import_role: {name: gnupg}
+    - import_role: {name: printing}
 
     - import_role: {name: gnome}
     - import_role: {name: fingerprint}

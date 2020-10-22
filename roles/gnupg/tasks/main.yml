@@ -1,0 +1,11 @@
+---
+- name: install GnuPG
+  pacman:
+    name:
+      - ccid
+      - gnupg
+      - pcsclite
+      - yubikey-manager-qt
+  notify:
+    - enable pcscd
+
