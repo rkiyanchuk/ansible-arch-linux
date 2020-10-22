@@ -16,7 +16,10 @@
   tasks:
     - import_role: {name: pacman}
     - import_role: {name: ssh}
-    - import_role: {name: desktop}
+
+    - import_role: {name: gnome}
+    - import_role: {name: fingerprint}
+
     - import_role: {name: dotfiles}
 
     - name: start GDM
