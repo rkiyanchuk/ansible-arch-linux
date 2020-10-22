@@ -25,4 +25,31 @@
 - import_tasks: printing.yml
 - import_tasks: yubikey.yml
 - import_tasks: tlp.yml
-- import_tasks: extra_packages.yml
+
+- name: install extra packages from repo
+  pacman:
+    name: "{{ extra_packages }}"
+
+- name: install extra packages from AUR
+  aur:
+    name: "{{ extra_aur_packages }}"
+  become: yes
+  become_user: "{{ user.name }}"
+
+- name: install host-specific packages from repo
+  pacman:
+    name: "{{ host_extra_packages }}"
+  when: host_extra_packages | length > 0
+
+- name: install host-specific packages from AUR
+  aur:
+    name: "{{ host_extra_aur_packages }}"
+  become: yes
+  become_user: "{{ user.name }}"
+  when: host_extra_aur_packages is defined and host_extra_aur_packages|length > 0
+
+- name: fix GoldenDict desktop file to work under Wayland
+  lineinfile:
+    path: /usr/share/applications/goldendict.desktop
+    regexp: "^Exec=goldendict"
+    line: "Exec=env QT_QPA_PLATFORM=xcb goldendict"
