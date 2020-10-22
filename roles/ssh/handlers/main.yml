@@ -1,0 +1,6 @@
+---
+- name: enable sshd
+  systemd:
+    name: sshd.service
+    enabled: yes
+    state: started
