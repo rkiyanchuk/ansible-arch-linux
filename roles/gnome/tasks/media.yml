@@ -3,7 +3,7 @@
   pacman:
     name: udiskie
 
-- name: install drivers
+- name: install Intel Video Acceleration API driver
   pacman:
     name:
       - intel-media-driver
@@ -31,22 +31,9 @@
       - pavucontrol
       - pamixer
       - paprefs
-      - playerctl
-
-- name: install pro-audio packages
-  pacman:
-    name:
-      - pro-audio
-      - jack2
 
 - name: add user to realtime group
   user:
     name: '{{ user.name }}'
     groups: realtime
     append: yes
-
-- name: configure to switch audio output to newly connected devices
-  lineinfile:
-    dest: /etc/pulse/default.pa
-    state: present
-    line: "load-module module-switch-on-connect"
