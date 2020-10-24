@@ -31,9 +31,13 @@
       - pavucontrol
       - pamixer
       - paprefs
+  notify:
+    - restart pulseaudio as user
 
 - name: add user to realtime group
   user:
     name: '{{ user.name }}'
     groups: realtime
     append: yes
+  notify:
+    - restart pulseaudio as user

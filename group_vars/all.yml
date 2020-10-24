@@ -114,7 +114,7 @@ extra_aur_packages:
   - ttf-joypixels
 
 dotfiles:
-  repo: "https://github.com/zoresvit/dotfiles"
+  repo: "https://github.com/rkiyanchuk/dotfiles"
   install_cmds:
     - "stow -d ${HOME}/dotfiles -S yay tilix zsh tmux git gnupg neovim"
     - "stow -d ${HOME}/dotfiles -S chromium goldendict sage"

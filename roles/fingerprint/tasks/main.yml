@@ -4,7 +4,7 @@
     name:
       - fprintd
 
-- name: install polkit policy for fprintd
+- name: restrict fingerprint enroll via polkit
   copy:
     src: polkit/50-net.reactivated.fprint-enroll.rules
     dest: /usr/share/polkit-1/rules.d/50-net.reactivated.fprint-enroll.rules

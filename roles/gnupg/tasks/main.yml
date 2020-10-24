@@ -8,4 +8,3 @@
       - yubikey-manager-qt
   notify:
     - enable pcscd
-

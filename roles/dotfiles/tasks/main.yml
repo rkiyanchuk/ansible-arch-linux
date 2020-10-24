@@ -1,5 +1,4 @@
 ---
-
 - name: copy tilix config to temp
   copy:
     src: com.gexperts.Tilix.conf

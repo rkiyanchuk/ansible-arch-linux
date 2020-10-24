@@ -1,10 +1,4 @@
 ---
-- name: enable bluetooth
-  systemd:
-    name: bluetooth.service
-    enabled: yes
-    state: started
-
 - name: restart pulseaudio as user
   systemd:
     name: pulseaudio.service
@@ -14,23 +8,6 @@
   become_user: "{{ user.name }}"
   environment:
     XDG_RUNTIME_DIR: "/run/user/{{ user.uid }}"
-
-- name: enable cron
-  systemd:
-    name: cronie.service
-    enabled: yes
-    state: started
-
-- name: enable cups
-  systemd:
-    name: org.cups.cupsd.service
-    enabled: yes
-    state: started
-
-- name: enable gdm
-  systemd:
-    name: gdm
-    enabled: yes
 
 - name: enable polkit
   systemd:
@@ -42,9 +19,3 @@
   become_user: "{{ user.name }}"
   environment:
     XDG_RUNTIME_DIR: "/run/user/{{ user.uid }}"
-
-- name: enable pcscd
-  systemd:
-    name: pcscd.service
-    enabled: yes
-    state: started

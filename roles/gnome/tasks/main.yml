@@ -1,11 +1,4 @@
 ---
-
-- name: install cron
-  pacman:
-    name: cronie
-  notify:
-    - enable cron
-
 - name: configure systemd logind
   copy:
     src: logind.conf
@@ -17,14 +10,9 @@
       - gnome
       - gnome-extra
       - gnome-tweaks
-  notify:
-    - enable gdm
 
 - import_tasks: wayland.yml
 - import_tasks: media.yml
-- import_tasks: printing.yml
-- import_tasks: yubikey.yml
-- import_tasks: tlp.yml
 
 - name: install extra packages from repo
   pacman:

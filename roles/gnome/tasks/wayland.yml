@@ -6,8 +6,6 @@
       - xorg-server-xwayland
       - wmctrl
       - wf-recorder
-  notify:
-    - enable gdm
 
 - name: install packages for Wayland from AUR
   aur:
@@ -31,4 +29,3 @@
       - xdg-desktop-portal
       - xdg-desktop-portal-gtk
       - xdg-desktop-portal-wlr
-

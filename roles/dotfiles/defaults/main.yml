@@ -1,6 +1,6 @@
 ---
 dotfiles:
-  repo: "https://github.com/zoresvit/dotfiles"
+  repo: "https://github.com/rkiyanchuk/dotfiles"
   install_cmds:
     - "stow -d ${HOME}/dotfiles -S zsh"
   deps: []
