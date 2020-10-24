@@ -1,13 +1,2 @@
-galaxy_info:
-  author: Ruslan Kiyanchuk
-  description: Configure Pacman for Arch Linux
-
-  license: GPLv3
-  min_ansible_version: 2.0
-  platforms:
-  - name: Arch
-
-  galaxy_tags: ['arch', 'linux', 'install']
-
 dependencies:
   - kewlfft.aur
