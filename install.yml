@@ -41,7 +41,6 @@
       copy:
         src: "{{ playbook_dir }}"
         dest: "{{ arch_root }}/home/{{ user.name }}/"
-        owner: "{{ user.name }}"
         mode: 0644
 
     - name: unmount partitions with the new system
