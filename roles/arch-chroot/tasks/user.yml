@@ -22,7 +22,7 @@
     append: yes
     groups: "{{ user.groups | join(',') }}"
     comment: "{{ user.comment }}"
-    password: "{{ hostvars.localhost.user_password }}"
+    password: "{{ hostvars.localhost.user_password | password_hash('sha512') }}"
     update_password: on_create
 
 - name: set user shell
