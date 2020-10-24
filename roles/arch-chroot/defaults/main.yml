@@ -37,13 +37,22 @@ base_packages:
   - dialog
   - efibootmgr
   - git
-  - glances
-  - lsof
+  - man
+  - man-db
+  - man-pages
+  - mlocate
   - moreutils
   - networkmanager
   - rsync
-  - sysstat
   - terminus-font
   - wpa_supplicant
   - zsh
   - zsh-completions
+  # System monitoring
+  - glances
+  - htop
+  - lsof
+  - powertop
+  - smartmontools
+  - strace
+  - sysstat
