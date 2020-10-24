@@ -10,7 +10,6 @@
 - name: install packages for Wayland from AUR
   aur:
     name:
-      - grimshot-git
       - wev
       - wshowkeys
       - wdisplays

@@ -10,6 +10,7 @@
       - gnome
       - gnome-extra
       - gnome-tweaks
+      - gendesk
 
 - import_tasks: wayland.yml
 - import_tasks: media.yml
