@@ -36,6 +36,7 @@ base_packages:
   - arch-wiki-lite
   - dialog
   - efibootmgr
+  - fwupd
   - git
   - man
   - man-db
