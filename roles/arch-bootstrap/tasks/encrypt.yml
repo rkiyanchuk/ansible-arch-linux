@@ -1,7 +1,7 @@
 ---
 - name: encrypt root device
   shell: >
-    echo -n "{{ hostvars.localhost.luks_passphrase }}" |
+    echo -n "{{ hostvars.localhost.user_password }}" |
     cryptsetup -qv luksFormat /dev/disk/by-partlabel/{{ item.name }}
   with_items:
     - "{{ drive.partitions }}"
@@ -9,7 +9,7 @@
 
 - name: open encrypted root device
   shell: >
-    echo -n "{{ hostvars.localhost.luks_passphrase }}" |
+    echo -n "{{ hostvars.localhost.user_password }}" |
     cryptsetup luksOpen /dev/disk/by-partlabel/{{ item.name }} arch-{{ item.name }}
   with_items:
     - "{{ drive.partitions }}"

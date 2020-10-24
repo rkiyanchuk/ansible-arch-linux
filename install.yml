@@ -4,11 +4,6 @@
   connection: local
 
   vars_prompt:
-    - name: luks_passphrase
-      prompt: "Encryption passphrase:"
-      private: yes
-      confirm: yes
-
     - name: user_password
       prompt: "User password:"
       encrypt: "sha512_crypt"
@@ -19,9 +14,6 @@
     - include_vars: "host_vars/{{ machine_aliases[ansible_product_name] }}"
 
     # Make prompted vars available for all plays.
-    - set_fact:
-        luks_passphrase: "{{ luks_passphrase }}"
-
     - set_fact:
         user_password: "{{ user_password }}"
 
