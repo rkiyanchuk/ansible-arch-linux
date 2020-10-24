@@ -26,7 +26,13 @@ Create bootable media
 Install OS
 ----------
 
-1. Boot into ArchLinux Live CD and connect to the Internet (`iwctl` for WiFi).
+1. Boot into ArchLinux Live CD and connect to the Internet.
+
+   Start `iwctl` prompt, then connect to WiFi with:
+
+   ```
+   station wlan0 connect <ssid>
+   ```
 
 2. Remount root partition to increase disk space for the installation.
 
@@ -43,7 +49,7 @@ Install OS
 4. Download and decompress playbook from GitHub:
 
     ```
-    git clone https://github.com/zoresvit/ansible-arch-linux
+    git clone https://github.com/rkiyanchuk/ansible-arch-linux
     cd ansible-arch-linux
     ```
 
