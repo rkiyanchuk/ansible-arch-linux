@@ -5,8 +5,8 @@
     state: present
 
 - name: configure sudoers
-  template:
-    src: sudoers.j2
+  copy:
+    src: sudoers
     dest: /etc/sudoers
     mode: 440
 
