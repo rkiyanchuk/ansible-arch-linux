@@ -40,10 +40,10 @@ Install OS
     mount -o remount,size=1G /run/archiso/cowspace
     ```
 
-3. Install dependencies: Ansible and `passlib` (for hashing password):
+3. Install Git and Ansible:
 
     ```
-    pacman -Sy git ansible python-passlib
+    pacman -Sy git ansible
     ```
 
 4. Download and decompress playbook from GitHub:
