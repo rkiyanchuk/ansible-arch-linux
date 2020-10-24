@@ -1,4 +1,8 @@
 ---
+- name: enable gdm
+  systemd:
+    name: gdm
+    enabled: yes
 
 - name: enable bluetooth
   systemd:

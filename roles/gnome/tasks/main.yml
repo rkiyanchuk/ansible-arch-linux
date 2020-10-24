@@ -11,6 +11,8 @@
       - gnome-extra
       - gnome-tweaks
       - gendesk
+  notify:
+    - enable gdm
 
 - import_tasks: wayland.yml
 - import_tasks: themes.yml
