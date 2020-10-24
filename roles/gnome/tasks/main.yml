@@ -25,7 +25,7 @@
     dest: /etc/dconf/db/gnome.d/00-ruslan
   notify: update dconf database
 
- - name: configure GNOME Shell Extensions support
+- name: configure GNOME Shell Extensions support
   pacman:
     name:
       - gnome-shell-extensions
