@@ -26,7 +26,7 @@ Create bootable media
 Install OS
 ----------
 
-1. Boot into ArchLinux Live CD and connect to the Internet (`wifi-menu` for WiFi).
+1. Boot into ArchLinux Live CD and connect to the Internet (`iwctl` for WiFi).
 
 2. Remount root partition to increase disk space for the installation.
 
