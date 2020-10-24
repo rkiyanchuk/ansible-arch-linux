@@ -65,6 +65,7 @@ extra_packages:
   - python-pynvim
 
   # media
+  - ardour
   - blender
   - calibre
   - chromium
@@ -73,13 +74,6 @@ extra_packages:
   - goldendict
   - gpick
   - inkscape
-  ## audio
-  - ardour
-  - cadence
-  - lsp-plugins
-  - lv2-plugins
-  - noise-repellent
-  - vst-plugins
 
   # misc
   - keepassxc

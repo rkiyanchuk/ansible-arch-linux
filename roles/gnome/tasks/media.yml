@@ -34,6 +34,12 @@
   notify:
     - restart pulseaudio as user
 
+- name: install pro-audio packages
+  pacman:
+    name:
+      - pro-audio
+      - jack2
+
 - name: add user to realtime group
   user:
     name: '{{ user.name }}'
