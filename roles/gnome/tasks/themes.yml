@@ -1,0 +1,59 @@
+---
+ - name: install GTK and Qt themes
+  pacman:
+    name:
+      - breeze
+      - breeze-gtk
+      - breeze-icons
+      - gnome-themes-extra
+      - qt5
+      - qt5-base
+      - qt5-wayland
+      - qt5ct
+
+ - name: install sounds for desktop events
+  pacman:
+    name:
+      - libcanberra
+      - libcanberra-pulse
+      - sound-theme-freedesktop
+
+- name: install fonts
+  pacman:
+    name:
+      - ttf-dejavu
+      # Fonts to use asian characters
+      - ttf-arphic-uming
+      - ttf-baekmuk
+      - ttf-indic-otf
+      # Emoji
+      - noto-fonts
+      - ttf-hannom  # vietnamese
+
+- name: install fonts from AUR
+  aur:
+    name:
+      - nerd-fonts-iosevka
+      - ttf-joypixels
+  become: yes
+  become_user: "{{ user.name }}"
+
+- name: create gtk-2.0 user config dir
+  file:
+    path: "/etc/gtk-2.0"
+    state: directory
+
+- name: configure GTK 2
+  copy:
+    src: gtk/gtkrc-2.0
+    dest: /etc/gtk-2.0/gtkrc
+
+- name: configure GTK 3
+  copy:
+    src: gtk/settings.ini
+    dest: /etc/gtk-3.0/settings.ini
+
+- name: install GTK 3 style
+  copy:
+    src: gtk/gtk.css
+    dest: /etc/gtk-3.0/gtk.css

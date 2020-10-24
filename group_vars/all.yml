@@ -81,10 +81,6 @@ extra_packages:
   - noise-repellent
   - vst-plugins
 
-  # fonts
-  - ttf-arphic-uming
-  - ttf-indic-otf
-
   # misc
   - keepassxc
   - libreoffice-still
@@ -103,9 +99,7 @@ extra_aur_packages:
   - dropbox
   - github-cli
   - nautilus-dropbox
-  - nerd-fonts-iosevka
   - tectonic
-  - ttf-joypixels
 
 dotfiles:
   repo: "https://github.com/rkiyanchuk/dotfiles"
