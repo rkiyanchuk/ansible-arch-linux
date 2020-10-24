@@ -34,11 +34,16 @@
   notify:
     - restart pulseaudio as user
 
-- name: install pro-audio packages
+- name: install packages for audio recording and editing
   pacman:
     name:
-      - pro-audio
-      - jack2
+      - ardour
+      - cadence
+      - dssi-plugins
+      - ladspa-plugins
+      - lv2-plugins
+      - realtime-privileges
+      - vst-plugins
 
 - name: add user to realtime group
   user:
