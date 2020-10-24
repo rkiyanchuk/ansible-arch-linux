@@ -2,17 +2,17 @@
 - name: install packages for Wayland
   pacman:
     name:
-      - wl-clipboard
-      - xorg-server-xwayland
-      - wmctrl
       - wf-recorder
+      - wl-clipboard
+      - wmctrl
+      - xorg-server-xwayland
 
 - name: install packages for Wayland from AUR
   aur:
     name:
+      - wdisplays
       - wev
       - wshowkeys
-      - wdisplays
   become: yes
   become_user: "{{ user.name }}"
 
