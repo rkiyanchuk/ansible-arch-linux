@@ -14,6 +14,23 @@
   notify:
     - enable gdm
 
+- name: create gnome.d directory for DConf
+  file:
+    path: /etc/dconf/db/gnome.d
+    state: directory
+
+- name: Configuring GNOME
+  copy:
+    src: dconf.conf
+    dest: /etc/dconf/db/gnome.d/00-ruslan
+  notify: update dconf database
+
+ - name: configure GNOME Shell Extensions support
+  pacman:
+    name:
+      - gnome-shell-extensions
+      - chrome-gnome-shell
+
 - import_tasks: wayland.yml
 - import_tasks: themes.yml
 - import_tasks: media.yml

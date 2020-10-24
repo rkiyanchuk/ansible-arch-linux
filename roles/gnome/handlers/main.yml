@@ -4,6 +4,9 @@
     name: gdm
     enabled: yes
 
+- name: update dconf database
+  command: dconf update
+
 - name: enable bluetooth
   systemd:
     name: bluetooth.service
