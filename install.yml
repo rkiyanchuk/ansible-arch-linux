@@ -36,6 +36,10 @@
 - hosts: localhost
   connection: local
   name: finish up installation
+
+  pre_tasks:
+    - include_vars: "host_vars/{{ machine_aliases[ansible_product_name] }}"
+
   tasks:
     - name: copy Ansible playbook to newly installed system
       copy:
