@@ -1,5 +1,5 @@
 ---
- - name: install GTK and Qt themes
+- name: install GTK and Qt themes
   pacman:
     name:
       - breeze
@@ -11,7 +11,7 @@
       - qt5-wayland
       - qt5ct
 
- - name: install sounds for desktop events
+- name: install sounds for desktop events
   pacman:
     name:
       - libcanberra
