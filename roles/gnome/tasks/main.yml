@@ -32,6 +32,7 @@
       - chrome-gnome-shell
 
 - import_tasks: wayland.yml
+- import_tasks: bluetooth.yml
 - import_tasks: themes.yml
 - import_tasks: media.yml
 

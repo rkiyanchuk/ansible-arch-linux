@@ -1,5 +1,7 @@
 ---
 - name: install bluetooth packages
+  tags:
+    - bluetooth
   pacman:
     name:
       - blueman
@@ -12,7 +14,9 @@
     - restart pulseaudio as user
 
 - name: install polkit policy for blueman
+  tags:
+    - bluetooth
   copy:
-    src: polkit/90-blueman.rules
+    src: polkit-blueman.rules
     dest: /usr/share/polkit-1/rules.d/90-blueman.rules
 
