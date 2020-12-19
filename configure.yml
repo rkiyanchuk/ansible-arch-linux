@@ -14,8 +14,8 @@
       command: timedatectl set-ntp true
 
   tasks:
-    - import_role: {name: base}
     - import_role: {name: pacman}
+    - import_role: {name: base}
     - import_role: {name: dotfiles}
     - import_role: {name: ssh}
     - import_role: {name: gnupg}

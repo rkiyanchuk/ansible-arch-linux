@@ -31,4 +31,10 @@
     - reload systemd config
     - enable paccache timer
 
+- name: enable paccache timer
+  service:
+    name: paccache.timer
+    enabled: yes
+    state: started
+
 - import_tasks: aur.yml
