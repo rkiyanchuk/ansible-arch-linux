@@ -42,3 +42,6 @@
     dest: /etc/systemd/user/ssh-agent.service
   notify:
     - enable ssh-agent
+
+# Run handlers
+- meta: flush_handlers
