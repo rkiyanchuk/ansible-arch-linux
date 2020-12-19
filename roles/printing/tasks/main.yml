@@ -14,9 +14,10 @@
     name: "{{ user.name }}"
     groups: lp
     append: yes
+  notify: enable ups
 
 - name: enable CUPS
   service:
-    name: org.cups.cupsd.service
+    name: cups
     enabled: yes
     state: started

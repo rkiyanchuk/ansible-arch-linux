@@ -25,7 +25,6 @@
     - import_role: {name: fingerprint}
     - import_role: {name: tlp}
 
-
     - name: start GDM
       service:
         name: gdm
