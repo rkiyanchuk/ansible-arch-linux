@@ -53,17 +53,6 @@ extra_packages:
   - unzip
   - zip
 
-  # developemnt
-  - clang
-  - cloc
-  - gdb
-  - git
-  - httpie
-  - neovim
-  - neovim-qt
-  - python-pip
-  - python-pynvim
-
   # media
   - ardour
   - blender
@@ -88,6 +77,18 @@ extra_packages:
   - hunspell-en_US
   - hunspell-he
 
+  # developemnt
+  - clang
+  - cloc
+  - gdb
+  - git
+  - httpie
+  - neovim
+  - neovim-qt
+  - python-pip
+  - python-pynvim
+  - python-jedi
+
 extra_aur_packages:
   - chromium-widevine  # Google's Content Decryption Module plugin.
   - dropbox
@@ -102,5 +103,4 @@ dotfiles:
     - "stow -d ${HOME}/dotfiles -S chromium goldendict sage"
   deps:
     - stow
-    - python-jedi
     - ctags
