@@ -11,4 +11,20 @@
     enabled: yes
     state: started
 
+- name: install GnuPG
+  pacman:
+    name:
+      - ccid
+      - gnupg
+      - pcsclite
+      - yubikey-manager-qt
+  notify:
+    - enable pcscd
+
+- name: enable pcscd
+  systemd:
+    name: pcscd.service
+    enabled: yes
+    state: started
+
 - import_tasks: printing.yaml

@@ -1,6 +1,0 @@
----
-- name: enable pcscd
-  systemd:
-    name: pcscd.service
-    enabled: yes
-    state: started

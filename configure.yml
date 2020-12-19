@@ -18,7 +18,6 @@
     - import_role: {name: base}
     - import_role: {name: dotfiles}
     - import_role: {name: ssh}
-    - import_role: {name: gnupg}
     - import_role: {name: printing}
 
     - import_role: {name: gnome}
