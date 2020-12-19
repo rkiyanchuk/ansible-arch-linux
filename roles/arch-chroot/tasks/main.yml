@@ -1,4 +1,6 @@
 ---
+- import_tasks: locales.yml
+
 - name: configure repository mirrors
   command: "reflector --sort score -p https --country '{{ country }}' --save /etc/pacman.d/mirrorlist"
 
@@ -6,8 +8,6 @@
   pacman:
     update_cache: yes
     upgrade: yes
-
-- import_tasks: locales.yml
 
 - name: configure hostname
   lineinfile:
