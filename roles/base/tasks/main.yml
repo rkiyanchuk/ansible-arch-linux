@@ -4,3 +4,11 @@
     name: cronie
   notify:
     - enable cron
+
+- name: enable cron
+  systemd:
+    name: cronie.service
+    enabled: yes
+    state: started
+
+- import_tasks: printing.yaml

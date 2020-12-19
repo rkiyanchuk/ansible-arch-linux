@@ -1,6 +1,0 @@
----
-- name: enable cron
-  systemd:
-    name: cronie.service
-    enabled: yes
-    state: started
