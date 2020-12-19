@@ -46,6 +46,7 @@ base_packages:
   - networkmanager
   - rsync
   - terminus-font
+  - texinfo
   - wpa_supplicant
   - zsh
   - zsh-completions
