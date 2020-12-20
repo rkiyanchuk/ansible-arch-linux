@@ -11,6 +11,12 @@
   notify:
     - enable bluetooth
 
+- name: enable bluetooth
+  systemd:
+    name: bluetooth.service
+    enabled: yes
+    state: started
+
 - name: install polkit policy for blueman
   tags:
     - bluetooth
