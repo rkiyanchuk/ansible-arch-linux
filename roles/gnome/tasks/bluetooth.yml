@@ -8,10 +8,8 @@
       - bluez
       - bluez-libs
       - bluez-utils
-      - pulseaudio-bluetooth
   notify:
     - enable bluetooth
-    - restart pulseaudio as user
 
 - name: install polkit policy for blueman
   tags:
@@ -20,3 +18,4 @@
     src: polkit-blueman.rules
     dest: /usr/share/polkit-1/rules.d/90-blueman.rules
 
+- meta: flush_handlers
