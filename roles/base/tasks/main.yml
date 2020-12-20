@@ -16,8 +16,6 @@
       - gnupg
       - pcsclite
       - yubikey-manager-qt
-  notify:
-    - enable pcscd
 
 - name: enable pcscd
   systemd:
