@@ -22,7 +22,6 @@
     name:
       - pipewire
       - pipewire-pulse
-      - pipewire-jack
       - pipewire-docs
       - libpipewire02
       - xdg-desktop-portal
