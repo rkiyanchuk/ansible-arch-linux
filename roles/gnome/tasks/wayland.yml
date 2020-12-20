@@ -27,3 +27,4 @@
       - xdg-desktop-portal
       - xdg-desktop-portal-gtk
       - xdg-desktop-portal-wlr
+    extra_args: "--noconfirm"
