@@ -14,15 +14,32 @@
   notify:
     - enable gdm
 
-- name: create DConf config dir
+- name: create DConf database dir
   file:
-    path: /etc/dconf/db/database.d
+    path: /etc/dconf/db/gnome.d
     state: directory
+    recurse: yes
 
-- name: configure DConf
+- name: create DConf profile dir
+  file:
+    path: /etc/dconf/profile
+    state: directory
+    recurse: yes
+
+- name: configure DConf database
   copy:
     src: dconf.conf
-    dest: /etc/dconf/db/database.d/ruslan.conf
+    dest: /etc/dconf/db/gnome.d/ruslan.conf
+  notify: update dconf database
+
+- name: configure DConf profile
+  lineinfile:
+    path: /etc/dconf/profile/user
+    line: "{{ item }}"
+    create: yes
+  with_items:
+    - "user-db:user"
+    - "system-db:gnome"
   notify: update dconf database
 
 - name: install GNOME Shell Extensions support
@@ -31,14 +48,10 @@
       - gnome-shell-extensions
       - chrome-gnome-shell
 
+
 - import_tasks: wayland.yml
 - import_tasks: bluetooth.yml
 - import_tasks: themes.yml
 - import_tasks: media.yml
 
-# TODO: verify if still needed.
-#- name: fix GoldenDict desktop file to work under Wayland
-#  lineinfile:
-#    path: /usr/share/applications/goldendict.desktop
-#    regexp: "^Exec=goldendict"
-#    line: "Exec=env QT_QPA_PLATFORM=xcb goldendict"
+- meta: flush_handlers
