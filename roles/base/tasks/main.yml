@@ -2,8 +2,6 @@
 - name: install cron
   pacman:
     name: cronie
-  notify:
-    - enable cron
 
 - name: enable cron
   systemd:
