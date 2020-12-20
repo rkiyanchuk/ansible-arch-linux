@@ -95,6 +95,7 @@ extra_aur_packages:
   - github-cli
   - nautilus-dropbox
   - tectonic
+  - visual-studio-code-bin
 
 dotfiles:
   repo: "https://github.com/rkiyanchuk/dotfiles"
