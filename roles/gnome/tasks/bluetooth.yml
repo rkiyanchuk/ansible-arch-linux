@@ -8,6 +8,7 @@
       - bluez
       - bluez-libs
       - bluez-utils
+      - bluez-hid2hci
   notify:
     - enable bluetooth
 
