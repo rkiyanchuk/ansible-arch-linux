@@ -51,9 +51,9 @@
     name:
       - ardour
       - cadence
-      - dssi-plugins
-      - ladspa-plugins
       - lv2-plugins
-      - vst-plugins
+      # - dssi-plugins
+      # - ladspa-plugins
+      # - vst-plugins
 
 - meta: flush_handlers
