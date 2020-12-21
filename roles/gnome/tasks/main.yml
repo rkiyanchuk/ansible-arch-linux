@@ -11,8 +11,13 @@
       - gnome-extra
       - gnome-tweaks
       - gendesk
-  notify:
-    - enable gdm
+
+- name: enable GDM
+  systemd:
+    name: gdm
+    state: started
+    enabled: yes
+
 
 - name: create DConf database dir
   file:

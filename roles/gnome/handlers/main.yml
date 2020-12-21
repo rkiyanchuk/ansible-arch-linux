@@ -1,9 +1,4 @@
 ---
-- name: enable gdm
-  systemd:
-    name: gdm
-    enabled: yes
-
 - name: update dconf database
   command: dconf update
   become: yes
