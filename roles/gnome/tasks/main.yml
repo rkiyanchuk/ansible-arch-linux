@@ -18,6 +18,14 @@
     state: started
     enabled: yes
 
+- name: install Gnome extensions
+  aur:
+    name:
+      - gnome-shell-extension-gtktitlebar-git
+      - gnome-shell-extension-topicons-plus
+      - gnome-shell-extension-system-monitor-git
+  become: yes
+  become_user: "{{ user.name }}"
 
 - name: create DConf database dir
   file:

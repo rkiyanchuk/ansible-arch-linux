@@ -78,9 +78,3 @@ Generating SSH key:
 ```sh
 ssh-keygen -t ed25519 -C "${USER}@${HOSTNAME}-$(date -I)"
 ```
-
-TODO: Gnome Shell extentions:
-
-- GTK Title Bar
-- Pixel Saver ?
-- Gnomesome ?
