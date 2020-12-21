@@ -68,7 +68,7 @@ Inspired by [pigmonkey/spark](https://github.com/pigmonkey/spark) playbook.
 ### Add fingerprint authentication
 
 ```sh
-fprint-enroll
+sudo fprint-enroll ruslan
 ```
 
 ### Notes
