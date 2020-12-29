@@ -17,6 +17,9 @@
       - pcsclite
       - yubikey-manager-qt
 
+- name: reload systemd config
+  command: systemctl daemon-reload
+
 - name: enable pcscd
   systemd:
     name: pcscd.service
