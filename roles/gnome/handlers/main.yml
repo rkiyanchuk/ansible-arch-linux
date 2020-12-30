@@ -9,6 +9,16 @@
     enabled: yes
     state: started
 
+- name: restart pulseaudio as user
+  systemd:
+    name: pulseaudio.service
+    scope: user
+    state: restarted
+  become: yes
+  become_user: "{{ user.name }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ user.uid }}"
+
 - name: enable polkit
   systemd:
     name: polkit

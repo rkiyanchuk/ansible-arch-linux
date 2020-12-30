@@ -24,36 +24,33 @@
 - name: install pulseaudio
   pacman:
     name:
+      - alsa-utils
+      - pulseaudio
+      - pulseaudio-alsa
+      - pulseaudio-jack
       - pipewire
       - pipewire-docs
-      - pipewire-alsa
-      - pipewire-pulse
       - libpipewire02  # For Chrome screen sharing to work as long as they ship with v0.2
       - pavucontrol
       - pamixer
       - paprefs
-
-- name: load bluez5 module in pipewire
-  lineinfile:
-    path: /etc/pipewire/pipewire.conf
-    regexp: '^exec /usr/bin/pipewire-media-session'
-    line: "exec /usr/bin/pipewire-media-session -e bluez5"
-
-- name: install Pipewire JACK dropin
-  aur:
-    name: "pipewire-jack-dropin"
-  become: yes
-  become_user: "{{ user.name }}"
-
+  notify:
+    - restart pulseaudio as user
 
 - name: install packages for audio recording and editing
   pacman:
     name:
+      - realtime-privileges
       - ardour
       - cadence
       - lv2-plugins
-      # - dssi-plugins
-      # - ladspa-plugins
-      # - vst-plugins
+
+- name: add user to realtime group
+  user:
+    name: '{{ user.name }}'
+    groups: realtime
+    append: yes
+  notify:
+    - restart pulseaudio as user
 
 - meta: flush_handlers

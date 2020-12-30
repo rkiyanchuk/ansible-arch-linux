@@ -21,7 +21,6 @@
   pacman:
     name:
       - pipewire
-      - pipewire-pulse
       - pipewire-docs
       - libpipewire02
       - xdg-desktop-portal

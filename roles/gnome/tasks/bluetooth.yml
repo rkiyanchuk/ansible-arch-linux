@@ -9,8 +9,10 @@
       - bluez-libs
       - bluez-utils
       - bluez-hid2hci
+      - pulseaudio-bluetooth
   notify:
     - enable bluetooth
+    - restart pulseaudio as user
 
 - name: enable bluetooth
   systemd:
