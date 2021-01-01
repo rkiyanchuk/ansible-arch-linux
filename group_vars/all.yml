@@ -40,6 +40,10 @@ extra_packages:
   - usbutils
   - tilix
 
+  # network 
+  - mtr
+  - traceroute
+
   # filesystem
   - dosfstools
   - exfat-utils
