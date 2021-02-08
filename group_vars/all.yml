@@ -40,7 +40,7 @@ extra_packages:
   - usbutils
   - tilix
 
-  # network 
+  # network
   - mtr
   - traceroute
 
@@ -100,6 +100,8 @@ extra_aur_packages:
   - nautilus-dropbox
   - tectonic
   - visual-studio-code-bin
+  - hunspell-uk
+  - hunspell-ru
 
 dotfiles:
   repo: "https://github.com/rkiyanchuk/dotfiles"
