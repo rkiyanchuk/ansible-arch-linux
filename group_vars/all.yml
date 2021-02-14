@@ -61,7 +61,6 @@ extra_packages:
   - ardour
   - blender
   - calibre
-  - chromium
   - digikam
   - gimp
   - goldendict
@@ -94,7 +93,7 @@ extra_packages:
   - python-jedi
 
 extra_aur_packages:
-  - chromium-widevine  # Google's Content Decryption Module plugin.
+  - google-chrome
   - dropbox
   - github-cli
   - nautilus-dropbox
@@ -107,7 +106,7 @@ dotfiles:
   repo: "https://github.com/rkiyanchuk/dotfiles"
   install_cmds:
     - "stow -d ${HOME}/dotfiles -S yay tilix zsh tmux git gnupg neovim"
-    - "stow -d ${HOME}/dotfiles -S chromium goldendict sage"
+    - "stow -d ${HOME}/dotfiles -S chrome goldendict sage"
   deps:
     - stow
     - ctags
