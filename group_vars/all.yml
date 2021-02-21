@@ -70,6 +70,9 @@ extra_packages:
   # misc
   - keepassxc
   - libreoffice-still
+  - sagemath
+  - sagemath-doc
+  - sagemath-jupyter
 
   # spellcheck
   - aspell
