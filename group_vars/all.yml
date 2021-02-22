@@ -73,6 +73,7 @@ extra_packages:
   - sagemath
   - sagemath-doc
   - sagemath-jupyter
+  - jre-openjdk
 
   # spellcheck
   - aspell
