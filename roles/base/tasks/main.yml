@@ -1,51 +1,80 @@
 ---
-- name: install cron
+
+- name: install intel microcode
   pacman:
-    name: cronie
+    name: intel-ucode
+    extra_args: "--overwrite /boot/intel-ucode.img"
+  when: "'GenuineIntel' in ansible_processor"
 
-- name: enable cron
-  systemd:
-    name: cronie.service
-    enabled: yes
-    state: started
+- name: find loader entry
+  find:
+    paths: [/boot/loader/entries]
+    patterns: '*.conf'
+  register: loader
 
-- name: install GnuPG
-  pacman:
-    name:
-      - ccid
-      - gnupg
-      - pcsclite
-      - yubikey-manager-qt
+- name: configure loader entry - include intel-ucode
+  ansible.builtin.lineinfile:
+    path: "{{ item.path }}"
+    insertafter: "^linux /vmlinuz-linux"
+    line: "initrd /intel-ucode.img"
+  with_items: "{{ output.files }}"
 
-- name: reload systemd config
-  command: systemctl daemon-reload
+- name: configure loader entry - add deep sleep option
+  ansible.builtin.lineinfile:
+    path: "{{ item.path }}"
+    regexp: '^options (.*)$'
+    line: '\1 mem_sleep_default=deep'
+    backrefs: yes
+  with_items: "{{ output.files }}"
 
-- name: enable pcscd
-  systemd:
-    name: pcscd.service
-    enabled: yes
-    state: started
 
-- import_tasks: printing.yaml
-
-- name: install extra packages from repo
-  pacman:
-    name: "{{ extra_packages }}"
-
-- name: install extra packages from AUR
-  aur:
-    name: "{{ extra_aur_packages }}"
-  become: yes
-  become_user: "{{ user.name }}"
-
-- name: install host-specific packages from repo
-  pacman:
-    name: "{{ host_extra_packages }}"
-  when: host_extra_packages | length > 0
-
-- name: install host-specific packages from AUR
-  aur:
-    name: "{{ host_extra_aur_packages }}"
-  become: yes
-  become_user: "{{ user.name }}"
-  when: host_extra_aur_packages is defined and host_extra_aur_packages|length > 0
+# - name: install cron
+  # pacman:
+    # name: cronie
+# 
+# - name: enable cron
+  # systemd:
+    # name: cronie.service
+    # enabled: yes
+    # state: started
+# 
+# - name: install GnuPG
+  # pacman:
+    # name:
+      # - ccid
+      # - gnupg
+      # - pcsclite
+      # - yubikey-manager-qt
+# 
+# - name: reload systemd config
+  # command: systemctl daemon-reload
+# 
+# - name: enable pcscd
+  # systemd:
+    # name: pcscd.service
+    # enabled: yes
+    # state: started
+# 
+# - import_tasks: printing.yaml
+# 
+# - name: install extra packages from repo
+  # pacman:
+    # name: "{{ extra_packages }}"
+# 
+# - name: install extra packages from AUR
+  # aur:
+    # name: "{{ extra_aur_packages }}"
+  # become: yes
+  # become_user: "{{ user.name }}"
+# 
+# - name: install host-specific packages from repo
+  # pacman:
+    # name: "{{ host_extra_packages }}"
+  # when: host_extra_packages | length > 0
+# 
+# - name: install host-specific packages from AUR
+  # aur:
+    # name: "{{ host_extra_aur_packages }}"
+  # become: yes
+  # become_user: "{{ user.name }}"
+  # when: host_extra_aur_packages is defined and host_extra_aur_packages|length > 0

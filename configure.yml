@@ -4,26 +4,26 @@
   connection: local
   become: yes
 
-  pre_tasks:
-    - include_vars: "host_vars/{{ machine_aliases[ansible_product_name] }}"
+  # pre_tasks:
+  #   - include_vars: "host_vars/{{ machine_aliases[ansible_product_name] }}"
 
-    - name: update repository mirrors
-      command: "reflector --sort score -p https --country '{{ country }}' --save /etc/pacman.d/mirrorlist"
+  #   - name: update repository mirrors
+  #     command: "reflector --sort score -p https --country '{{ country }}' --save /etc/pacman.d/mirrorlist"
 
-    - name: enable time sync
-      command: timedatectl set-ntp true
+  #   - name: enable time sync
+  #     command: timedatectl set-ntp true
 
   tasks:
-    - import_role: {name: pacman}
     - import_role: {name: base}
-    - import_role: {name: dotfiles}
-    - import_role: {name: ssh}
-    - import_role: {name: gnome}
-    - import_role: {name: fingerprint}
-    - import_role: {name: tlp}
+    # - import_role: {name: pacman}
+    # - import_role: {name: dotfiles}
+    # - import_role: {name: ssh}
+    # - import_role: {name: gnome}
+    # - import_role: {name: fingerprint}
+    # - import_role: {name: tlp}
 
-    - name: start GDM
-      service:
-        name: gdm
-        state: started
-        enabled: yes
+    # - name: start GDM
+    #   service:
+    #     name: gdm
+    #     state: started
+    #     enabled: yes
