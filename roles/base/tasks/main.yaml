@@ -28,55 +28,74 @@
   with_items: "{{ loader.files }}"
 
 
+- name: set hostname in /etc/hosts file
+  template:
+    src: hosts.j2
+    dest: /etc/hosts
+    mode: 0644
+
+- name: install base packages
+  pacman:
+    name: "{{ base_packages }}"
+
+- name: configure console font
+  lineinfile:
+    path: /etc/vconsole.conf
+    line: "FONT=ter-122n"
+    create: yes
+
+- name: set user shell
+  command: chsh -s /bin/zsh  {{ user.name }}
 
 - import_tasks: printing.yaml
+- import_tasks: network.yml
 
-# - name: install cron
-  # pacman:
-    # name: cronie
-# 
-# - name: enable cron
-  # systemd:
-    # name: cronie.service
-    # enabled: yes
-    # state: started
-# 
-# - name: install GnuPG
-  # pacman:
-    # name:
-      # - ccid
-      # - gnupg
-      # - pcsclite
-      # - yubikey-manager-qt
-# 
-# - name: reload systemd config
-  # command: systemctl daemon-reload
-# 
-# - name: enable pcscd
-  # systemd:
-    # name: pcscd.service
-    # enabled: yes
-    # state: started
+- name: install cron
+  pacman:
+    name: cronie
+
+- name: enable cron
+  systemd:
+    name: cronie.service
+    enabled: yes
+    state: started
+
+- name: install GnuPG
+  pacman:
+    name:
+      - ccid
+      - gnupg
+      - pcsclite
+      - yubikey-manager-qt
+
+- name: reload systemd config
+  command: systemctl daemon-reload
+
+- name: enable pcscd
+  systemd:
+    name: pcscd.service
+    enabled: yes
+    state: started
 
 
-# - name: install extra packages from repo
-  # pacman:
-    # name: "{{ extra_packages }}"
-# 
-# - name: install extra packages from AUR
-  # aur:
-    # name: "{{ extra_aur_packages }}"
-  # become: yes
-  # become_user: "{{ user.name }}"
-# 
-# - name: install host-specific packages from repo
-  # pacman:
-    # name: "{{ host_extra_packages }}"
-  # when: host_extra_packages | length > 0
-# 
-# - name: install host-specific packages from AUR
-  # aur:
-    # name: "{{ host_extra_aur_packages }}"
-  # become: yes
-  # become_user: "{{ user.name }}"
-  # when: host_extra_aur_packages is defined and host_extra_aur_packages|length > 0
+- name: install extra packages from repo
+  pacman:
+    name: "{{ extra_packages }}"
+
+- name: install extra packages from AUR
+  aur:
+    name: "{{ extra_aur_packages }}"
+  become: yes
+  become_user: "{{ user.name }}"
+
+- name: install host-specific packages from repo
+  pacman:
+    name: "{{ host_extra_packages }}"
+  when: host_extra_packages | length > 0
+
+- name: install host-specific packages from AUR
+  aur:
+    name: "{{ host_extra_aur_packages }}"
+  become: yes
+  become_user: "{{ user.name }}"
+  when: host_extra_aur_packages is defined and host_extra_aur_packages|length > 0
