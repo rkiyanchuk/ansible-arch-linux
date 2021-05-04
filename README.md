@@ -1,10 +1,10 @@
 # ansible-arch-linux
 
-A set of Ansible playbooks for provisioning Arch Linux.
+A set of Ansible playbooks for provisioning Arch Linux. Inspired by [pigmonkey/spark](https://github.com/pigmonkey/spark) playbook.
 
-Inspired by [pigmonkey/spark](https://github.com/pigmonkey/spark) playbook.
+This playbook now relies on [archinstall](https://archlinux.org/packages/extra/any/archinstall/) for initial bootstrapping.
 
-## How to run
+## Usage
 
 ### Create bootable media
 
@@ -30,29 +30,26 @@ Inspired by [pigmonkey/spark](https://github.com/pigmonkey/spark) playbook.
    station wlan0 connect <ssid>
    ```
 
-2. Remount root partition to increase disk space for the installation.
+2. Install archinstall.
 
-    ```sh
-    mount -o remount,size=1G /run/archiso/cowspace
-    ```
+   ```sh
+   sudo pacman -Sy archinstall
+   ```
 
-3. Install Git and Ansible:
+3. Run guided installer.
 
-    ```sh
-    pacman -Sy git ansible
-    ```
+   ```sh
+   python -m archinstall guided
+   ```
+
+### Configure Arch Linux
+
 
 4. Download and decompress playbook from GitHub:
 
     ```sh
     git clone https://github.com/rkiyanchuk/ansible-arch-linux
     cd ansible-arch-linux
-    ```
-
-5. Install dependent roles and run Ansible to provision base system:
-
-    ```sh
-    ansible-playbook install.yml
     ```
 
 6. After the reboot login into the new system, configure WiFi via `nmtui`,
