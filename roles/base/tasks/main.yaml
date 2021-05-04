@@ -48,7 +48,7 @@
   command: chsh -s /bin/zsh  {{ user.name }}
 
 - import_tasks: printing.yaml
-- import_tasks: network.yml
+- import_tasks: network.yaml
 
 - name: install cron
   pacman:
