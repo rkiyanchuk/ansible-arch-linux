@@ -28,6 +28,9 @@
   with_items: "{{ loader.files }}"
 
 
+
+- import_tasks: printing.yaml
+
 # - name: install cron
   # pacman:
     # name: cronie
@@ -54,9 +57,8 @@
     # name: pcscd.service
     # enabled: yes
     # state: started
-# 
-# - import_tasks: printing.yaml
-# 
+
+
 # - name: install extra packages from repo
   # pacman:
     # name: "{{ extra_packages }}"

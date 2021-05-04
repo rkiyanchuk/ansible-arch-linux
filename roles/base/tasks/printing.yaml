@@ -11,7 +11,7 @@
 - name: add user to lp group
   user:
     name: "{{ user.name }}"
-    groups: lp
+    groups: [lp]
     append: yes
 
 - name: enable CUPS
