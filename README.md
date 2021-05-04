@@ -44,8 +44,13 @@ This playbook now relies on [archinstall](https://archlinux.org/packages/extra/a
 
 ### Configure Arch Linux
 
+1. Install Ansible.
 
-4. Download and decompress playbook from GitHub:
+   ```sh
+   pacman -S ansible
+   ```
+
+2. Download and decompress playbook from GitHub:
 
     ```sh
     git clone https://github.com/rkiyanchuk/ansible-arch-linux
