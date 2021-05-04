@@ -17,7 +17,7 @@
     path: "{{ item.path }}"
     insertafter: "^linux /vmlinuz-linux"
     line: "initrd /intel-ucode.img"
-  with_items: "{{ output.files }}"
+  with_items: "{{ loader.files }}"
 
 - name: configure loader entry - add deep sleep option
   ansible.builtin.lineinfile:
@@ -25,7 +25,7 @@
     regexp: '^options (.*)$'
     line: '\1 mem_sleep_default=deep'
     backrefs: yes
-  with_items: "{{ output.files }}"
+  with_items: "{{ loader.files }}"
 
 
 # - name: install cron
