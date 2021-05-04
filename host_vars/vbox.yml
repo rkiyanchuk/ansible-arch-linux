@@ -1,8 +1,0 @@
-hostname: vbox
-
-host_extra_packages:
-  - nvidia-340xx-utils
-  - virtualbox-guest-modules-arch
-  - virtualbox-guest-utils
-
-host_extra_aur_packages: []

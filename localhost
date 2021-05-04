@@ -1,5 +1,2 @@
 [host]
 localhost
-
-[chroot]
-/mnt ansible_chroot_exe=arch-chroot

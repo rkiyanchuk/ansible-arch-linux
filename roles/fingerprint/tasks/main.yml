@@ -8,3 +8,4 @@
   copy:
     src: polkit/50-net.reactivated.fprint-enroll.rules
     dest: /usr/share/polkit-1/rules.d/50-net.reactivated.fprint-enroll.rules
+    mode: 0644

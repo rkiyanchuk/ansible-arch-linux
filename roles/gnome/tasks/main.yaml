@@ -1,0 +1,35 @@
+---
+
+- name: install GNOME extras
+  pacman:
+    name:
+      - gnome-extra
+      - gnome-shell-extensions
+
+- name: install Gnome extensions
+  kewlfft.aur.aur:
+    name:
+      - chrome-gnome-shell
+      - gnome-shell-extension-gtktitlebar-git
+      - gnome-shell-extension-topicons-plus
+      - gnome-shell-extension-system-monitor-git
+  become: yes
+  become_user: "{{ user.name }}"
+
+# NOTE: psutil is not installed as ansible dependency for some reason and has to be installed manually.
+# TODO: is this still required?
+- name: install psutil for ansible
+  pacman:
+    name: python-psutil
+
+- name: configure dconf
+  become: no
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value | string }}"
+  with_dict: "{{ dconf }}"
+
+- import_tasks: bluetooth.yaml
+- import_tasks: themes.yaml
+- import_tasks: media.yaml
+- import_tasks: wayland.yaml

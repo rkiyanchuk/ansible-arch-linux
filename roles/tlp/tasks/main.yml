@@ -9,19 +9,23 @@
       - smartmontools
 
 - name: mask systemd radio service
-  command: systemctl mask systemd-rfkill.service
+  ansible.builtin.systemd:
+    name: systemd-rfkill.service
+    masked: yes
 
-- name: mask systemd radio socket
-  command: systemctl mask systemd-rfkill.socket
+- name: mask systemd radio socket  # noqa no-changed-when
+  ansible.builtin.systemd:
+    name: systemd-rfkill.socket
+    masked: yes
 
 - name: enable TLP service
-  systemd:
+  ansible.builtin.systemd:
     name: tlp.service
     enabled: yes
     state: restarted
 
 - name: enable NetworkManager-dispatcher service
-  systemd:
+  ansible.builtin.systemd:
     name: NetworkManager-dispatcher.service
     enabled: yes
     state: started

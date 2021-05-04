@@ -1,0 +1,17 @@
+---
+- name: enable sshd
+  ansible.builtin.systemd:
+    name: sshd
+    enabled: yes
+    state: restarted
+
+- name: enable ssh-agent
+  ansible.builtin.systemd:
+    name: ssh-agent
+    scope: user
+    enabled: yes
+    state: restarted
+  become: yes
+  become_user: "{{ user.name }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ user.uid }}"

@@ -1,0 +1,33 @@
+---
+- name: configure console font
+  lineinfile:
+    path: /etc/vconsole.conf
+    line: "FONT=ter-122n"
+    create: yes
+    mode: 0644
+
+- name: install cron
+  pacman:
+    name: cronie
+
+- name: enable cron
+  ansible.builtin.systemd:
+    name: cronie.service
+    enabled: yes
+    state: started
+
+- name: configure systemd logind
+  copy:
+    src: logind.conf
+    dest: /etc/systemd/logind.conf
+    mode: 0600
+
+- name: install zsh
+  pacman:
+    name: zsh
+
+- name: set user shell  # noqa no-changed-when
+  command: chsh -s /bin/zsh  {{ user.name }}
+
+- import_tasks: gnupg.yaml
+- import_tasks: printing.yaml

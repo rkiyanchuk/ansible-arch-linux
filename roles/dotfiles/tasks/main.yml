@@ -3,8 +3,9 @@
   copy:
     src: com.gexperts.Tilix.conf
     dest: "/var/tmp/com.gexperts.Tilix.conf"
+    mode: 0644
 
-- name: install tilix settings
+- name: install tilix settings  # noqa no-changed-when
   shell: "dconf load /com/gexperts/Tilix/ < /var/tmp/com.gexperts.Tilix.conf"
   become: yes
   become_user: "{{ user.name }}"
@@ -13,34 +14,39 @@
   file:
     path: "${HOME}/.tmux/plugins"
     state: directory
+    mode: 0755
   become: yes
   become_user: "{{ user.name }}"
 
 - name: install tmux plugin manager
-  git:
+  ansible.builtin.git:
     repo: "https://github.com/tmux-plugins/tpm"
     dest: "${HOME}/.tmux/plugins/tpm"
+    version: master
   become: yes
   become_user: "{{ user.name }}"
 
-- name: install oh-my-zsh
+- name: install oh-my-zsh  # noqa no-changed-when
   shell: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  register: result
+  failed_when: 'result.rc != 0 and "folder already exists" not in result.stdout' 
   become: yes
   become_user: "{{ user.name }}"
-  ignore_errors: yes
 
 - name: install Zsh theme powerlevel10k
-  git:
+  ansible.builtin.git:
     repo: "https://github.com/romkatv/powerlevel10k.git"
     dest: "${HOME}/.oh-my-zsh/custom/themes/powerlevel10k"
+    version: master
     depth: 1
   become: yes
   become_user: "{{ user.name }}"
 
 - name: install Zsh plugin zsh-lazyload
-  git:
+  ansible.builtin.git:
     repo: "https://github.com/qoomon/zsh-lazyload"
     dest: "${HOME}/.oh-my-zsh/custom/plugins/zsh-lazyload"
+    version: master
     depth: 1
   become: yes
   become_user: "{{ user.name }}"
@@ -56,9 +62,10 @@
     name: stow
 
 - name: clone dotfiles
-  git:
+  ansible.builtin.git:
     repo: "{{ dotfiles.repo }}"
     dest: "${HOME}/dotfiles"
+    version: master
   become: yes
   become_user: "{{ user.name }}"
 
@@ -66,7 +73,7 @@
   pacman:
     name: "{{ dotfiles.deps }}"
 
-- name: install dotfiles
+- name: install dotfiles  # noqa no-changed-when
   command: "{{ item }}"
   become_user: "{{ user.name }}"
   with_items: "{{ dotfiles.install_cmds }}"
@@ -78,6 +85,7 @@
   file:
     path: "${HOME}/.config/keepassxc"
     state: directory
+    mode: 0755
   become: yes
   become_user: "{{ user.name }}"
 
@@ -85,3 +93,4 @@
   copy:
     src: keepassxc.ini
     dest: "${HOME}/.config/keepassxc/"
+    mode: 0644

@@ -1,0 +1,186 @@
+---
+# These are aliases that define file names with group vars for a host.
+# The name is obtained from `ansible_product_name` fact and matched to
+# corresponding file in `host_vars`.
+machine_aliases:
+  VirtualBox: vbox.yaml
+  XPS 13 9300: xps.yaml
+
+country: United States
+hostname: xps
+timezone: America/Los_Angeles
+locales:
+  - en_US
+  - uk_UA
+
+user:
+  name: ruslan
+  group: ruslan
+  uid: 1000
+  comment: Ruslan Kiyanchuk
+  groups:
+    - sys
+    - video
+    - wheel
+    - systemd-journal
+  shell: /bin/zsh
+  email: ruslan.kiyanchuk@gmail.com
+
+extra_packages:
+  - arch-wiki-lite
+  - dialog
+  - efibootmgr
+  - fwupd
+  - man
+  - man-db
+  - man-pages
+  - mlocate
+  - moreutils
+  - rsync
+  - terminus-font
+  - texinfo
+  - wpa_supplicant
+  - zsh
+  - zsh-completions
+
+  # System monitoring
+  - glances
+  - htop
+  - lsof
+  - powertop
+  - smartmontools
+  - strace
+  - sysstat
+  
+  # system
+  - bat
+  - fd
+  - fzf
+  - hardinfo
+  - ripgrep
+  - tldr
+  - tmux
+  - tmuxp
+  - usbutils
+  - tilix
+
+  # network
+  - mtr
+  - traceroute
+
+  # filesystem
+  - dosfstools
+  - exfat-utils
+  - ntfs-3g
+  - tree
+
+  # archives
+  - file-roller
+  - p7zip
+  - unrar
+  - unzip
+  - zip
+
+  # media
+  - ardour
+  - blender
+  - calibre
+  - digikam
+  - gimp
+  - goldendict
+  - gpick
+  - inkscape
+
+  # misc
+  - keepassxc
+  - libreoffice-still
+  - sagemath
+  - sagemath-doc
+  - jre-openjdk
+
+  # spellcheck
+  - aspell
+  - aspell-en
+  - aspell-ru
+  - aspell-uk
+  - hunspell
+  - hunspell-en_US
+  - hunspell-he
+
+  # development
+  - clang
+  - cloc
+  - gdb
+  - git
+  - httpie
+  - neovim
+  - neovim-qt
+  - python-pip
+  - python-pynvim
+  - python-jedi
+
+extra_aur_packages:
+  - google-chrome
+  - dropbox
+  - github-cli
+  - nautilus-dropbox
+  - tectonic
+  - visual-studio-code-bin
+
+# Monitor settings with `dconf watch /` while configuring via UI, then update here.
+# Run `dconf update` to manually update settings.
+dconf:
+  "/org/gnome/desktop/input-sources/sources": "[('xkb', 'us'), ('xkb', 'ua'), ('xkb', 'ru')]"
+  "/org/gnome/desktop/input-sources/xkb-options": "['terminate:ctrl_alt_bksp', 'lv3:ralt_switch', 'compose:ralt']"
+  "/org/gnome/desktop/interface/clock-show-date": "true"
+  "/org/gnome/desktop/interface/clock-show-seconds": "true"
+  "/org/gnome/desktop/interface/text-scaling-factor": "1.25"
+  "/org/gnome/desktop/interface/clock-show-weekday": "true"
+  "/org/gnome/desktop/interface/enable-hot-corners": "false"
+  "/org/gnome/desktop/interface/show-battery-percentage": "true"
+  "/org/gnome/desktop/notifications/show-in-lock-screen": "false"
+  "/org/gnome/desktop/peripherals/mouse/natural-scroll": "true"
+  "/org/gnome/desktop/peripherals/touchpad/disable-while-typing": "true"
+  "/org/gnome/desktop/peripherals/touchpad/natural-scroll": "true"
+  "/org/gnome/desktop/peripherals/touchpad/tap-to-click": "true"
+  "/org/gnome/mutter/dynamic-workspaces": "false"
+  "/org/gnome/settings-daemon/plugins/color/night-light-enabled": "true"
+  "/org/gnome/settings-daemon/plugins/color/night-light-temperature": "uint32 3700"
+  "/org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type": "'nothing'"
+
+  "/org/gnome/desktop/wm/keybindings/switch-to-workspace-1": "['<Primary>1']"
+  "/org/gnome/desktop/wm/keybindings/switch-to-workspace-2": "['<Primary>2']"
+  "/org/gnome/desktop/wm/keybindings/switch-to-workspace-3": "['<Primary>3']"
+  "/org/gnome/desktop/wm/keybindings/switch-to-workspace-4": "['<Primary>4']"
+
+#move-to-workspace-1 = ['<Primary><Super>1']
+#move-to-workspace-2 = ['<Primary><Super>2']
+#move-to-workspace-3 = ['<Primary><Super>3']
+#move-to-workspace-4 = ['<Primary><Super>4']
+
+#[org/gnome/desktop/interface]
+#gtk-scheme = "Breeze"
+#icon-theme = "Breeze"
+#cursor-theme = "Breeze_Snow"
+
+#[org/gnome/shell/keybindings]
+#switch-to-application-1=['<Super><Alt>1']
+#switch-to-application-2=['<Super><Alt>2']
+#switch-to-application-3=['<Super><Alt>3']
+#switch-to-application-4=['<Super><Alt>4']
+
+
+#switch-applications = ['<Super>Tab']
+#switch-applications-backward = ['<Shift><Super>Tab']
+#switch-windows = ['<Alt>Tab']
+#switch-windows-backward = ['<Shift><Alt>Tab']
+#close = ['<Primary>q']
+
+dotfiles:
+  repo: "https://github.com/rkiyanchuk/dotfiles"
+  install_cmds:
+    - "stow -d ${HOME}/dotfiles -S yay tilix zsh tmux git gnupg neovim gtk"
+    - "stow -d ${HOME}/dotfiles -S chrome goldendict sage"
+  deps:
+    - stow
+    - ctags

@@ -1,0 +1,26 @@
+---
+- name: set hostname in /etc/hosts file
+  template:
+    src: hosts.j2
+    dest: /etc/hosts
+    mode: 0644
+
+- name: install NetworkManager and dependencies
+  pacman:
+    name:
+      - networkmanager
+      - networkmanager-openvpn
+      - network-manager-applet
+      - gnome-keyring
+      - reflector
+
+- name: configure mirrors update hook
+  template:
+    src: nm-mirrors-hook.sh
+    dest: /etc/NetworkManager/dispatcher.d/99update-mirrors.sh
+    mode: 0755
+
+- name: enable NetworkManager
+  ansible.builtin.systemd:
+    name: NetworkManager.service
+    enabled: yes

@@ -1,0 +1,73 @@
+---
+- hosts: localhost
+  name: configure Arch Linux system
+  connection: local
+  become: yes
+
+  pre_tasks:
+    - name: load host variables
+      include_vars: "host_vars/{{ machine_aliases[ansible_product_name] }}"
+      tags: ["always"]
+
+    - name: install reflector to retrieve latest Pacman mirrorlist
+      pacman:
+        name: reflector
+
+    - name: update repository mirrors  # noqa no-changed-when
+      command: "reflector --sort score -p https --country '{{ country }}' --save /etc/pacman.d/mirrorlist"
+
+    - name: enable time sync  # noqa no-changed-when
+      command: timedatectl set-ntp true
+
+  tasks:
+    - import_role: {name: package_management}  # noqa unnamed-task
+      tags: ["package-management"]
+
+    - import_role: {name: network}  # noqa unnamed-task
+      tags: ["network"]
+
+    - import_role: {name: ssh}  # noqa unnamed-task
+      tags: ["ssh"]
+
+    - import_role: {name: system}  # noqa unnamed-task
+      tags: ["system"]
+
+    - import_role: {name: gnome}  # noqa unnamed-task
+      tags: ["gnome"]
+
+    - import_role: {name: dotfiles}  # noqa unnamed-task
+      tags: ["dotfiles"]
+
+    # TODO: requires DBUS, troubleshoot
+    # - import_role: {name: fingerprint}  # noqa unnamed-task
+    #   tags: ["fingerprint"]
+
+    # - import_role: {name: tlp}
+
+    - name: install extra packages from repo
+      tags: ["extra-packages"]
+      pacman:
+        name: "{{ extra_packages }}"
+
+    - name: install extra packages from AUR
+      tags: ["extra-packages-aur"]
+      kewlfft.aur.aur:
+        use: yay
+        name: "{{ extra_aur_packages }}"
+      become: yes
+      become_user: "{{ user.name }}"
+
+    - name: install host-specific packages from repo
+      tags: ["extra-packages"]
+      pacman:
+        name: "{{ host_extra_packages }}"
+      when: host_extra_packages | length > 0
+
+    - name: install host-specific packages from AUR
+      tags: ["extra-packages-aur"]
+      kewlfft.aur.aur:
+        use: yay
+        name: "{{ host_extra_aur_packages }}"
+      become: yes
+      become_user: "{{ user.name }}"
+      when: host_extra_aur_packages is defined and host_extra_aur_packages|length > 0

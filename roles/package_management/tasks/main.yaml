@@ -1,0 +1,36 @@
+---
+- name: 'configure pacman: enable color'
+  lineinfile:
+    path: /etc/pacman.conf
+    regexp: '^#?Color$'
+    line: Color
+
+- name: 'configure pacman: enable verbose package lists'
+  lineinfile:
+    path: /etc/pacman.conf
+    regexp: '^#?VerbosePkgLists$'
+    line: VerbosePkgLists
+
+- name: refresh pacman cache and upgrade the system
+  pacman:
+    update_cache: yes
+    upgrade: yes
+
+- name: install pacman cache cleanup service
+  copy:
+    src: paccache.service
+    dest: /etc/systemd/system/paccache.service
+    mode: 0644
+  notify:
+    - systemd reload
+
+- name: install pacman cache cleanup timer
+  copy:
+    src: paccache.timer
+    dest: /etc/systemd/system/paccache.timer
+    mode: 0644
+  notify:
+    - systemd reload
+    - paccache timer
+
+- import_tasks: aur.yaml

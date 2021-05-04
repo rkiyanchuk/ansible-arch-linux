@@ -1,0 +1,10 @@
+---
+- name: systemd reload
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: paccache timer
+  ansible.builtin.systemd:
+    name: paccache.timer
+    enabled: yes
+    state: restarted

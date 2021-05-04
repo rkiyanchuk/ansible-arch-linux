@@ -1,0 +1,29 @@
+---
+- name: install bluetooth packages
+  tags:
+    - bluetooth
+  pacman:
+    name:
+      - bluez
+      - bluez-libs
+      - bluez-utils
+      - bluez-hid2hci
+      - pulseaudio-bluetooth
+  changed_when: true # always trigger handlers
+  notify:
+    - enable bluetooth
+    - restart pulseaudio as user
+
+- name: install polkit policy for blueman
+  tags:
+    - bluetooth
+  copy:
+    mode: 0644
+    src: polkit-blueman.rules
+    dest: /usr/share/polkit-1/rules.d/90-blueman.rules
+
+- name: enable bluetooth
+  ansible.builtin.systemd:
+    name: bluetooth.service
+    enabled: yes
+    state: started

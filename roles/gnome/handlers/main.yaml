@@ -1,0 +1,30 @@
+---
+- name: update dconf database
+  command: dconf update
+
+- name: enable bluetooth
+  ansible.builtin.systemd:
+    name: bluetooth.service
+    enabled: yes
+    state: restarted
+
+- name: restart pulseaudio as user
+  ansible.builtin.systemd:
+    name: pulseaudio.service
+    scope: user
+    state: restarted
+  become: yes
+  become_user: "{{ user.name }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ user.uid }}"
+
+- name: enable polkit
+  ansible.builtin.systemd:
+    name: polkit
+    scope: user
+    enabled: yes
+    state: started
+  become: yes
+  become_user: "{{ user.name }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ user.uid }}"

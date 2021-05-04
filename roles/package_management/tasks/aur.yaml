@@ -1,0 +1,10 @@
+---
+- name: install AUR package helper
+  kewlfft.aur.aur:
+    name: yay
+  become_user: "{{ user.name }}"
+
+- name: install downgrade script for downgrading packages
+  kewlfft.aur.aur:
+    name: downgrade
+  become_user: "{{ user.name }}"

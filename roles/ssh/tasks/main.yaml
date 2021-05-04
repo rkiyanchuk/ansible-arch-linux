@@ -1,0 +1,45 @@
+---
+- name: install SSH related packages
+  pacman:
+    update_cache: "yes"
+    name:
+      - openssh
+      - keychain
+
+- name: configure SSH daemon
+  template:
+    src: sshd_config.j2
+    dest: /etc/ssh/sshd_config
+    mode: 0644
+    backup: yes
+  changed_when: true  # force handlers to run every time
+  notify:
+    - enable sshd
+
+- name: create SSH dir
+  file:
+    path: "/home/{{ user.name }}/.ssh"
+    state: directory
+    mode: 0700
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+
+- name: create SSH config
+  file:
+    path: "/home/{{ user.name }}/.ssh/config"
+    state: touch
+    mode: 0600
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+
+- name: install ssh-agent.service
+  copy:
+    src: ssh-agent.service
+    dest: /etc/systemd/user/ssh-agent.service
+    mode: 0644
+  changed_when: true  # force handlers to run every time
+  notify:
+    - enable ssh-agent
+
+- name: force SSH handlers to run
+  meta: flush_handlers
