@@ -3,12 +3,13 @@
 # The name is obtained from `ansible_product_name` fact and matched to
 # corresponding file in `host_vars`.
 machine_aliases:
-  VirtualBox: vbox.yml
-  XPS 13 9300: xps.yml
+  VirtualBox: vbox.yaml
+  XPS 13 9300: xps.yaml
 
-arch_root: /mnt
 
 country: United States
+
+arch_root: /mnt
 timezone: America/Los_Angeles
 locales:
   - en_US

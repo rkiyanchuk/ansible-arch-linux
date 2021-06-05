@@ -58,7 +58,7 @@ This playbook now relies on [archinstall](https://archlinux.org/packages/extra/a
 
     ```sh
     ansible-galaxy install kewlfft.aur
-    ansible-playbook --ask-become-pass configure.yml
+    ansible-playbook --ask-become-pass configure.yaml
     ```
 
 ## Post-setup

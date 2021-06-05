@@ -27,7 +27,6 @@
     backrefs: yes
   with_items: "{{ loader.files }}"
 
-
 - name: set hostname in /etc/hosts file
   template:
     src: hosts.j2
@@ -78,7 +77,6 @@
     name: pcscd.service
     enabled: yes
     state: started
-
 
 - name: install extra packages from repo
   pacman:

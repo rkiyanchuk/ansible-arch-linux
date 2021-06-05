@@ -4,14 +4,14 @@
   connection: local
   become: yes
 
-  # pre_tasks:
-  #   - include_vars: "host_vars/{{ machine_aliases[ansible_product_name] }}"
+  pre_tasks:
+    - include_vars: "host_vars/{{ machine_aliases[ansible_product_name] }}"
 
-  #   - name: update repository mirrors
-  #     command: "reflector --sort score -p https --country '{{ country }}' --save /etc/pacman.d/mirrorlist"
+    - name: update repository mirrors
+      command: "reflector --sort score -p https --country '{{ country }}' --save /etc/pacman.d/mirrorlist"
 
-  #   - name: enable time sync
-  #     command: timedatectl set-ntp true
+    - name: enable time sync
+      command: timedatectl set-ntp true
 
   tasks:
     - import_role: {name: base}

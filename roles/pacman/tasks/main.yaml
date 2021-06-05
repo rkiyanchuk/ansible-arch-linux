@@ -27,6 +27,7 @@
   copy:
     src: paccache.service
     dest: /etc/systemd/system/paccache.service
+    mode: 0644
   notify:
     - reload systemd config
 
@@ -34,6 +35,7 @@
   copy:
     src: paccache.timer
     dest: /etc/systemd/system/paccache.timer
+    mode: 0644
   notify:
     - reload systemd config
     - enable paccache timer
@@ -44,4 +46,4 @@
     enabled: yes
     state: started
 
-- import_tasks: aur.yml
+- import_tasks: aur.yaml

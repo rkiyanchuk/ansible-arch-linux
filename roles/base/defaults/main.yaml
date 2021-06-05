@@ -1,36 +1,5 @@
-hostname: localhost
-timezone: America/Los_Angeles
+---
 country: United States
-locales:
-  - en_US
-
-interfaces:
-  wireless: "wlan0"
-
-user:
-  name: user
-  group: user
-  uid: 1000
-  comment: First Last
-  groups:
-    - sys
-    - video
-    - wheel
-    - systemd-journal
-  shell: /bin/zsh
-  email: user@example.com
-
-initramfs_hooks:
-  - base
-  - systemd
-  - autodetect
-  - keyboard
-  - sd-vconsole
-  - modconf
-  - block
-  - sd-encrypt
-  - filesystems
-  - fsck
 
 base_packages:
   - arch-wiki-lite
