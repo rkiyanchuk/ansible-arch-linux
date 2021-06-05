@@ -8,6 +8,7 @@ machine_aliases:
 
 
 country: United States
+hostname: xps
 
 arch_root: /mnt
 timezone: America/Los_Angeles
