@@ -74,7 +74,6 @@ extra_packages:
   - libreoffice-still
   - sagemath
   - sagemath-doc
-  - sagemath-jupyter
   - jre-openjdk
 
   # spellcheck
