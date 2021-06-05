@@ -42,22 +42,18 @@ This playbook now relies on [archinstall](https://archlinux.org/packages/extra/a
    python -m archinstall guided
    ```
 
+4. For additional packages specify `ansible git reflector`.
+
 ### Configure Arch Linux
 
-1. Install Ansible.
-
-   ```sh
-   pacman -S ansible
-   ```
-
-2. Download and decompress playbook from GitHub:
+1. Download and decompress playbook from GitHub:
 
     ```sh
     git clone https://github.com/rkiyanchuk/ansible-arch-linux
     cd ansible-arch-linux
     ```
 
-6. After the reboot login into the new system, configure WiFi via `nmtui`,
+2. After the reboot login into the new system, configure WiFi via `nmtui`,
    and run Ansible to install and configure full-featured Arch Linux:
 
     ```sh

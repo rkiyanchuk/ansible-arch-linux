@@ -43,6 +43,7 @@
     path: /etc/vconsole.conf
     line: "FONT=ter-122n"
     create: yes
+    mode: 0644
 
 - name: set user shell
   command: chsh -s /bin/zsh  {{ user.name }}
@@ -69,7 +70,8 @@
       - yubikey-manager-qt
 
 - name: reload systemd config
-  command: systemctl daemon-reload
+  systemd:
+    daemon_reload: yes
 
 - name: enable pcscd
   systemd:
