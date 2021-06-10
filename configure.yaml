@@ -5,7 +5,12 @@
   become: yes
 
   pre_tasks:
-    - include_vars: "host_vars/{{ machine_aliases[ansible_product_name] }}"
+    - name: load host variables
+      include_vars: "host_vars/{{ machine_aliases[ansible_product_name] }}"
+
+    - name: install reflector to retrieve latest Pacman mirrorlist
+      pacman:
+        name: reflector
 
     - name: update repository mirrors
       command: "reflector --sort score -p https --country '{{ country }}' --save /etc/pacman.d/mirrorlist"
@@ -15,7 +20,7 @@
 
   tasks:
     - import_role: {name: pacman}
-    - import_role: {name: base}
+    #- import_role: {name: base}
     # - import_role: {name: dotfiles}
     # - import_role: {name: ssh}
     # - import_role: {name: gnome}

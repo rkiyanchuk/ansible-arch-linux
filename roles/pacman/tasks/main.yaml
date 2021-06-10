@@ -11,13 +11,6 @@
     regexp: '^#?VerbosePkgLists$'
     line: VerbosePkgLists
 
-- name: install reflector to retrieve latest Pacman mirrorlist
-  pacman:
-    name: reflector
-
-- name: update Pacman repository mirrors
-  command: "reflector --sort score -p https --country '{{ country }}' --save /etc/pacman.d/mirrorlist"
-
 - name: refresh Pacman cache and upgrade the system
   pacman:
     update_cache: yes
