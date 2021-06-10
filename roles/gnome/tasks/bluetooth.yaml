@@ -4,7 +4,6 @@
     - bluetooth
   pacman:
     name:
-      - blueman
       - bluez
       - bluez-libs
       - bluez-utils

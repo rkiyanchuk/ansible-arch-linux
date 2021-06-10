@@ -1,12 +1,4 @@
 ---
-- name: install udiskie for automount
-  pacman:
-    name: udiskie
-
-- name: install Intel Video Acceleration API driver
-  pacman:
-    name:
-      - intel-media-driver
 
 - name: install media codecs
   pacman:
@@ -35,7 +27,7 @@
       - pamixer
       - paprefs
   notify:
-    - restart pulseaudio as user
+    - restart pulseaudio
 
 - name: install packages for audio recording and editing
   pacman:

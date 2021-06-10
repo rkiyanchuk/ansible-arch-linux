@@ -3,20 +3,7 @@
   copy:
     src: logind.conf
     dest: /etc/systemd/logind.conf
-
-- name: install Gnome
-  pacman:
-    name:
-      - gnome
-      - gnome-extra
-      - gnome-tweaks
-      - gendesk
-
-- name: enable GDM
-  systemd:
-    name: gdm
-    state: started
-    enabled: yes
+    mode: 0600
 
 - name: install Gnome extensions
   aur:
@@ -62,8 +49,8 @@
       - chrome-gnome-shell
 
 
-- import_tasks: bluetooth.yml
-- import_tasks: themes.yml
-- import_tasks: media.yml
+- import_tasks: bluetooth.yaml
+- import_tasks: themes.yaml
+- import_tasks: media.yaml
 
 - meta: flush_handlers
