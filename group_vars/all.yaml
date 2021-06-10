@@ -6,11 +6,8 @@ machine_aliases:
   VirtualBox: vbox.yaml
   XPS 13 9300: xps.yaml
 
-
 country: United States
 hostname: xps
-
-arch_root: /mnt
 timezone: America/Los_Angeles
 locales:
   - en_US
@@ -30,6 +27,31 @@ user:
   email: ruslan.kiyanchuk@gmail.com
 
 extra_packages:
+  - arch-wiki-lite
+  - dialog
+  - efibootmgr
+  - fwupd
+  - man
+  - man-db
+  - man-pages
+  - mlocate
+  - moreutils
+  - rsync
+  - terminus-font
+  - texinfo
+  - wpa_supplicant
+  - zsh
+  - zsh-completions
+
+  # System monitoring
+  - glances
+  - htop
+  - lsof
+  - powertop
+  - smartmontools
+  - strace
+  - sysstat
+  
   # system
   - bat
   - fd
@@ -85,7 +107,7 @@ extra_packages:
   - hunspell-en_US
   - hunspell-he
 
-  # developemnt
+  # development
   - clang
   - cloc
   - gdb
@@ -107,11 +129,11 @@ extra_aur_packages:
   - hunspell-uk
   - hunspell-ru
 
-dotfiles:
-  repo: "https://github.com/rkiyanchuk/dotfiles"
-  install_cmds:
-    - "stow -d ${HOME}/dotfiles -S yay tilix zsh tmux git gnupg neovim"
-    - "stow -d ${HOME}/dotfiles -S chrome goldendict sage"
-  deps:
-    - stow
-    - ctags
+# dotfiles:
+#   repo: "https://github.com/rkiyanchuk/dotfiles"
+#   install_cmds:
+#     - "stow -d ${HOME}/dotfiles -S yay tilix zsh tmux git gnupg neovim"
+#     - "stow -d ${HOME}/dotfiles -S chrome goldendict sage"
+#   deps:
+#     - stow
+#     - ctags

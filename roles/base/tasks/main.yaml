@@ -1,23 +1,9 @@
 ---
-
-- name: install intel microcode
-  pacman:
-    name: intel-ucode
-    extra_args: "--overwrite /boot/intel-ucode.img"
-  when: "'GenuineIntel' in ansible_processor"
-
 - name: find loader entry
   find:
     paths: [/boot/loader/entries]
     patterns: '*.conf'
   register: loader
-
-- name: configure loader entry - include intel-ucode
-  ansible.builtin.lineinfile:
-    path: "{{ item.path }}"
-    insertafter: "^linux /vmlinuz-linux"
-    line: "initrd /intel-ucode.img"
-  with_items: "{{ loader.files }}"
 
 - name: configure loader entry - add deep sleep option
   ansible.builtin.lineinfile:
@@ -32,10 +18,6 @@
     src: hosts.j2
     dest: /etc/hosts
     mode: 0644
-
-- name: install base packages
-  pacman:
-    name: "{{ base_packages }}"
 
 - name: configure console font
   lineinfile:

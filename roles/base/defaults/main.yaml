@@ -2,29 +2,5 @@
 country: United States
 hostname: local
 
-base_packages:
-  - arch-wiki-lite
-  - dialog
-  - efibootmgr
-  - fwupd
-  - git
-  - man
-  - man-db
-  - man-pages
-  - mlocate
-  - moreutils
-  - networkmanager
-  - rsync
-  - terminus-font
-  - texinfo
-  - wpa_supplicant
-  - zsh
-  - zsh-completions
-  # System monitoring
-  - glances
-  - htop
-  - lsof
-  - powertop
-  - smartmontools
-  - strace
-  - sysstat
+user:
+  name: user
