@@ -26,9 +26,6 @@
     create: yes
     mode: 0644
 
-- name: set user shell
-  command: chsh -s /bin/zsh  {{ user.name }}
-
 - import_tasks: printing.yaml
 - import_tasks: network.yaml
 
@@ -81,3 +78,6 @@
   become: yes
   become_user: "{{ user.name }}"
   when: host_extra_aur_packages is defined and host_extra_aur_packages|length > 0
+
+- name: set user shell
+  command: chsh -s /bin/zsh  {{ user.name }}
