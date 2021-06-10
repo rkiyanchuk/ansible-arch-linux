@@ -57,7 +57,7 @@ This playbook now relies on [archinstall](https://archlinux.org/packages/extra/a
    and run Ansible to install and configure full-featured Arch Linux:
 
     ```sh
-    ansible-galaxy install kewlfft.aur
+    ansible-galaxy install -r requirements.yaml
     ansible-playbook --ask-become-pass configure.yaml
     ```
 
