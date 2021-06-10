@@ -10,7 +10,7 @@
   service:
     name: sshd
     state: stopped
-  ignore_errors: 'yes'
+  ignore_errors: yes
 
 - name: configure SSH daemon
   template:
@@ -40,6 +40,7 @@
   copy:
     src: ssh-agent.service
     dest: /etc/systemd/user/ssh-agent.service
+    mode: 0600
   notify:
     - enable ssh-agent
 
