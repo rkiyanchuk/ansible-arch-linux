@@ -1,0 +1,11 @@
+---
+country: United States
+hostname: local
+
+extra_packages: []
+extra_aur_packages: []
+host_extra_packages: []
+host_extra_aur_packages: []
+
+user:
+  name: user

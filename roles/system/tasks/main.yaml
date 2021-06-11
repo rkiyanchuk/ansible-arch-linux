@@ -1,10 +1,4 @@
 ---
-- name: find loader entry
-  find:
-    paths: [/boot/loader/entries]
-    patterns: '*.conf'
-  register: loader
-
 - name: set hostname in /etc/hosts file
   template:
     src: hosts.j2
@@ -17,9 +11,6 @@
     line: "FONT=ter-122n"
     create: yes
     mode: 0644
-
-- import_tasks: printing.yaml
-- import_tasks: network.yaml
 
 - name: install cron
   pacman:
@@ -73,3 +64,6 @@
 
 - name: set user shell
   command: chsh -s /bin/zsh  {{ user.name }}
+
+- import_tasks: printing.yaml
+- import_tasks: network.yaml
