@@ -13,17 +13,17 @@
     - enable bluetooth
     - restart pulseaudio as user
 
-- name: enable bluetooth
-  systemd:
-    name: bluetooth.service
-    enabled: yes
-    state: started
-
 - name: install polkit policy for blueman
   tags:
     - bluetooth
   copy:
     src: polkit-blueman.rules
     dest: /usr/share/polkit-1/rules.d/90-blueman.rules
+
+- name: enable bluetooth
+  systemd:
+    name: bluetooth.service
+    enabled: yes
+    state: started
 
 - meta: flush_handlers

@@ -11,17 +11,11 @@
       - qt5-wayland
       - qt5ct
 
-- name: install sounds for desktop events
-  pacman:
-    name:
-      - libcanberra
-      - libcanberra-pulse
-      - sound-theme-freedesktop
-
 - name: install fonts
   pacman:
     name:
       - ttf-dejavu
+      - ttf-joypixels
       # Fonts to use asian characters
       - ttf-arphic-uming
       - ttf-baekmuk
@@ -34,7 +28,6 @@
   aur:
     name:
       - nerd-fonts-iosevka
-      - ttf-joypixels
   become: yes
   become_user: "{{ user.name }}"
 

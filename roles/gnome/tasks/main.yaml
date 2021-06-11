@@ -5,6 +5,12 @@
     dest: /etc/systemd/logind.conf
     mode: 0600
 
+- name: install GNOME Shell Extensions support
+  pacman:
+    name:
+      - gnome-shell-extensions
+      - chrome-gnome-shell
+
 - name: install Gnome extensions
   aur:
     name:
@@ -19,12 +25,14 @@
     path: /etc/dconf/db/gnome.d
     state: directory
     recurse: yes
+  notify: update dconf database
 
 - name: create DConf profile dir
   file:
     path: /etc/dconf/profile
     state: directory
     recurse: yes
+  notify: update dconf database
 
 - name: configure DConf database
   copy:
@@ -42,15 +50,9 @@
     - "system-db:gnome"
   notify: update dconf database
 
-- name: install GNOME Shell Extensions support
-  pacman:
-    name:
-      - gnome-shell-extensions
-      - chrome-gnome-shell
-
-
-- import_tasks: bluetooth.yaml
-- import_tasks: themes.yaml
-- import_tasks: media.yaml
+# - import_tasks: bluetooth.yaml
+# - import_tasks: themes.yaml
+# - import_tasks: media.yaml
+# - import_tasks: wayland.yaml
 
 - meta: flush_handlers
