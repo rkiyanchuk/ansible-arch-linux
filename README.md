@@ -42,7 +42,7 @@ This playbook now relies on [archinstall](https://archlinux.org/packages/extra/a
    python -m archinstall guided
    ```
 
-4. For additional packages specify `ansible git reflector`.
+4. For additional packages specify `ansible git`.
 
 ### Configure Arch Linux
 

@@ -5,15 +5,6 @@
     patterns: '*.conf'
   register: loader
 
-# TODO: This seems broken
-# - name: configure loader entry - add deep sleep option
-#   ansible.builtin.lineinfile:
-#     path: "{{ item.path }}"
-#     regexp: '^options (.*)$'
-#     line: '\1 mem_sleep_default=deep'
-#     backrefs: yes
-#   with_items: "{{ loader.files }}"
-
 - name: set hostname in /etc/hosts file
   template:
     src: hosts.j2
