@@ -9,8 +9,7 @@
   pacman:
     name:
       - gnome-shell-extensions
-      - chrome-gnome-shell
-    extra_args: "--noconfirm"
+      # - chrome-gnome-shell # fails to install
 
 - name: install Gnome extensions
   aur:
