@@ -153,20 +153,25 @@ dconf:
   "/org/gnome/shell/favorite-apps": "@as []"
   "/org/gnome/system/location/enabled": "true"
 
-  "/org/gnome/desktop/wm/keybindings/switch-to-workspace-1": "['<Super>1']"
-  "/org/gnome/desktop/wm/keybindings/switch-to-workspace-2": "['<Super>2']"
-  "/org/gnome/desktop/wm/keybindings/switch-to-workspace-3": "['<Super>3']"
-  "/org/gnome/desktop/wm/keybindings/switch-to-workspace-4": "['<Super>4']"
+  "/org/gnome/desktop/wm/keybindings/switch-to-workspace-1": "['<Primary>1']"
+  "/org/gnome/desktop/wm/keybindings/switch-to-workspace-2": "['<Primary>2']"
+  "/org/gnome/desktop/wm/keybindings/switch-to-workspace-3": "['<Primary>3']"
+  "/org/gnome/desktop/wm/keybindings/switch-to-workspace-4": "['<Primary>4']"
 
   "/org/gnome/desktop/wm/keybindings/move-to-workspace-1": "['<Primary><Super>1']"
   "/org/gnome/desktop/wm/keybindings/move-to-workspace-2": "['<Primary><Super>2']"
-  "/org/gnome/desktop/wm/keybindings/move-to-workspace-3": "['<Primar><Super>3']"
+  "/org/gnome/desktop/wm/keybindings/move-to-workspace-3": "['<Primary><Super>3']"
   "/org/gnome/desktop/wm/keybindings/move-to-workspace-4": "['<Primary><Super>4']"
 
   "/org/gnome/desktop/wm/keybindings/switch-applications": "['<Super>Tab']"
   "/org/gnome/desktop/wm/keybindings/switch-applications-backward": "['<Shift><Super>Tab']"
   "/org/gnome/desktop/wm/keybindings/switch-windows": "['<Alt>Tab']"
   "/org/gnome/desktop/wm/keybindings/switch-windows-backward": "['<Shift><Alt>Tab']"
+
+  "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings": "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
+  "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding": "'<Super>Return'"
+  "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command": "'tilix'"
+  "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name": "'Launch terminal'"
 
 dotfiles:
   repo: "https://github.com/rkiyanchuk/dotfiles"
