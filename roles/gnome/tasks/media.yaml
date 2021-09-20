@@ -23,7 +23,6 @@
       - libpipewire02  # For Chrome screen sharing to work as long as they ship with v0.2
       - pavucontrol
       - pamixer
-      - paprefs
   notify:
     - restart pipewire-pulse as user
 
