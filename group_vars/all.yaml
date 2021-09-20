@@ -153,6 +153,9 @@ dconf:
   "/org/gnome/shell/favorite-apps": "@as []"
   "/org/gnome/system/location/enabled": "true"
 
+  "/org/gnome/nautilus/preferences/default-folder-viewer": "'list-view'"
+  "/org/gtk/settings/file-chooser/sort-directories-first": "true"
+
   "/org/gnome/desktop/wm/keybindings/switch-to-workspace-1": "['<Primary>1']"
   "/org/gnome/desktop/wm/keybindings/switch-to-workspace-2": "['<Primary>2']"
   "/org/gnome/desktop/wm/keybindings/switch-to-workspace-3": "['<Primary>3']"
