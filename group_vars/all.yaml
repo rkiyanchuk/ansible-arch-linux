@@ -132,14 +132,15 @@ extra_aur_packages:
 # Monitor settings with `dconf watch /` while configuring via UI, then update here.
 # Run `dconf update` to manually update settings.
 dconf:
+  "/org/gnome/desktop/datetime/automatic-timezone": "true"
   "/org/gnome/desktop/input-sources/sources": "[('xkb', 'us'), ('xkb', 'ua'), ('xkb', 'ru')]"
   "/org/gnome/desktop/input-sources/xkb-options": "['terminate:ctrl_alt_bksp', 'lv3:ralt_switch', 'compose:ralt']"
   "/org/gnome/desktop/interface/clock-show-date": "true"
   "/org/gnome/desktop/interface/clock-show-seconds": "true"
-  "/org/gnome/desktop/interface/text-scaling-factor": "1.25"
   "/org/gnome/desktop/interface/clock-show-weekday": "true"
   "/org/gnome/desktop/interface/enable-hot-corners": "false"
   "/org/gnome/desktop/interface/show-battery-percentage": "true"
+  "/org/gnome/desktop/interface/text-scaling-factor": "1.25"
   "/org/gnome/desktop/notifications/show-in-lock-screen": "false"
   "/org/gnome/desktop/peripherals/mouse/natural-scroll": "true"
   "/org/gnome/desktop/peripherals/touchpad/disable-while-typing": "true"
@@ -149,6 +150,7 @@ dconf:
   "/org/gnome/settings-daemon/plugins/color/night-light-enabled": "true"
   "/org/gnome/settings-daemon/plugins/color/night-light-temperature": "uint32 3700"
   "/org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type": "'nothing'"
+  "/org/gnome/system/location/enabled": "true"
 
   "/org/gnome/desktop/wm/keybindings/switch-to-workspace-1": "['<Primary>1']"
   "/org/gnome/desktop/wm/keybindings/switch-to-workspace-2": "['<Primary>2']"
