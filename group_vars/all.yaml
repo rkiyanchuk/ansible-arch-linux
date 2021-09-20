@@ -150,35 +150,23 @@ dconf:
   "/org/gnome/settings-daemon/plugins/color/night-light-enabled": "true"
   "/org/gnome/settings-daemon/plugins/color/night-light-temperature": "uint32 3700"
   "/org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type": "'nothing'"
+  "/org/gnome/shell/favorite-apps": "@as []"
   "/org/gnome/system/location/enabled": "true"
 
-  "/org/gnome/desktop/wm/keybindings/switch-to-workspace-1": "['<Primary>1']"
-  "/org/gnome/desktop/wm/keybindings/switch-to-workspace-2": "['<Primary>2']"
-  "/org/gnome/desktop/wm/keybindings/switch-to-workspace-3": "['<Primary>3']"
-  "/org/gnome/desktop/wm/keybindings/switch-to-workspace-4": "['<Primary>4']"
+  "/org/gnome/desktop/wm/keybindings/switch-to-workspace-1": "['<Super>1']"
+  "/org/gnome/desktop/wm/keybindings/switch-to-workspace-2": "['<Super>2']"
+  "/org/gnome/desktop/wm/keybindings/switch-to-workspace-3": "['<Super>3']"
+  "/org/gnome/desktop/wm/keybindings/switch-to-workspace-4": "['<Super>4']"
 
-#move-to-workspace-1 = ['<Primary><Super>1']
-#move-to-workspace-2 = ['<Primary><Super>2']
-#move-to-workspace-3 = ['<Primary><Super>3']
-#move-to-workspace-4 = ['<Primary><Super>4']
+  "/org/gnome/desktop/wm/keybindings/move-to-workspace-1": "['<Primary><Super>1']"
+  "/org/gnome/desktop/wm/keybindings/move-to-workspace-2": "['<Primary><Super>2']"
+  "/org/gnome/desktop/wm/keybindings/move-to-workspace-3": "['<Primar><Super>3']"
+  "/org/gnome/desktop/wm/keybindings/move-to-workspace-4": "['<Primary><Super>4']"
 
-#[org/gnome/desktop/interface]
-#gtk-scheme = "Breeze"
-#icon-theme = "Breeze"
-#cursor-theme = "Breeze_Snow"
-
-#[org/gnome/shell/keybindings]
-#switch-to-application-1=['<Super><Alt>1']
-#switch-to-application-2=['<Super><Alt>2']
-#switch-to-application-3=['<Super><Alt>3']
-#switch-to-application-4=['<Super><Alt>4']
-
-
-#switch-applications = ['<Super>Tab']
-#switch-applications-backward = ['<Shift><Super>Tab']
-#switch-windows = ['<Alt>Tab']
-#switch-windows-backward = ['<Shift><Alt>Tab']
-#close = ['<Primary>q']
+  "/org/gnome/desktop/wm/keybindings/switch-applications": "['<Super>Tab']"
+  "/org/gnome/desktop/wm/keybindings/switch-applications-backward": "['<Shift><Super>Tab']"
+  "/org/gnome/desktop/wm/keybindings/switch-windows": "['<Alt>Tab']"
+  "/org/gnome/desktop/wm/keybindings/switch-windows-backward": "['<Shift><Alt>Tab']"
 
 dotfiles:
   repo: "https://github.com/rkiyanchuk/dotfiles"
