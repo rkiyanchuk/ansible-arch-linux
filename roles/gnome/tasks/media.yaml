@@ -12,21 +12,20 @@
       - gst-plugins-ugly
       - gst-plugins-bad
 
-- name: install pulseaudio
+- name: install pipewire
   pacman:
     name:
       - alsa-utils
-      - pulseaudio
-      - pulseaudio-alsa
-      - pulseaudio-jack
       - pipewire
+      - pipewire-pulse
+      - pipewire-jack
       - pipewire-docs
       - libpipewire02  # For Chrome screen sharing to work as long as they ship with v0.2
       - pavucontrol
       - pamixer
       - paprefs
   notify:
-    - restart pulseaudio as user
+    - restart pipewire-pulse as user
 
 - name: install packages for audio recording and editing
   pacman:
@@ -42,4 +41,4 @@
     groups: realtime
     append: yes
   notify:
-    - restart pulseaudio as user
+    - restart pipewire-pulse as user

@@ -8,11 +8,10 @@
       - bluez-libs
       - bluez-utils
       - bluez-hid2hci
-      - pulseaudio-bluetooth
   changed_when: true # always trigger handlers
   notify:
     - enable bluetooth
-    - restart pulseaudio as user
+    - restart pipewire-pulse as user
 
 - name: install polkit policy for blueman
   tags:

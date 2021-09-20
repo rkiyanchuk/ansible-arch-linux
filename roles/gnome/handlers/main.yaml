@@ -1,18 +1,16 @@
 ---
-- name: update dconf database
-  command: dconf update
-
 - name: enable bluetooth
   ansible.builtin.systemd:
     name: bluetooth.service
     enabled: yes
     state: restarted
 
-- name: restart pulseaudio as user
+- name: restart pipewire-pulse as user
   ansible.builtin.systemd:
-    name: pulseaudio.service
+    name: pipewire-pulse.service
     scope: user
     state: restarted
+    enabled: yes
   become: yes
   become_user: "{{ user.name }}"
   environment:
