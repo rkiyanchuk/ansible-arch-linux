@@ -1,4 +1,4 @@
 host_extra_packages: []
-host_extra_aur_packages:
+host_extra_aur_packages:  []
 # TODO: this fails to install
 #  - libfprint-2-tod1-xps9300-bin  # Fingerprint scanner lib for Dell XPS 13 9300.

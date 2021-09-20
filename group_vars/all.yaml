@@ -97,6 +97,8 @@ extra_packages:
   - sagemath
   - sagemath-doc
   - jre-openjdk
+  - ansible
+  - ansible-lint
 
   # spellcheck
   - aspell
