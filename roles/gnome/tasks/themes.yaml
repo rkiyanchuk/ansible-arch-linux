@@ -27,7 +27,8 @@
 - name: install fonts from AUR
   kewlfft.aur.aur:
     name:
-      - nerd-fonts-iosevka
+      - ttf-iosevka
+      - ttf-iosevka-term
       - ttf-cmu-serif
   become: yes
   become_user: "{{ user.name }}"
