@@ -15,6 +15,17 @@
   become: yes
   become_user: "{{ user.name }}"
 
+- name: copy system-monitor.conf to temp
+  copy:
+    src: system-monitor.conf
+    dest: "/var/tmp/system-monitor.conf"
+    mode: 0644
+
+- name: configure system-monitor extension  # noqa no-changed-when
+  shell: "dconf load /org/gnome/shell/extensions/system-monitor/ < /var/tmp/system-monitor.conf"
+  become: yes
+  become_user: "{{ user.name }}"
+
 # NOTE: psutil is not installed as ansible dependency for some reason and has to be installed manually.
 # TODO: is this still required?
 - name: install psutil for ansible
