@@ -176,10 +176,13 @@ dconf:
   "/org/gnome/desktop/wm/keybindings/switch-windows": "['<Alt>Tab']"
   "/org/gnome/desktop/wm/keybindings/switch-windows-backward": "['<Shift><Alt>Tab']"
 
-  "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings": "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
+  "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings": "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/']"
   "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding": "'<Super>Return'"
   "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command": "'tilix'"
   "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name": "'Launch terminal'"
+  "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/binding": "'<Super>Print'"
+  "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/command": "'flameshot gui'"
+  "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/name": "'Flameshot'"
 
 dotfiles:
   repo: "https://github.com/rkiyanchuk/dotfiles"
