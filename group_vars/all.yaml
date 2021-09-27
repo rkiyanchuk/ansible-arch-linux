@@ -156,15 +156,20 @@ dconf:
   "/org/gnome/nautilus/preferences/default-folder-viewer": "'list-view'"
   "/org/gtk/settings/file-chooser/sort-directories-first": "true"
 
-  "/org/gnome/desktop/wm/keybindings/switch-to-workspace-1": "['<Primary>1']"
-  "/org/gnome/desktop/wm/keybindings/switch-to-workspace-2": "['<Primary>2']"
-  "/org/gnome/desktop/wm/keybindings/switch-to-workspace-3": "['<Primary>3']"
-  "/org/gnome/desktop/wm/keybindings/switch-to-workspace-4": "['<Primary>4']"
+  "/org/gnome/shell/keybindings/switch-to-application-1": "@as []"
+  "/org/gnome/shell/keybindings/switch-to-application-2": "@as []"
+  "/org/gnome/shell/keybindings/switch-to-application-3": "@as []"
+  "/org/gnome/shell/keybindings/switch-to-application-4": "@as []"
 
-  "/org/gnome/desktop/wm/keybindings/move-to-workspace-1": "['<Primary><Super>1']"
-  "/org/gnome/desktop/wm/keybindings/move-to-workspace-2": "['<Primary><Super>2']"
-  "/org/gnome/desktop/wm/keybindings/move-to-workspace-3": "['<Primary><Super>3']"
-  "/org/gnome/desktop/wm/keybindings/move-to-workspace-4": "['<Primary><Super>4']"
+  "/org/gnome/desktop/wm/keybindings/switch-to-workspace-1": "['<Super>1']"
+  "/org/gnome/desktop/wm/keybindings/switch-to-workspace-2": "['<Super>2']"
+  "/org/gnome/desktop/wm/keybindings/switch-to-workspace-3": "['<Super>3']"
+  "/org/gnome/desktop/wm/keybindings/switch-to-workspace-4": "['<Super>4']"
+
+  "/org/gnome/desktop/wm/keybindings/move-to-workspace-1": "['<Super><Shift>1']"
+  "/org/gnome/desktop/wm/keybindings/move-to-workspace-2": "['<Super><Shift>2']"
+  "/org/gnome/desktop/wm/keybindings/move-to-workspace-3": "['<Super><Shift>3']"
+  "/org/gnome/desktop/wm/keybindings/move-to-workspace-4": "['<Super><Shift>4']"
 
   "/org/gnome/desktop/wm/keybindings/switch-applications": "['<Super>Tab']"
   "/org/gnome/desktop/wm/keybindings/switch-applications-backward": "['<Shift><Super>Tab']"
