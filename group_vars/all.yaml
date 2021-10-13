@@ -188,7 +188,7 @@ dotfiles:
   repo: "https://github.com/rkiyanchuk/dotfiles"
   install_cmds:
     - "stow -d ${HOME}/dotfiles -S yay tilix zsh tmux git gnupg neovim gtk"
-    - "stow -d ${HOME}/dotfiles -S chrome goldendict sage"
+    - "stow -d ${HOME}/dotfiles -S chrome goldendict sage systemd"
   deps:
     - stow
     - ctags
