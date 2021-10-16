@@ -124,6 +124,7 @@ extra_packages:
 extra_aur_packages:
   - google-chrome
   - dropbox
+  - dropbox-cli
   - github-cli
   - nautilus-dropbox
   - tectonic
